@@ -8,7 +8,8 @@ Fitur Pada Aplikasi
     2. CRUD Angkatan  
     3. CRUD Fakultas  
     4. CRUD Jurusan  
-    5. CRUD Fakultas  
+    5. CRUD Fakultas
+    6. Show Data Kegiatan
 
 ## Installasi Prooject
 
