@@ -4,93 +4,32 @@
             <ul>
                 <li class="menu-title"><span>Main</span></li>
                 <li>
-                    <a href="index.html"><i data-feather="home"></i> <span>Dashboard</span></a>
+                    <a href="{{ route('dashboard') }}"><i data-feather="home"></i> <span>Dashboard</span></a>
                 </li>
                 <li>
-                    <a href="customers.html"><i data-feather="users"></i> <span>Customers</span></a>
+                    <a href=""><i data-feather="users"></i> <span>Mahasiswa</span></a>
                 </li>
                 <li>
-                    <a href="estimates.html"><i data-feather="file-text"></i> <span>Estimates</span></a>
+                    <a href=""><i data-feather="package"></i> <span>Kegiatan</span></a>
                 </li>
                 <li>
-                    <a href="invoices.html"><i data-feather="clipboard"></i> <span>Invoices</span></a>
+                    <a href=""><i data-feather="box"></i> <span>Pembimbing Akademik</span></a>
                 </li>
-                <li>
-                    <a href="payments.html"><i data-feather="credit-card"></i> <span>Payments</span></a>
-                </li>
-                <li>
-                    <a href="expenses.html"><i data-feather="package"></i> <span>Expenses</span></a>
-                </li>
-                <li>
-                    <a href="settings.html"><i data-feather="settings"></i> <span>Settings</span></a>
-                </li>
+                <li class="menu-title"><span>Master</span></li>
                 <li class="submenu active">
-                    <a href="#"><i data-feather="grid"></i> <span> Application</span> <span
+                    <a href="#"><i data-feather="grid"></i> <span>Master Data</span> <span
                             class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="chat.html">Chat</a></li>
-                        <li><a href="calendar.html">Calendar</a></li>
-                        <li><a href="inbox.html" class="active">Email</a></li>
+                        <li><a href="calendar.html">Fakultas</a></li>
+                        <li><a href="inbox.html">Jurusan</a></li>
+                        <li><a href="calendar.html">Prodi</a></li>
+                        <li><a href="chat.html">Angkatan</a></li>
                     </ul>
                 </li>
-                <li class="menu-title">
-                    <span>Pages</span>
-                </li>
+
+                <li class="menu-title"><span>Pengaturan</span></li>
                 <li>
-                    <a href="profile.html"><i data-feather="user-plus"></i> <span>Profile</span></a>
-                </li>
-                <li class="submenu">
-                    <a href="#"><i data-feather="lock"></i> <span> Authentication </span> <span
-                            class="menu-arrow"></span></a>
-                    <ul>
-                        <li><a href="login.html"> Login </a></li>
-                        <li><a href="register.html"> Register </a></li>
-                        <li><a href="forgot-password.html"> Forgot Password </a></li>
-                        <li><a href="lock-screen.html"> Lock Screen </a></li>
-                    </ul>
-                </li>
-                <li class="submenu">
-                    <a href="#"><i data-feather="alert-octagon"></i> <span> Error Pages </span> <span
-                            class="menu-arrow"></span></a>
-                    <ul>
-                        <li><a href="error-404.html">404 Error </a></li>
-                        <li><a href="error-500.html">500 Error </a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="users.html"><i data-feather="user"></i> <span>Users</span></a>
-                </li>
-                <li>
-                    <a href="blank-page.html"><i data-feather="file"></i> <span>Blank Page</span></a>
-                </li>
-                <li>
-                    <a href="maps-vector.html"><i data-feather="map-pin"></i> <span>Vector Maps</span></a>
-                </li>
-                <li class="menu-title">
-                    <span>UI Interface</span>
-                </li>
-                <li>
-                    <a href="components.html"><i data-feather="layers"></i> <span>Components</span></a>
-                </li>
-                <li class="submenu">
-                    <a href="#"><i data-feather="columns"></i> <span> Forms </span> <span
-                            class="menu-arrow"></span></a>
-                    <ul>
-                        <li><a href="form-basic-inputs.html">Basic Inputs </a></li>
-                        <li><a href="form-input-groups.html">Input Groups </a></li>
-                        <li><a href="form-horizontal.html">Horizontal Form </a></li>
-                        <li><a href="form-vertical.html"> Vertical Form </a></li>
-                        <li><a href="form-mask.html"> Form Mask </a></li>
-                        <li><a href="form-validation.html"> Form Validation </a></li>
-                    </ul>
-                </li>
-                <li class="submenu">
-                    <a href="#"><i data-feather="layout"></i> <span> Tables </span> <span
-                            class="menu-arrow"></span></a>
-                    <ul>
-                        <li><a href="tables-basic.html">Basic Tables </a></li>
-                        <li><a href="data-tables.html">Data Table </a></li>
-                    </ul>
+                    <a href="settings.html"><i data-feather="user"></i> <span>Profile</span></a>
                 </li>
             </ul>
         </div>

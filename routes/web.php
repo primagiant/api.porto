@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KegiatanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,11 +16,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('kegiatan', KegiatanController::class)->only(['index']);
+});
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
+require __DIR__ . '/admin.php';
+require __DIR__ . '/pa.php';
+require __DIR__ . '/mahasiswa.php';
