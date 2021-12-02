@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\AdminUsers;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class AdminRegisterSeeder extends Seeder
@@ -14,9 +14,9 @@ class AdminRegisterSeeder extends Seeder
      */
     public function run()
     {
-        AdminUsers::create([
+        User::create([
             'name' => 'Admin Porto',
-            'email' => 'superadmin@porto.id',
+            'email' => 'super.admin@porto.id',
             'password' => bcrypt('password'),
         ]);
     }

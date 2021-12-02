@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AdminUsers;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function register(Request $request) {
+    public function register(Request $request)
+    {
         $validator = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|string|unique:admin,email',
             'password' => 'required|string|confirmed',
         ]);
 
-        $user = AdminUsers::create([
+        $user = User::create([
             'name' => $validator['name'],
             'email' => $validator['email'],
             'password' => bcrypt($validator['password']),
@@ -37,15 +38,16 @@ class AuthController extends Controller
         ], 200);
     }
 
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
         $validator = $request->validate([
             'email' => 'required|email|string',
             'password' => 'required|string',
         ]);
 
-        $user = AdminUsers::where('email', $validator['email'])->first();
+        $user = User::where('email', $validator['email'])->first();
 
-        if(!Hash::check($validator['password'], $user->password)) {
+        if (!Hash::check($validator['password'], $user->password)) {
             return response([
                 'message' => 'Bad Cerd',
             ], 401);
