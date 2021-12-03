@@ -14,7 +14,7 @@ class DashboardController extends Controller
         } else if (Auth::user()->hasRole('pa')) {
             return redirect('/detail-pa');
         } else if (Auth::user()->hasRole('admin')) {
-            return view('admin.pages.index');
+            return redirect('/admin/dashboard');
         }
     }
 }

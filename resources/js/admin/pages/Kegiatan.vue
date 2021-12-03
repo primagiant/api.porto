@@ -6,7 +6,7 @@
                     <h3 class="page-title">Kegiatan</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <router-link to="/admin/dashboard">Dashboard</router-link>
+                            <router-link :to="{ name: 'dashboard' }">Dashboard</router-link>
                         </li>
                         <li class="breadcrumb-item active">Kegiatan</li>
                     </ul>

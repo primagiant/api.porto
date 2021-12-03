@@ -5,7 +5,7 @@
                 <ul>
                     <li class="menu-title"><span>Main</span></li>
                     <li>
-                        <router-link to="/admin/dashboard">
+                        <router-link :to="{ name: 'dashboard' }">
                             <i data-feather="home"></i>
                             <span>Dashboard</span>
                         </router-link>
@@ -17,7 +17,7 @@
                         </router-link>
                     </li>
                     <li>
-                        <router-link to="/admin/kegiatan">
+                        <router-link :to="{ name: 'kegiatan' }">
                             <i data-feather="package"></i>
                             <span>Kegiatan</span>
                         </router-link>
@@ -36,10 +36,10 @@
                             <span class="menu-arrow"></span>
                         </router-link>
                         <ul>
-                            <li><router-link to="/admin/fakultas">Fakultas</router-link></li>
-                            <li><router-link to="/admin/jurusan">Jurusan</router-link></li>
-                            <li><router-link to="/admin/prodi">Prodi</router-link></li>
-                            <li><router-link to="/admin/angkatan">Angkatan</router-link></li>
+                            <li><router-link :to="{ name: 'fakultas' }">Fakultas</router-link></li>
+                            <li><router-link :to="{ name: 'jurusan' }">Jurusan</router-link></li>
+                            <li><router-link :to="{ name: 'prodi' }">Prodi</router-link></li>
+                            <li><router-link :to="{ name: 'angkatan' }">Angkatan</router-link></li>
                         </ul>
                     </li>
 
