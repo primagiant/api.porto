@@ -5477,11 +5477,47 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    var _this = this;
+    this.showAllData();
+  },
+  methods: {
+    showAllData: function showAllData() {
+      var _this = this;
 
-    axios.get("/api/angkatan").then(function (response) {
-      _this.angkatan = response.data.data;
-    });
+      axios.get("/api/angkatan").then(function (response) {
+        _this.angkatan = response.data.data;
+      });
+    },
+    deleteData: function deleteData(id) {
+      var _this2 = this;
+
+      this.$swal.fire({
+        title: "Apakah kamu yakin?",
+        text: "Jika kamu hapus, maka data tidak akan kembali lagi.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Delete",
+        cancelButtonText: "Batal"
+      }).then(function (result) {
+        if (result.value) {
+          var uri = "/api/angkatan/".concat(id);
+
+          _this2.axios["delete"](uri).then(function (response) {
+            _this2.$swal.fire({
+              title: "Success!",
+              text: "Article deleted successfully",
+              icon: "success",
+              timer: 1000
+            });
+
+            _this2.products.data.splice(_this2.products.data.indexOf(id), 1);
+          });
+
+          _this2.showAllData();
+        }
+      });
+    }
   }
 });
 
@@ -44272,7 +44308,24 @@ var render = function () {
                             ]
                           ),
                           _vm._v(" "),
-                          _vm._m(1, true),
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn btn-sm btn-white text-danger mr-2",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.deleteData(item.id)
+                                },
+                              },
+                            },
+                            [
+                              _c("i", { staticClass: "far fa-trash-alt mr-1" }),
+                              _vm._v(
+                                "\n                                            Delete\n                                        "
+                              ),
+                            ]
+                          ),
                         ],
                         1
                       ),
@@ -44302,21 +44355,6 @@ var staticRenderFns = [
         _c("th", { staticClass: "text-right" }, [_vm._v("Actions")]),
       ]),
     ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "btn btn-sm btn-white text-danger mr-2" },
-      [
-        _c("i", { staticClass: "far fa-trash-alt mr-1" }),
-        _vm._v(
-          "\n                                            Delete\n                                        "
-        ),
-      ]
-    )
   },
 ]
 render._withStripped = true

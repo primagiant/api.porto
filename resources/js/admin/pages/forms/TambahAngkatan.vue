@@ -19,7 +19,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <form action="" method="POST">
+                        <form @submit.prevent="saveData">
                             <div class="form-group">
                                 <label>Tahun Angkatan</label>
                                 <input type="number" class="form-control" autofocus />
@@ -34,3 +34,19 @@
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            tahun: "",
+        };
+    },
+    mounted() {},
+    methods: {
+        saveData: function (e) {
+            e.preventDefault();
+        },
+    },
+};
+</script>

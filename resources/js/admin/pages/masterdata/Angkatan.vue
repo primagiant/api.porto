@@ -42,7 +42,7 @@
                                                 <i class="far fa-edit mr-1"></i>
                                                 Edit
                                             </router-link>
-                                            <button class="btn btn-sm btn-white text-danger mr-2">
+                                            <button @click="deleteData(item.id)" class="btn btn-sm btn-white text-danger mr-2">
                                                 <i class="far fa-trash-alt mr-1"></i>
                                                 Delete
                                             </button>
@@ -66,9 +66,37 @@ export default {
         };
     },
     mounted() {
-        axios.get("/api/angkatan").then((response) => {
-            this.angkatan = response.data.data;
-        });
+        this.showAllData();
+    },
+    methods: {
+        showAllData: function () {
+            axios.get("/api/angkatan").then((response) => {
+                this.angkatan = response.data.data;
+            });
+        },
+        deleteData: function (id) {
+            this.$swal
+                .fire({
+                    title: "Apakah kamu yakin?",
+                    text: "Jika kamu hapus, maka data tidak akan kembali lagi.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Delete",
+                    cancelButtonText: "Batal",
+                })
+                .then((result) => {
+                    if (result.value) {
+                        let uri = `/api/angkatan/${id}`;
+                        this.axios.delete(uri).then((response) => {
+                            this.$swal.fire({ title: "Success!", text: "Article deleted successfully", icon: "success", timer: 1000 });
+                            // this.products.data.splice(this.products.data.indexOf(id), 1);
+                        });
+                        this.showAllData();
+                    }
+                });
+        },
     },
 };
 </script>

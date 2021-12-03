@@ -4,16 +4,15 @@ import Jurusan from './admin/pages/masterdata/Jurusan.vue';
 import Prodi from './admin/pages/masterdata/Prodi.vue';
 import Dashboard from './admin/pages/Dashboard.vue';
 import Kegiatan from './admin/pages/Kegiatan.vue';
-import CreateKegiatan from './admin/pages/forms/CreateKegiatan.vue';
-import EditKegiatan from './admin/pages/forms/EditKegiatan.vue';
+import TambahAngkatan from './admin/pages/forms/TambahAngkatan.vue';
 
 export const routes = [
     { name: 'dashboard', path: '/admin/dashboard', component: Dashboard },
     { name: 'kegiatan', path: '/admin/kegiatan', component: Kegiatan },
     // Angkatan
     { name: 'angkatan', path: '/admin/angkatan', component: Angkatan },
-    { name:'angkatanCreate', path: '/admin/angkatan/create', component: CreateKegiatan },
-    { name:'angkatanEdit', path: '/admin/angkatan/edit/:id', component: EditKegiatan },
+    { name:'angkatanCreate', path: '/admin/angkatan/create', component: TambahAngkatan },
+    // { name:'angkatanEdit', path: '/admin/angkatan/edit/:id', component: FormKegiatan },
     // Fakultas
     { name: 'fakultas', path: '/admin/fakultas', component: Fakultas },
     // Jurusan
