@@ -20,11 +20,15 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::resource('kegiatan', KegiatanController::class)->only(['index']);
+    Route::get('/dashboard', function () {
+        return view('admin.app');
+    })->name('dashboard');
+});
+
+Route::group(['middleware' => ['auth', 'role:admin']], function () {
+    Route::get('admin/{any}', function () {
+        return view('admin.app');
+    })->where('any', '.*');
 });
 
 require __DIR__ . '/auth.php';
-require __DIR__ . '/admin.php';
-require __DIR__ . '/pa.php';
-require __DIR__ . '/mahasiswa.php';

@@ -10,7 +10,7 @@ class DashboardController extends Controller
     public function index()
     {
         if (Auth::user()->hasRole('mahasiswa')) {
-            return redirect('/detail-mahasiswa');
+            return redirect('/admin/dashboard');
         } else if (Auth::user()->hasRole('pa')) {
             return redirect('/detail-pa');
         } else if (Auth::user()->hasRole('admin')) {
