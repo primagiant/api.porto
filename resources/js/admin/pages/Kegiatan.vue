@@ -8,13 +8,13 @@
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
                         <!-- loop 1 -->
-                        <li class="list-group-item">
-                            <strong>Testing</strong>
-                            <ul class="list-group list-group-flush">
-                                <!-- loop 2 -->
+                        <li v-for="(kategori_kegiatan, index) in kegiatan" :key="index" class="list-group-item">
+                            <strong>{{ kategori_kegiatan.nama }}</strong>
+                            <!-- loop 2 -->
+                            <ul v-for="(jenis_kegiatan, index) in kategori_kegiatan.jenis_kegiatan" :key="index" class="list-group list-group-flush">
                                 <li class="list-group-item d-flex justify-content-between">
-                                    <span>Nama Jenis Kategori</span>
-                                    <strong>Point Reverensi</strong>
+                                    <span>{{ jenis_kegiatan.nama }}</span>
+                                    <strong>{{ jenis_kegiatan.ref_point }}</strong>
                                 </li>
                             </ul>
                         </li>

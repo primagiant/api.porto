@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AngkatanResource;
 use App\Models\Angkatan;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -13,12 +14,7 @@ class AngkatanController extends Controller
 {
     public function index()
     {
-        $angkatan = Angkatan::paginate(4);
-        $response = [
-            'message' => "All Data Angkatan",
-            'data' => $angkatan,
-        ];
-        return response()->json($response, Response::HTTP_OK);
+        return AngkatanResource::collection(Angkatan::paginate(3));
     }
 
     public function store(Request $request)

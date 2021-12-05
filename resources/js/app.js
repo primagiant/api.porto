@@ -3,6 +3,7 @@ window.Vue = require('vue').default;
 
 import Admin from './admin/App.vue';
 import PembimbingAkademik from './pembimbingAkademik/App.vue';
+import Mahasiswa from './Mahasiswa/App.vue';
 
 import VueAxios from 'vue-axios';
 import VueRouter from 'vue-router';
@@ -35,27 +36,27 @@ const admin = new Vue({
     render: h => h(Admin)
 });
 
-// Pembimbing Akademik
-const PembimbingAkademikRouter = new VueRouter({
-    mode: 'history',
-    routes: PembimbingAkademikRoutes
-});
+// // Pembimbing Akademik
+// const PembimbingAkademikRouter = new VueRouter({
+//     mode: 'history',
+//     routes: PembimbingAkademikRoutes
+// });
 
-const pembimbingAkademik = new Vue({
-     el: '#pembimbingAkademik',
-     router: PembimbingAkademikRouter,
-     render: h => h(PembimbingAkademik)
-});
+// const pembimbingAkademik = new Vue({
+//      el: '#pembimbingAkademik',
+//      router: PembimbingAkademikRouter,
+//      render: h => h(PembimbingAkademik)
+// });
 
-// Mahasiswa
-const MahasiswaRouter = new VueRouter({
-    mode: 'history',
-    routes: MahasiswaRoutes
-});
+// // Mahasiswa
+// const MahasiswaRouter = new VueRouter({
+//     mode: 'history',
+//     routes: MahasiswaRoutes
+// });
 
-const mahasiswa = new Vue({
-     el: '#mahasiswa',
-     router: MahasiswaRouter,
-     render: h => h(PembimbingAkademik)
-});
+// const mahasiswa = new Vue({
+//      el: '#mahasiswa',
+//      router: MahasiswaRouter,
+//      render: h => h(Mahasiswa)
+// });
  

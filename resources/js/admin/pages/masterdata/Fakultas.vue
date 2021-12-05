@@ -30,7 +30,7 @@
                                             <a href="" class="btn btn-sm btn-warning rounded-left">
                                                 <i class="ti-pencil-alt"></i>
                                             </a>
-                                            <button class="btn btn-sm btn-danger rounded-right" type="submit">
+                                            <button @click="deleteData(item.id)" class="btn btn-sm btn-danger rounded-right" type="submit">
                                                 <i class="ti-trash"></i>
                                             </button>
                                         </div>
@@ -57,9 +57,37 @@ export default {
         };
     },
     mounted() {
-        axios.get("/api/fakultas").then((response) => {
-            this.fakultas = response.data.data;
-        });
+        this.showAllData();
+    },
+    methods: {
+        showAllData: function () {
+            axios.get("/api/fakultas").then((response) => {
+                this.fakultas = response.data.data;
+            });
+        },
+        deleteData: function (id) {
+            this.$swal
+                .fire({
+                    title: "Apakah kamu yakin?",
+                    text: "Jika kamu hapus, maka data tidak akan kembali lagi.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Delete",
+                    cancelButtonText: "Batal",
+                })
+                .then((result) => {
+                    if (result.value) {
+                        let uri = `/api/fakultas/${id}`;
+                        this.axios.delete(uri).then((response) => {
+                            this.$swal.fire({ title: "Success!", text: "Fakultas deleted successfully", icon: "success", timer: 1000 });
+                            // this.products.data.splice(this.products.data.indexOf(id), 1);
+                        });
+                        this.showAllData();
+                    }
+                });
+        },
     },
 };
 </script>

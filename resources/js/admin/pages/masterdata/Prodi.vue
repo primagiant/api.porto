@@ -23,18 +23,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(item, index) in jurusan" :key="index">
+                                <tr v-for="(item, index) in prodi" :key="index">
                                     <td>{{ index + 1 }}</td>
                                     <td>{{ item.nama_prodi }}</td>
-                                    <td>{{ item.nama_jurusan }}</td>
-                                    <td>{{ item.nama_fakultas }}</td>
+                                    <td>{{ item.jurusan }}</td>
+                                    <td>{{ item.fakultas }}</td>
                                     <td>{{ item.deskripsi }}</td>
                                     <td class="text-center">
                                         <div class="d-inline btn-group">
                                             <a href="" class="btn btn-sm btn-warning rounded-left">
                                                 <i class="ti-pencil-alt"></i>
                                             </a>
-                                            <button class="btn btn-sm btn-danger rounded-right" type="submit">
+                                            <button @click="deleteData(item.id)" class="btn btn-sm btn-danger rounded-right" type="submit">
                                                 <i class="ti-trash"></i>
                                             </button>
                                         </div>
@@ -52,3 +52,45 @@
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            prodi: {},
+        };
+    },
+    mounted() {
+        this.showAllData();
+    },
+    methods: {
+        showAllData: function () {
+            axios.get("/api/prodi").then((response) => {
+                this.prodi = response.data.data;
+            });
+        },
+        deleteData: function (id) {
+            this.$swal
+                .fire({
+                    title: "Apakah kamu yakin?",
+                    text: "Jika kamu hapus, maka data tidak akan kembali lagi.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Delete",
+                    cancelButtonText: "Batal",
+                })
+                .then((result) => {
+                    if (result.value) {
+                        let uri = `/api/prodi/${id}`;
+                        this.axios.delete(uri).then((response) => {
+                            this.$swal.fire({ title: "Success!", text: "Prodi deleted successfully", icon: "success", timer: 1000 });
+                        });
+                        this.showAllData();
+                    }
+                });
+        },
+    },
+};
+</script>
