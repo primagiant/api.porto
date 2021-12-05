@@ -13,7 +13,7 @@ class AngkatanController extends Controller
 {
     public function index()
     {
-        $angkatan = Angkatan::all();
+        $angkatan = Angkatan::paginate(4);
         $response = [
             'message' => "All Data Angkatan",
             'data' => $angkatan,

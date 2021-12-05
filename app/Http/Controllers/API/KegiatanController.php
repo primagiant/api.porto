@@ -3,15 +3,17 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\KegiatanResource;
 use App\Models\KategoriKegiatan;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class KegiatanController extends Controller
 {
     public function index()
     {
-        $kegiatan = KategoriKegiatan::all();
+        $kegiatan = KegiatanResource::collection(
+            KategoriKegiatan::where('nama', 'like', '%' . request('keyword') . "%")->paginate(5)
+        );
         $response = [
             'message' => "All Data Kegiatan",
             'data' => $kegiatan,

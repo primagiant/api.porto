@@ -1,56 +1,45 @@
 <template>
     <div>
-        <div class="page-header">
-            <div class="row">
-                <div class="col">
-                    <h3 class="page-title">Angkatan</h3>
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <router-link :to="{ name: 'dashboard' }">Dashboard</router-link>
-                        </li>
-                        <li class="breadcrumb-item active">Angkatan</li>
-                    </ul>
-                </div>
-                <div class="col-auto">
-                    <router-link :to="{ name: 'angkatanCreate' }" class="btn btn-primary mr-1">
-                        <i class="fas fa-plus"></i>
-                        <span class="ml-1">Tambah Data</span>
-                    </router-link>
-                </div>
-            </div>
+        <div class="col mb-3 ml-2">
+            <h3>Angkatan</h3>
         </div>
-
-        <div class="row">
-            <div class="col-md-8">
-                <div class="card card-table">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-center table-hover">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th>#</th>
-                                        <th class="text-center">Angkatan Tahun</th>
-                                        <th class="text-right">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="(item, index) in angkatan" :key="index">
-                                        <td>{{ index + 1 }}</td>
-                                        <td class="text-center">{{ item.tahun }}</td>
-                                        <td class="text-right">
-                                            <router-link :to="{ name: 'angkatanEdit' }" class="btn btn-sm btn-white text-success mr-2">
-                                                <i class="far fa-edit mr-1"></i>
-                                                Edit
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <router-link :to="{ name: 'angkatanCreate' }" class="btn btn-primary mb-3">
+                        <i class="icon-plus mr-2"></i>
+                        Tambah Data
+                    </router-link>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Angkatan</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(item, index) in angkatan" :key="index">
+                                    <td>{{ index + 1 }}</td>
+                                    <td class="text-center">{{ item.tahun }}</td>
+                                    <td class="text-right">
+                                        <div class="d-inline btn-group">
+                                            <router-link :to="{ name: 'angkatanEdit' }" class="btn btn-sm btn-warning rounded-left">
+                                                <i class="ti-pencil-alt"></i>
                                             </router-link>
-                                            <button @click="deleteData(item.id)" class="btn btn-sm btn-white text-danger mr-2">
-                                                <i class="far fa-trash-alt mr-1"></i>
-                                                Delete
+                                            <button @click="deleteData(item.id)" class="btn btn-sm btn-danger rounded-right">
+                                                <i class="ti-trash"></i>
                                             </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- <div class="d-flex justify-content-between align-items-center mt-4 px-3">
+                            <small class="text-secondary">Showing {{ $angkatan->firstItem() }} to {{ $angkatan->lastItem() }} of {{ $angkatan->total() }} results.</small>
+                            {{ $angkatan->links() }}
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -63,6 +52,8 @@ export default {
     data() {
         return {
             angkatan: {},
+            options1: ["value1", "value2", "value3"],
+            result1: "",
         };
     },
     mounted() {

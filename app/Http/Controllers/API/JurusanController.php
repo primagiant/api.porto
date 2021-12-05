@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
+use App\Http\Resources\JurusanResource;
 use App\Models\Jurusan;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -12,7 +14,7 @@ class JurusanController extends Controller
 {
     public function index()
     {
-        $jurusan = Jurusan::all();
+        $jurusan = JurusanResource::collection(Jurusan::paginate(4));
         $response = [
             'message' => "All Data Jurusan",
             'data' => $jurusan,

@@ -1,9 +1,11 @@
 <template>
     <div>
-        <div class="page-header">
-            <div class="row">
-                <div class="col-sm-6">
-                    <h3 class="page-title">Dashboard</h3>
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="row">
+                    <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                        <h3 class="font-weight-bold">Dashboard</h3>
+                    </div>
                 </div>
             </div>
         </div>

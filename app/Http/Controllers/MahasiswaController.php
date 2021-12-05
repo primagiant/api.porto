@@ -20,35 +20,4 @@ class MahasiswaController extends Controller
             return view('mahasiswa.pages.dashboard');
         }
     }
-
-    public function create()
-    {
-        $fakultas = Fakultas::all();
-        return view('admin.forms.mahasiswa',compact('fakultas'));
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
-    }
 }

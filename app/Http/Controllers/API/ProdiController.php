@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-
+use App\Http\Resources\ProdiResource;
 use App\Models\Prodi;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ class ProdiController extends Controller
 {
     public function index()
     {
-        $prodi = Prodi::all();
+        $prodi = ProdiResource::collection(Prodi::paginate(4));
         $response = [
             'message' => "All Data Prodi",
             'data' => $prodi,

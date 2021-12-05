@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-
+use App\Http\Resources\FakultasResource;
 use App\Models\Fakultas;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ class FakultasController extends Controller
 {
     public function index()
     {
-        $fakultas = Fakultas::all();
+        $fakultas = FakultasResource::collection(Fakultas::paginate(4));
         $response = [
             'message' => "All Data Fakultas",
             'data' => $fakultas,

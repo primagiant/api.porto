@@ -29,4 +29,16 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     })->where('any', '.*');
 });
 
+Route::group(['middleware' => ['auth', 'role:pembimbingakademik']], function () {
+    Route::get('pembimbing-akademik/{any}', function () {
+        return view('pembimbingAkademik.app');
+    })->where('any', '.*');
+});
+
+Route::group(['middleware' => ['auth', 'role:pembimbingakademik']], function () {
+    Route::get('mahasiswa/{any}', function () {
+        return view('mahasiswa.app');
+    })->where('any', '.*');
+});
+
 require __DIR__ . '/auth.php';

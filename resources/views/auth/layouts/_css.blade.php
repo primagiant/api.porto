@@ -1,8 +1,5 @@
-<link rel="shortcut icon" href="{{ asset('assets\img\Logo.svg') }}" type="image/x-icon">
-
-<link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap.min.css">
-
-<link rel="stylesheet" href="{{ asset('') }}assets/plugins/fontawesome/css/fontawesome.min.css">
-<link rel="stylesheet" href="{{ asset('') }}assets/plugins/fontawesome/css/all.min.css">
-
-<link rel="stylesheet" href="{{ asset('') }}assets/css/style.css">
+<link rel="stylesheet" href="{{ asset('') }}/vendors/feather/feather.css">
+<link rel="stylesheet" href="{{ asset('') }}/vendors/ti-icons/css/themify-icons.css">
+<link rel="stylesheet" href="{{ asset('') }}/vendors/css/vendor.bundle.base.css">
+<link rel="stylesheet" href="{{ asset('') }}/css/vertical-layout-light/style.css">
+<link rel="shortcut icon" href="{{ asset('') }}/images/favicon.png" />

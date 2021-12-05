@@ -1,32 +1,28 @@
 <template>
     <div>
-        <div class="page-header">
-            <div class="row">
-                <div class="col-sm-6">
-                    <h3 class="page-title">Kegiatan</h3>
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <router-link :to="{ name: 'dashboard' }">Dashboard</router-link>
-                        </li>
-                        <li class="breadcrumb-item active">Kegiatan</li>
-                    </ul>
-                </div>
-            </div>
+        <div class="col-md-12 mb-3">
+            <h3>Kegiatan</h3>
         </div>
         <div class="col-md-12 rounded">
             <div class="card">
                 <div class="card-body">
-                    <ul v-for="(item, index) in kegiatan" :key="index" class="list-group list-group-flush">
+                    <ul class="list-group list-group-flush">
+                        <!-- loop 1 -->
                         <li class="list-group-item">
-                            <strong>{{ item.nama }}</strong>
+                            <strong>Testing</strong>
                             <ul class="list-group list-group-flush">
+                                <!-- loop 2 -->
                                 <li class="list-group-item d-flex justify-content-between">
-                                    <span></span>
-                                    <strong></strong>
+                                    <span>Nama Jenis Kategori</span>
+                                    <strong>Point Reverensi</strong>
                                 </li>
                             </ul>
                         </li>
                     </ul>
+                    <!-- <div class="d-flex justify-content-between align-items-center mt-4 px-3">
+                        <small class="text-secondary">Showing {{ $kegiatan->firstItem() }} to {{ $kegiatan->lastItem() }} of {{ $kegiatan->total() }} results.</small>
+                        {{ $kegiatan->links() }}
+                    </div> -->
                 </div>
             </div>
         </div>
