@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\JurusanResource;
+use App\Models\Fakultas;
 use App\Models\Jurusan;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -12,24 +13,23 @@ use Symfony\Component\HttpFoundation\Response;
 
 class JurusanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $jurusan = JurusanResource::collection(Jurusan::paginate(4));
-        $response = [
-            'message' => "All Data Jurusan",
-            'data' => $jurusan,
-        ];
-        return response()->json($response, Response::HTTP_OK);
+        if (isset($request->page)) {
+            $jurusan = JurusanResource::collection(Jurusan::paginate(4));
+            $response = [
+                'message' => "All Data Jurusan",
+                'data' => $jurusan,
+            ];
+            return response()->json($response, Response::HTTP_OK);
+        } else {
+            return JurusanResource::collection(Jurusan::all());
+        }
     }
 
-    public function byFakultas()
+    public function byFakultas($fakultas_id)
     {
-        $jurusan = JurusanResource::collection(Jurusan::paginate(4));
-        $response = [
-            'message' => "All Data Jurusan",
-            'data' => $jurusan,
-        ];
-        return response()->json($response, Response::HTTP_OK);
+        return JurusanResource::collection(Fakultas::find($fakultas_id)->jurusan);
     }
 
     public function store(Request $request)

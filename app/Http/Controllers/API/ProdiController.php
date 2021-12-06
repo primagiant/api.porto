@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProdiResource;
+use App\Models\Jurusan;
 use App\Models\Prodi;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -12,14 +13,23 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ProdiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $prodi = ProdiResource::collection(Prodi::paginate(4));
-        $response = [
-            'message' => "All Data Prodi",
-            'data' => $prodi,
-        ];
-        return response()->json($response, Response::HTTP_OK);
+        if (isset($request->page)) {
+            $prodi = ProdiResource::collection(Prodi::paginate(4));
+            $response = [
+                'message' => "All Data Prodi",
+                'data' => $prodi,
+            ];
+            return response()->json($response, Response::HTTP_OK);
+        } else {
+            return ProdiResource::collection(Prodi::all());
+        }
+    }
+
+    public function byJurusan($jurusan_id)
+    {
+        return ProdiResource::collection(Jurusan::find($jurusan_id)->prodi);
     }
 
     public function store(Request $request)

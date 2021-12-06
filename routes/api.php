@@ -24,7 +24,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('jurusan', JurusanController::class)->except(['create', 'edit']);
     Route::resource('prodi', ProdiController::class)->except(['create', 'edit']);
     Route::resource('angkatan', AngkatanController::class)->except(['create', 'edit']);
-    Route::get('fakultas/all', [FakultasController::class, 'all']);
-    Route::get('jurusan/{fakultas_id}', [JurusanController::class, 'byFakultas']);
-    Route::get('prodi/{jurusan_id}', [ProdiController::class, 'byJurusan']);
+    Route::get('fakultas/all', [FakultasController::class, 'allData']);
+    Route::get('jurusan/byFakultas/{fakultas_id}', [JurusanController::class, 'byFakultas']);
+    Route::get('prodi/byJurusan/{jurusan_id}', [ProdiController::class, 'byJurusan']);
 });

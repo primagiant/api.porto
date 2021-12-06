@@ -12,19 +12,18 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FakultasController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $fakultas = FakultasResource::collection(Fakultas::paginate(4));
-        $response = [
-            'message' => "All Data Fakultas",
-            'data' => $fakultas,
-        ];
-        return response()->json($response, Response::HTTP_OK);
-    }
-
-    public function all()
-    {
-        $fakultas = FakultasResource::collection(Fakultas::all());
+        if (isset($request->page)) {
+            $fakultas = FakultasResource::collection(Fakultas::paginate(4));
+            $response = [
+                'message' => "All Data Fakultas",
+                'data' => $fakultas,
+            ];
+            return response()->json($response, Response::HTTP_OK);
+        } else {
+            return FakultasResource::collection(Fakultas::all());
+        }
     }
 
     public function store(Request $request)
