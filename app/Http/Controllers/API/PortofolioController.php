@@ -7,15 +7,11 @@ use App\Http\Resources\PortofolioResource;
 use App\Models\Mahasiswa;
 use App\Models\Portofolio;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\QueryException;
-use Illuminate\Support\Facades\DB;
 
 class PortofolioController extends Controller
 {
@@ -29,7 +25,6 @@ class PortofolioController extends Controller
 
     public function store(Request $request)
     {
-        ddd($request);
         $validator = Validator::make($request->all(), [
             'kategori_kegiatan_id' => ['required'],
             'jenis_kegiatan_id' => ['required'],
@@ -46,8 +41,8 @@ class PortofolioController extends Controller
         try {
             $portofolio = Portofolio::create([
                 'mahasiswa_id' => User::find(Auth::user()->id)->mahasiswa->id,
-                'kategori_kegiatan_id' => $request->kategori_kegiatan,
-                'jenis_kegiatan_id' => $request->jenis_kegiatan,
+                'kategori_kegiatan_id' => $request->kategori_kegiatan_id,
+                'jenis_kegiatan_id' => $request->jenis_kegiatan_id,
                 'nama_kegiatan' => $request->nama_kegiatan,
                 'penyelenggara' => $request->penyelenggara,
                 'tahun' => $request->tahun,
@@ -64,6 +59,23 @@ class PortofolioController extends Controller
                 'data' => $result,
             ];
             return response()->json($response, Response::HTTP_CREATED);
+        } catch (QueryException $e) {
+            return response()->json([
+                'message' => "Failed " . $e->errorInfo,
+            ]);
+        }
+    }
+
+    public function destroy($id)
+    {
+        $portofolio = Portofolio::findOrFail($id);
+        try {
+            unlink('storage/' . $portofolio->bukti);
+            $portofolio->delete();
+            $response = [
+                'message' => "Portofolio Deleted",
+            ];
+            return response()->json($response, Response::HTTP_OK);
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo,
