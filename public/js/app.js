@@ -5657,7 +5657,7 @@ __webpack_require__.r(__webpack_exports__);
       fakultas: {},
       datas: {
         nama_jurusan: null,
-        nama_fakultas: null,
+        fakultas_id: null,
         deskripsi: null
       },
       errors: {},
@@ -5674,7 +5674,8 @@ __webpack_require__.r(__webpack_exports__);
     if (this.$route.params.id) {
       this.axios.get("/api/jurusan/" + this.$route.params.id).then(function (response) {
         _this.datas.nama_jurusan = response.data.data.nama_jurusan;
-        _this.datas.nama_fakultas = response.data.data.nama_fakultas;
+        _this.datas.fakultas_id = response.data.data.fakultas_id;
+        console.log(_this.datas.fakultas_id);
         _this.datas.deskripsi = response.data.data.deskripsi;
       });
     }
@@ -5683,6 +5684,7 @@ __webpack_require__.r(__webpack_exports__);
     saveData: function saveData(e) {
       var _this2 = this;
 
+      console.log(this.datas.fakultas_id);
       e.preventDefault();
 
       if (this.$route.params.id) {
@@ -46420,13 +46422,19 @@ var render = function () {
                 }),
                 _vm._v(" "),
                 _vm.errors.nama_jurusan
-                  ? _c("div", { staticClass: "invalid-feedback" })
+                  ? _c("div", { staticClass: "invalid-feedback" }, [
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.errors.nama_jurusan[0]) +
+                          "\n            "
+                      ),
+                    ])
                   : _vm._e(),
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "nama_fakultas" } }, [
-                  _vm._v("Nama Fakultas"),
+                _c("label", { attrs: { for: "fakultas_id" } }, [
+                  _vm._v("Fakultas"),
                 ]),
                 _vm._v(" "),
                 _c(
@@ -46436,8 +46444,8 @@ var render = function () {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.fakultas,
-                        expression: "fakultas",
+                        value: _vm.datas.fakultas_id,
+                        expression: "datas.fakultas_id",
                       },
                     ],
                     staticClass: "form-control",
@@ -46451,18 +46459,20 @@ var render = function () {
                             var val = "_value" in o ? o._value : o.value
                             return val
                           })
-                        _vm.fakultas = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
+                        _vm.$set(
+                          _vm.datas,
+                          "fakultas_id",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
                       },
                     },
                   },
                   [
-                    _c(
-                      "option",
-                      { attrs: { selected: "", disabled: "", value: "" } },
-                      [_vm._v("Select Fakultas")]
-                    ),
+                    _c("option", { attrs: { disabled: "", value: "" } }, [
+                      _vm._v("Select Fakultas"),
+                    ]),
                     _vm._v(" "),
                     _vm._l(_vm.fakultas.data, function (item) {
                       return _c(
@@ -46475,8 +46485,14 @@ var render = function () {
                   2
                 ),
                 _vm._v(" "),
-                _vm.errors.nama_fakultas
-                  ? _c("div", { staticClass: "invalid-feedback" })
+                _vm.errors.fakultas_id
+                  ? _c("div", { staticClass: "invalid-feedback" }, [
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.errors.fakultas_id[0]) +
+                          "\n            "
+                      ),
+                    ])
                   : _vm._e(),
               ]),
               _vm._v(" "),
@@ -46508,7 +46524,15 @@ var render = function () {
                   },
                 }),
                 _vm._v(" "),
-                _c("div", { staticClass: "invalid-feedback" }),
+                _vm.errors.deskripsi
+                  ? _c("div", { staticClass: "invalid-feedback" }, [
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.errors.deskripsi[0]) +
+                          "\n            "
+                      ),
+                    ])
+                  : _vm._e(),
               ]),
               _vm._v(" "),
               _c(

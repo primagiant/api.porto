@@ -12,26 +12,26 @@
               <label for="nama_jurusan">Nama Jurusan</label>
               <input v-model="datas.nama_jurusan" type="text" autofocus class="form-control" :class="{ 'is-invalid': invalid }" name="nama_jurusan" placeholder="Nama Jurusan" />
               <div v-if="errors.nama_jurusan" class="invalid-feedback">
-                <!-- {{ errors.nama_jurusan[0] }} -->
+                {{ errors.nama_jurusan[0] }}
               </div>
             </div>
 
             <div class="form-group">
-              <label for="nama_fakultas">Nama Fakultas</label>
-              <select v-model="fakultas" class="form-control">
-                <option selected disabled value="">Select Fakultas</option>
+              <label for="fakultas_id">Fakultas</label>
+              <select v-model="datas.fakultas_id" class="form-control">
+                <option disabled value="">Select Fakultas</option>
                 <option v-for="item in fakultas.data" :key="item.id" :value="item.id">{{ item.nama_fakultas }}</option>
               </select>
-              <div v-if="errors.nama_fakultas" class="invalid-feedback">
-                <!-- {{ errors.nama_fakultas[0] }} -->
+              <div v-if="errors.fakultas_id" class="invalid-feedback">
+                {{ errors.fakultas_id[0] }}
               </div>
             </div>
 
             <div class="form-group">
               <label for="deskripsi">Deskripsi</label>
               <textarea v-model="datas.deskripsi" class="form-control" :class="{ 'is-invalid': invalid }" name="deskripsi" rows="6"></textarea>
-              <div class="invalid-feedback">
-                <!-- {{ errors.deskripsi[0] }} -->
+              <div v-if="errors.deskripsi" class="invalid-feedback">
+                {{ errors.deskripsi[0] }}
               </div>
             </div>
             <button type="submit" class="btn btn-primary mr-2">Simpan</button>
@@ -50,7 +50,7 @@ export default {
       fakultas: {},
       datas: {
         nama_jurusan: null,
-        nama_fakultas: null,
+        fakultas_id: null,
         deskripsi: null,
       },
       errors: {},
@@ -64,13 +64,15 @@ export default {
     if (this.$route.params.id) {
       this.axios.get("/api/jurusan/" + this.$route.params.id).then((response) => {
         this.datas.nama_jurusan = response.data.data.nama_jurusan;
-        this.datas.nama_fakultas = response.data.data.nama_fakultas;
+        this.datas.fakultas_id = response.data.data.fakultas_id;
+        console.log(this.datas.fakultas_id);
         this.datas.deskripsi = response.data.data.deskripsi;
       });
     }
   },
   methods: {
     saveData: function (e) {
+      console.log(this.datas.fakultas_id);
       e.preventDefault();
       if (this.$route.params.id) {
         axios

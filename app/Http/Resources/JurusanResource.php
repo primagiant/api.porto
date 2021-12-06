@@ -16,6 +16,7 @@ class JurusanResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'fakultas_id' => $this->fakultas_id,
             'fakultas' => $this->fakultas->nama_fakultas,
             'nama_jurusan' => $this->nama_jurusan,
             'deskripsi' => $this->deskripsi,
