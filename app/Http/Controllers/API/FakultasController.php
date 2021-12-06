@@ -22,6 +22,11 @@ class FakultasController extends Controller
         return response()->json($response, Response::HTTP_OK);
     }
 
+    public function all()
+    {
+        $fakultas = FakultasResource::collection(Fakultas::all());
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [

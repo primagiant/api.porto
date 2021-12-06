@@ -22,6 +22,16 @@ class JurusanController extends Controller
         return response()->json($response, Response::HTTP_OK);
     }
 
+    public function byFakultas()
+    {
+        $jurusan = JurusanResource::collection(Jurusan::paginate(4));
+        $response = [
+            'message' => "All Data Jurusan",
+            'data' => $jurusan,
+        ];
+        return response()->json($response, Response::HTTP_OK);
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
