@@ -32,13 +32,10 @@ class MahasiswaController extends Controller
                         ->get()
                 );
             } else {
-                $mhs = PembimbingAkademik::find(Auth::user()->pa->id)->mahasiswa;
+                return MahasiswaResource::collection(
+                    PembimbingAkademik::find(Auth::user()->pa->id)->mahasiswas
+                );
             }
-            $response = [
-                'message' => "All Data Angkatan",
-                'data' => $mhs,
-            ];
-            return response()->json($response, Response::HTTP_OK);
         }
     }
 
