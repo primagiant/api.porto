@@ -9,7 +9,6 @@ class Mahasiswa extends Model
 {
     use HasFactory;
     protected $table = "tb_mahasiswa";
-    protected $primary = 'nim';
     protected $fillable = [
         'nim',
         'nama',
@@ -24,7 +23,7 @@ class Mahasiswa extends Model
 
     public function portofolio()
     {
-        return $this->hasMany(Portofolio::class, 'mahasiswa_nim', 'nim');
+        return $this->hasMany(Portofolio::class, 'mahasiswa_id', 'id');
     }
 
     public function account()

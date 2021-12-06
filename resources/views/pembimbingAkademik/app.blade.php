@@ -7,14 +7,14 @@
     <meta name="csrf-token" value="{{ csrf_token() }}">
 
     <title>{{ config('app.name') }}</title>
-    @include('pembimbingAkadmik.layouts._css')
+    @include('pembimbingAkademik.layouts._css')
 </head>
 
 <body>
-    <div id="pembimbingAkadmik">
+    <div id="pembimbingAkademik">
     </div>
 
-    @include('pembimbingAkadmik.layouts._js')
+    @include('pembimbingAkademik.layouts._js')
 </body>
 
 </html>

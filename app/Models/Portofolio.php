@@ -10,7 +10,7 @@ class Portofolio extends Model
     use HasFactory;
     protected $table = "tb_portofolio";
     protected $fillable = [
-        'mahasiswa_nim',
+        'mahasiswa_id',
         'kategori_kegiatan_id',
         'jenis_kegiatan_id',
         'valid_point',
@@ -23,7 +23,7 @@ class Portofolio extends Model
 
     public function mahasiswa()
     {
-        return $this->belongsTo(Mahasiswa::class, 'mahasiswa_nim', 'nim');
+        return $this->belongsTo(Mahasiswa::class, 'mahasiswa_id', 'id');
     }
 
     public function kategori_kegiatan()

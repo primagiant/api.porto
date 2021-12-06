@@ -50,7 +50,7 @@ class JurusanController extends Controller
 
     public function show($id)
     {
-        $jurusan = Jurusan::findOrFail($id);
+        $jurusan = new JurusanResource(Jurusan::findOrFail($id));
         $response = [
             'message' => "Jurusan with id " . $id,
             'data' => $jurusan,

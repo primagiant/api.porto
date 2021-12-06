@@ -15,7 +15,7 @@ class CreateTbPortofolio extends Migration
     {
         Schema::create('tb_portofolio', function (Blueprint $table) {
             $table->id();
-            $table->string('mahasiswa_nim', 10);
+            $table->unsignedBigInteger('mahasiswa_id');
             $table->unsignedBigInteger('kategori_kegiatan_id');
             $table->unsignedBigInteger('jenis_kegiatan_id');
             $table->integer('valid_point');
@@ -26,6 +26,8 @@ class CreateTbPortofolio extends Migration
             $table->boolean('status');
             $table->timestamps();
 
+            $table->foreign('mahasiswa_id')->references('id')->on('tb_mahasiswa')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('kategori_kegiatan_id')->references('id')->on('tb_kategori_kegiatan')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('jenis_kegiatan_id')->references('id')->on('tb_jenis_kegiatan')

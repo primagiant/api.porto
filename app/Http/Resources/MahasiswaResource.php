@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PembimbingAkademikResource extends JsonResource
+class MahasiswaResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,14 +15,15 @@ class PembimbingAkademikResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
+            'nim' => $this->nim,
             'user_id' => $this->user_id,
             'nama' => $this->nama,
+            'pembimbing_akademik' => $this->pembimbing_akademik->nama,
+            'angkatan' => $this->angkatan->tahun,
             'fakultas' => $this->fakultas->nama_fakultas,
             'jurusan' => $this->jurusan->nama_jurusan,
             'prodi' => $this->prodi->nama_prodi,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'status' => $this->status,
         ];
     }
 }

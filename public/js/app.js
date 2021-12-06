@@ -5477,7 +5477,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5485,12 +5484,17 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    var _this = this;
+    this.getResults();
+  },
+  methods: {
+    getResults: function getResults() {
+      var _this = this;
 
-    axios.get("/api/kegiatan").then(function (response) {
-      _this.kegiatan = response.data.data;
-      console.log(_this.kegiatan);
-    });
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get("/api/kegiatan?page=" + page).then(function (response) {
+        _this.kegiatan = response.data;
+      });
+    }
   }
 });
 
@@ -6201,38 +6205,52 @@ window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js
 vue__WEBPACK_IMPORTED_MODULE_10__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_11__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_10__["default"].use((vue_sweetalert2__WEBPACK_IMPORTED_MODULE_8___default()));
 vue__WEBPACK_IMPORTED_MODULE_10__["default"].use(vue_axios__WEBPACK_IMPORTED_MODULE_3__["default"], (axios__WEBPACK_IMPORTED_MODULE_4___default()));
-vue__WEBPACK_IMPORTED_MODULE_10__["default"].component('pagination', __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js")); // Admin
+vue__WEBPACK_IMPORTED_MODULE_10__["default"].component('pagination', __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js"));
+var admin = document.getElementById('admin');
+var pembimbingAkademik = document.getElementById('pembimbingAkademik');
 
-var AdminRouter = new vue_router__WEBPACK_IMPORTED_MODULE_11__["default"]({
-  mode: 'history',
-  routes: _routes_admin__WEBPACK_IMPORTED_MODULE_5__.AdminRoutes
-});
-var admin = new vue__WEBPACK_IMPORTED_MODULE_10__["default"]({
-  el: '#admin',
-  router: AdminRouter,
-  render: function render(h) {
-    return h(_admin_App_vue__WEBPACK_IMPORTED_MODULE_0__["default"]);
-  }
-}); // // Pembimbing Akademik
-// const PembimbingAkademikRouter = new VueRouter({
-//     mode: 'history',
-//     routes: PembimbingAkademikRoutes
-// });
-// const pembimbingAkademik = new Vue({
-//      el: '#pembimbingAkademik',
-//      router: PembimbingAkademikRouter,
-//      render: h => h(PembimbingAkademik)
-// });
-// // Mahasiswa
-// const MahasiswaRouter = new VueRouter({
-//     mode: 'history',
-//     routes: MahasiswaRoutes
-// });
-// const mahasiswa = new Vue({
-//      el: '#mahasiswa',
-//      router: MahasiswaRouter,
-//      render: h => h(Mahasiswa)
-// });
+if (admin !== null) {
+  // Admin
+  var AdminRouter = new vue_router__WEBPACK_IMPORTED_MODULE_11__["default"]({
+    mode: 'history',
+    routes: _routes_admin__WEBPACK_IMPORTED_MODULE_5__.AdminRoutes
+  });
+
+  var _admin = new vue__WEBPACK_IMPORTED_MODULE_10__["default"]({
+    el: '#admin',
+    router: AdminRouter,
+    render: function render(h) {
+      return h(_admin_App_vue__WEBPACK_IMPORTED_MODULE_0__["default"]);
+    }
+  });
+} else if (pembimbingAkademik !== null) {
+  // Pembimbing Akademik
+  var PembimbingAkademikRouter = new vue_router__WEBPACK_IMPORTED_MODULE_11__["default"]({
+    mode: 'history',
+    routes: _routes_pembimbingAkademik__WEBPACK_IMPORTED_MODULE_6__.PembimbingAkademikRoutes
+  });
+
+  var _pembimbingAkademik = new vue__WEBPACK_IMPORTED_MODULE_10__["default"]({
+    el: '#pembimbingAkademik',
+    router: PembimbingAkademikRouter,
+    render: function render(h) {
+      return h(_pembimbingAkademik_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"]);
+    }
+  });
+} else {
+  // Mahasiswa
+  var MahasiswaRouter = new vue_router__WEBPACK_IMPORTED_MODULE_11__["default"]({
+    mode: 'history',
+    routes: _routes_mahasiswa__WEBPACK_IMPORTED_MODULE_7__.MahasiswaRoutes
+  });
+  var mahasiswa = new vue__WEBPACK_IMPORTED_MODULE_10__["default"]({
+    el: '#mahasiswa',
+    router: MahasiswaRouter,
+    render: function render(h) {
+      return h(_Mahasiswa_App_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
+    }
+  });
+}
 
 /***/ }),
 
@@ -6379,7 +6397,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "PembimbingAkademikRoutes": () => (/* binding */ PembimbingAkademikRoutes)
 /* harmony export */ });
-var PembimbingAkademikRoutes = [];
+/* harmony import */ var _pembimbingAkademik_pages_Dashboard_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../pembimbingAkademik/pages/Dashboard.vue */ "./resources/js/pembimbingAkademik/pages/Dashboard.vue");
+
+var PembimbingAkademikRoutes = [{
+  name: 'dashboard',
+  path: '/pembimbing-akademik/dashboard',
+  component: _pembimbingAkademik_pages_Dashboard_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+}];
 
 /***/ }),
 
@@ -44344,6 +44368,43 @@ component.options.__file = "resources/js/pembimbingAkademik/components/Sidebar.v
 
 /***/ }),
 
+/***/ "./resources/js/pembimbingAkademik/pages/Dashboard.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/pembimbingAkademik/pages/Dashboard.vue ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Dashboard_vue_vue_type_template_id_a3870a86___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=template&id=a3870a86& */ "./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=template&id=a3870a86&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _Dashboard_vue_vue_type_template_id_a3870a86___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Dashboard_vue_vue_type_template_id_a3870a86___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pembimbingAkademik/pages/Dashboard.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/Mahasiswa/App.vue?vue&type=script&lang=js&":
 /*!*****************************************************************!*\
   !*** ./resources/js/Mahasiswa/App.vue?vue&type=script&lang=js& ***!
@@ -44889,6 +44950,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Sidebar_vue_vue_type_template_id_746a721f___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Sidebar_vue_vue_type_template_id_746a721f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Sidebar.vue?vue&type=template&id=746a721f& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/components/Sidebar.vue?vue&type=template&id=746a721f&");
+
+
+/***/ }),
+
+/***/ "./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=template&id=a3870a86&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=template&id=a3870a86& ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_a3870a86___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_a3870a86___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_a3870a86___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Dashboard.vue?vue&type=template&id=a3870a86& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=template&id=a3870a86&");
 
 
 /***/ }),
@@ -45869,16 +45947,8 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-12 grid-margin" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-12 col-xl-8 mb-4 mb-xl-0" }, [
-              _c("h3", { staticClass: "font-weight-bold" }, [
-                _vm._v("Dashboard"),
-              ]),
-            ]),
-          ]),
-        ]),
+      _c("div", { staticClass: "col-md-12 mb-3" }, [
+        _c("h3", [_vm._v("Dashboard")]),
       ]),
     ])
   },
@@ -45914,7 +45984,7 @@ var render = function () {
           _c(
             "ul",
             { staticClass: "list-group list-group-flush" },
-            _vm._l(_vm.kegiatan, function (kategori_kegiatan, index) {
+            _vm._l(_vm.kegiatan.data, function (kategori_kegiatan, index) {
               return _c(
                 "li",
                 { key: index, staticClass: "list-group-item" },
@@ -45955,6 +46025,18 @@ var render = function () {
             }),
             0
           ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "mt-3" },
+            [
+              _c("pagination", {
+                attrs: { data: _vm.kegiatan, align: "center" },
+                on: { "pagination-change-page": _vm.getResults },
+              }),
+            ],
+            1
+          ),
         ]),
       ]),
     ]),
@@ -45992,9 +46074,104 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("Mahasiswa")])
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("div", { staticClass: "col-md-12 mb-3" }, [
+        _c("h3", [_vm._v("Mahasiswa")]),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-12 grid-margin stretch-card" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "a",
+              { staticClass: "btn btn-primary mb-3", attrs: { href: "" } },
+              [
+                _c("i", { staticClass: "icon-plus mr-2" }),
+                _vm._v("\n                    Tambah Data\n                "),
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "table-responsive" }, [
+              _c("table", { staticClass: "table table-hover" }, [
+                _c("thead", [
+                  _c("tr", [
+                    _c("th", [_vm._v("Nama")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("NIM")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("Pembimbing Akademik")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("Fakultas")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("Jurusan")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("Program Studi")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("Action")]),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("tbody", [
+                  _c("tr", [
+                    _c("td", [_vm._v("Jacob")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("20202020")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("Peembimbing Akademik")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("Teknik dan Kejuruan")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("Teknik Informatik")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("Ilmu Komputer")]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "form",
+                        {
+                          staticClass: "d-inline btn-group",
+                          attrs: { action: "", method: "POST" },
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              staticClass:
+                                "btn btn-sm btn-warning rounded-left",
+                              attrs: { href: "" },
+                            },
+                            [_c("i", { staticClass: "ti-pencil-alt" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn btn-sm btn-danger rounded-right show-delete-confirm",
+                              attrs: { type: "submit" },
+                            },
+                            [_c("i", { staticClass: "ti-trash" })]
+                          ),
+                        ]
+                      ),
+                    ]),
+                  ]),
+                ]),
+              ]),
+            ]),
+          ]),
+        ]),
+      ]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -46017,9 +46194,96 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("Pembimbing Akademik")])
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("div", { staticClass: "col-md-12 mb-3" }, [
+        _c("h3", [_vm._v("Pembimbing Akademik")]),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-12 grid-margin stretch-card" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c("button", { staticClass: "btn btn-primary mb-3" }, [
+              _c("i", { staticClass: "icon-plus mr-2" }),
+              _vm._v("\n                    Tambah Data\n                "),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "table-responsive" }, [
+              _c("table", { staticClass: "table table-hover" }, [
+                _c("thead", [
+                  _c("tr", [
+                    _c("th", [_vm._v("Nama")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("Fakultas")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("Fakultas")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("Jurusan")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("Program Studi")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("Action")]),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("tbody", [
+                  _c("tr", [
+                    _c("td", [_vm._v("Jacob")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("Teknik Ternak Lele")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("Teknik dan Kejuruan")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("Teknik Informatika")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("Ilmu Komputer")]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "form",
+                        {
+                          staticClass: "d-inline btn-group",
+                          attrs: { action: "", method: "POST" },
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              staticClass:
+                                "btn btn-sm btn-warning rounded-left",
+                              attrs: { href: "" },
+                            },
+                            [_c("i", { staticClass: "ti-pencil-alt" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn btn-sm btn-danger rounded-right show-delete-confirm",
+                              attrs: { type: "submit" },
+                            },
+                            [_c("i", { staticClass: "ti-trash" })]
+                          ),
+                        ]
+                      ),
+                    ]),
+                  ]),
+                ]),
+              ]),
+            ]),
+          ]),
+        ]),
+      ]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -47014,132 +47278,41 @@ var render = function () {
           ],
           1
         ),
-        _vm._v(" "),
-        _c(
-          "li",
-          { staticClass: "nav-item" },
-          [
-            _c(
-              "router-link",
-              {
-                staticClass: "nav-link",
-                attrs: { to: { name: "pembimbingakademik" } },
-              },
-              [
-                _c("i", { staticClass: "ti-id-badge menu-icon" }),
-                _vm._v(" "),
-                _c("span", { staticClass: "menu-title" }, [
-                  _vm._v(
-                    "\n                    Pembimbing\n                    "
-                  ),
-                  _c("br"),
-                  _vm._v("\n                    Akademik\n                "),
-                ]),
-              ]
-            ),
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "collapse", attrs: { id: "ui-basic" } }, [
-            _c("ul", { staticClass: "nav flex-column sub-menu" }, [
-              _c(
-                "li",
-                { staticClass: "nav-item" },
-                [
-                  _c(
-                    "router-link",
-                    {
-                      staticClass: "nav-link",
-                      attrs: { to: { name: "fakultas" } },
-                    },
-                    [_vm._v("Fakultas")]
-                  ),
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                { staticClass: "nav-item" },
-                [
-                  _c(
-                    "router-link",
-                    {
-                      staticClass: "nav-link",
-                      attrs: { to: { name: "jurusan" } },
-                    },
-                    [_vm._v("Jurusan")]
-                  ),
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                { staticClass: "nav-item" },
-                [
-                  _c(
-                    "router-link",
-                    {
-                      staticClass: "nav-link",
-                      attrs: { to: { name: "prodi" } },
-                    },
-                    [_vm._v("Program Studi")]
-                  ),
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                { staticClass: "nav-item" },
-                [
-                  _c(
-                    "router-link",
-                    {
-                      staticClass: "nav-link",
-                      attrs: { to: { name: "angkatan" } },
-                    },
-                    [_vm._v("Angkatan")]
-                  ),
-                ],
-                1
-              ),
-            ]),
-          ]),
-        ]),
       ]),
     ]
   )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=template&id=a3870a86&":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=template&id=a3870a86& ***!
+  \***********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
 }
 var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "nav-link",
-        attrs: {
-          "data-toggle": "collapse",
-          href: "#ui-basic",
-          "aria-expanded": "false",
-          "aria-controls": "ui-basic",
-        },
-      },
-      [
-        _c("i", { staticClass: "ti-package menu-icon" }),
-        _vm._v(" "),
-        _c("span", { staticClass: "menu-title" }, [_vm._v("Master Data")]),
-        _vm._v(" "),
-        _c("i", { staticClass: "menu-arrow" }),
-      ]
-    )
+    return _c("div", [_c("h3", [_vm._v("Dashboard")])])
   },
 ]
 render._withStripped = true

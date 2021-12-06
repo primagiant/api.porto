@@ -14,7 +14,7 @@ class AngkatanController extends Controller
 {
     public function index()
     {
-        return AngkatanResource::collection(Angkatan::paginate(3));
+        return AngkatanResource::collection(Angkatan::orderBy('tahun')->paginate(3));
     }
 
     public function store(Request $request)

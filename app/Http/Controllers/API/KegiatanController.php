@@ -11,14 +11,9 @@ class KegiatanController extends Controller
 {
     public function index()
     {
-        $kegiatan = KegiatanResource::collection(
+        return KegiatanResource::collection(
             KategoriKegiatan::where('nama', 'like', '%' . request('keyword') . "%")->paginate(5)
         );
-        $response = [
-            'message' => "All Data Kegiatan",
-            'data' => $kegiatan,
-        ];
-        return response()->json($response, Response::HTTP_OK);
     }
 
     public function show($id)

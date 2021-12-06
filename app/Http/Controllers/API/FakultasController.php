@@ -49,7 +49,7 @@ class FakultasController extends Controller
 
     public function show($id)
     {
-        $fakultas = Fakultas::findOrFail($id);
+        $fakultas = new FakultasResource(Fakultas::findOrFail($id));
         $response = [
             'message' => "Fakultas with id " . $id,
             'data' => $fakultas,

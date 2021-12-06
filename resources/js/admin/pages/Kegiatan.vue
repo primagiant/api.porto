@@ -8,7 +8,7 @@
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
                         <!-- loop 1 -->
-                        <li v-for="(kategori_kegiatan, index) in kegiatan" :key="index" class="list-group-item">
+                        <li v-for="(kategori_kegiatan, index) in kegiatan.data" :key="index" class="list-group-item">
                             <strong>{{ kategori_kegiatan.nama }}</strong>
                             <!-- loop 2 -->
                             <ul v-for="(jenis_kegiatan, index) in kategori_kegiatan.jenis_kegiatan" :key="index" class="list-group list-group-flush">
@@ -19,10 +19,9 @@
                             </ul>
                         </li>
                     </ul>
-                    <!-- <div class="d-flex justify-content-between align-items-center mt-4 px-3">
-                        <small class="text-secondary">Showing {{ $kegiatan->firstItem() }} to {{ $kegiatan->lastItem() }} of {{ $kegiatan->total() }} results.</small>
-                        {{ $kegiatan->links() }}
-                    </div> -->
+                    <div class="mt-3">
+                        <pagination :data="kegiatan" @pagination-change-page="getResults" align="center"></pagination>
+                    </div>
                 </div>
             </div>
         </div>
@@ -37,10 +36,14 @@ export default {
         };
     },
     mounted() {
-        axios.get("/api/kegiatan").then((response) => {
-            this.kegiatan = response.data.data;
-            console.log(this.kegiatan);
-        });
+        this.getResults();
+    },
+    methods: {
+        getResults: function (page = 1) {
+            axios.get("/api/kegiatan?page=" + page).then((response) => {
+                this.kegiatan = response.data;
+            });
+        },
     },
 };
 </script>

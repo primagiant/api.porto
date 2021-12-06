@@ -7,10 +7,11 @@ use App\Http\Resources\PembimbingAkademikResource;
 use App\Models\PembimbingAkademik;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Validation\Rules;
 
@@ -43,6 +44,7 @@ class PembimbingAkademikController extends Controller
             return response()->json($validator->errors(), Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
+        DB::beginTransaction();
         try {
             $user = User::create([
                 'name' => $request->name,
@@ -60,6 +62,8 @@ class PembimbingAkademikController extends Controller
                 'prodi_id' => $request->prodi_id,
             ]);
 
+            DB::commit();
+
             $result = new PembimbingAkademikResource(
                 PembimbingAkademik::findOrFail($pa->id)
             );
@@ -70,10 +74,21 @@ class PembimbingAkademikController extends Controller
             ];
             return response()->json($response, Response::HTTP_CREATED);
         } catch (QueryException $e) {
+            DB::rollBack();
             return response()->json([
                 'message' => "Failed " . $e->errorInfo,
             ]);
         }
+    }
+
+    public function show($id)
+    {
+        $pembimbingAkademik = new PembimbingAkademikResource(PembimbingAkademik::findOrFail($id));
+        $response = [
+            'message' => "Pembimbing Akademik with id " . $id,
+            'data' => $pembimbingAkademik,
+        ];
+        return response()->json($response, Response::HTTP_OK);
     }
 
     public function destroy($id)

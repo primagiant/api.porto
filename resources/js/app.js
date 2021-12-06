@@ -24,39 +24,48 @@ Vue.use(VueAxios, axios);
 
 Vue.component('pagination', require('laravel-vue-pagination'));
 
-// Admin
-const AdminRouter = new VueRouter({
-    mode: 'history',
-    routes: AdminRoutes
-});
+var admin = document.getElementById('admin');
+var pembimbingAkademik = document.getElementById('pembimbingAkademik');
 
-const admin = new Vue({
-    el: '#admin',
-    router: AdminRouter,
-    render: h => h(Admin)
-});
+if (admin !== null) {
+    // Admin
+    const AdminRouter = new VueRouter({
+        mode: 'history',
+        routes: AdminRoutes
+    });
+    
+    const admin = new Vue({
+        el: '#admin',
+        router: AdminRouter,
+        render: h => h(Admin)
+    });
+} else if(pembimbingAkademik !== null) {
+    // Pembimbing Akademik
+    const PembimbingAkademikRouter = new VueRouter({
+        mode: 'history',
+        routes: PembimbingAkademikRoutes
+    });
+    
+    const pembimbingAkademik = new Vue({
+         el: '#pembimbingAkademik',
+         router: PembimbingAkademikRouter,
+         render: h => h(PembimbingAkademik)
+    });
+} else {
+    // Mahasiswa
+    const MahasiswaRouter = new VueRouter({
+        mode: 'history',
+        routes: MahasiswaRoutes
+    });
+    
+    const mahasiswa = new Vue({
+         el: '#mahasiswa',
+         router: MahasiswaRouter,
+         render: h => h(Mahasiswa)
+    });
+}
 
-// // Pembimbing Akademik
-// const PembimbingAkademikRouter = new VueRouter({
-//     mode: 'history',
-//     routes: PembimbingAkademikRoutes
-// });
 
-// const pembimbingAkademik = new Vue({
-//      el: '#pembimbingAkademik',
-//      router: PembimbingAkademikRouter,
-//      render: h => h(PembimbingAkademik)
-// });
 
-// // Mahasiswa
-// const MahasiswaRouter = new VueRouter({
-//     mode: 'history',
-//     routes: MahasiswaRoutes
-// });
 
-// const mahasiswa = new Vue({
-//      el: '#mahasiswa',
-//      router: MahasiswaRouter,
-//      render: h => h(Mahasiswa)
-// });
  

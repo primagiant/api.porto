@@ -51,7 +51,7 @@ class ProdiController extends Controller
 
     public function show($id)
     {
-        $prodi = Prodi::findOrFail($id);
+        $prodi = new ProdiResource(Prodi::findOrFail($id));
         $response = [
             'message' => "Prodi with id " . $id,
             'data' => $prodi,

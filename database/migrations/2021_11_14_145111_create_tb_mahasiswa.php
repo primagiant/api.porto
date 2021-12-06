@@ -14,7 +14,8 @@ class CreateTbMahasiswa extends Migration
     public function up()
     {
         Schema::create('tb_mahasiswa', function (Blueprint $table) {
-            $table->string('nim', 10)->primary()->unique();
+            $table->id();
+            $table->string('nim', 10)->unique();
             $table->string('nama', 191);
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('pembimbing_akademik_id')->nullable();
