@@ -19,14 +19,9 @@ class PembimbingAkademikController extends Controller
 {
     public function index()
     {
-        $pa = PembimbingAkademikResource::collection(
+        return PembimbingAkademikResource::collection(
             PembimbingAkademik::paginate(4)
         );
-        $response = [
-            'message' => "All Data Kegiatan",
-            'data' => $pa,
-        ];
-        return response()->json($response, Response::HTTP_OK);
     }
 
     public function store(Request $request)

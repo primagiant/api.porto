@@ -23,7 +23,7 @@ class MahasiswaController extends Controller
     {
         if (Auth::user()->hasRole('admin')) {
             return MahasiswaResource::collection(Mahasiswa::orderBy('nim')->paginate(4));
-        } else if (Auth::user()->hasRole('pa')) {
+        } else if (Auth::user()->hasRole('pembimbingakademik')) {
             if (request('keyword') != null) {
                 return MahasiswaResource::collection(
                     Mahasiswa::where('pa_id', '=', Auth::user()->pa->id)

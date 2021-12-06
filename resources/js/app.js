@@ -18,7 +18,6 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.all';
 
 import Vue from 'vue';
-Vue.component('select2', require('./components/Select2.vue').default);
 
 Vue.use(VueRouter);
 Vue.use(VueSweetalert2);

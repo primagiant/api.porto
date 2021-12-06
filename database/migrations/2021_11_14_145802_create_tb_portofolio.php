@@ -23,7 +23,7 @@ class CreateTbPortofolio extends Migration
             $table->string('penyelenggara', 191);
             $table->string('tahun', 4);
             $table->string('bukti', 255);
-            $table->boolean('status');
+            $table->boolean('status')->default(0);
             $table->timestamps();
 
             $table->foreign('mahasiswa_id')->references('id')->on('tb_mahasiswa')

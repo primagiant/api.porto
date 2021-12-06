@@ -28,7 +28,7 @@ class Mahasiswa extends Model
 
     public function account()
     {
-        return $this->hasOne(User::class, 'user_id', 'id');
+        return $this->hasOne(User::class);
     }
 
     public function pembimbing_akademik()
