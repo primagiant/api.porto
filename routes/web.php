@@ -35,7 +35,7 @@ Route::group(['middleware' => ['auth', 'role:pembimbingakademik']], function () 
     })->where('any', '.*');
 });
 
-Route::group(['middleware' => ['auth', 'role:pembimbingakademik']], function () {
+Route::group(['middleware' => ['auth', 'role:mahasiswa']], function () {
     Route::get('mahasiswa/{any}', function () {
         return view('mahasiswa.app');
     })->where('any', '.*');

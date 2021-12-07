@@ -97,20 +97,24 @@ class MahasiswaController extends Controller
         }
     }
 
+    public function show($id)
+    {
+    }
+
     public function destroy($id)
     {
         $mhs = Mahasiswa::findOrFail($id);
-        // try {
-        User::destroy($mhs->user_id);
-        $mhs->delete();
-        $response = [
-            'message' => "Mahasiswa Deleted",
-        ];
-        return response()->json($response, Response::HTTP_OK);
-        // } catch (QueryException $e) {
-        //     return response()->json([
-        //         'message' => "Failed " . $e->errorInfo,
-        //     ]);
-        // }
+        try {
+            User::destroy($mhs->user_id);
+            $mhs->delete();
+            $response = [
+                'message' => "Mahasiswa Deleted",
+            ];
+            return response()->json($response, Response::HTTP_OK);
+        } catch (QueryException $e) {
+            return response()->json([
+                'message' => "Failed " . $e->errorInfo,
+            ]);
+        }
     }
 }

@@ -66,6 +66,14 @@ class PortofolioController extends Controller
         }
     }
 
+    public function show($nim)
+    {
+        $mhs_id = Mahasiswa::where('nim', $nim)->first()->id;
+        return PortofolioResource::collection(
+            Mahasiswa::find($mhs_id)->portofolio()->where('status', 0)->paginate(5)
+        );
+    }
+
     public function destroy($id)
     {
         $portofolio = Portofolio::findOrFail($id);

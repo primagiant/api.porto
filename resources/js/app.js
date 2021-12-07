@@ -27,6 +27,7 @@ Vue.component('pagination', require('laravel-vue-pagination'));
 
 var admin = document.getElementById('admin');
 var pembimbingAkademik = document.getElementById('pembimbingAkademik');
+var mahasiswa = document.getElementById('mahasiswa');
 
 if (admin !== null) {
     // Admin
@@ -52,7 +53,7 @@ if (admin !== null) {
          router: PembimbingAkademikRouter,
          render: h => h(PembimbingAkademik)
     });
-} else {
+} else if (mahasiswa !== null) {
     // Mahasiswa
     const MahasiswaRouter = new VueRouter({
         mode: 'history',

@@ -18,7 +18,7 @@
 <script>
 import Footer from "../components/Footer.vue";
 import Navbar from "../components/Navbar.vue";
-import Sidebar from "../admin/components/Sidebar.vue";
+import Sidebar from "./components/Sidebar.vue";
 export default {
     components: {
         Navbar,

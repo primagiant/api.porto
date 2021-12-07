@@ -16,45 +16,10 @@
             </li>
 
             <li class="nav-item">
-                <router-link :to="{ name: 'mahasiswa' }" class="nav-link">
+                <router-link :to="{ name: 'portofolio' }" class="nav-link">
                     <i class="ti-user menu-icon"></i>
-                    <span class="menu-title">Mahasiswa</span>
+                    <span class="menu-title">Portofolio</span>
                 </router-link>
-            </li>
-
-            <li class="nav-item">
-                <router-link :to="{ name: 'pembimbingakademik' }" class="nav-link">
-                    <i class="ti-id-badge menu-icon"></i>
-                    <span class="menu-title">
-                        Pembimbing
-                        <br />
-                        Akademik
-                    </span>
-                </router-link>
-            </li>
-
-            <li class="nav-item">
-                <div class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                    <i class="ti-package menu-icon"></i>
-                    <span class="menu-title">Master Data</span>
-                    <i class="menu-arrow"></i>
-                </div>
-                <div class="collapse" id="ui-basic">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item">
-                            <router-link :to="{ name: 'fakultas' }" class="nav-link">Fakultas</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link :to="{ name: 'jurusan' }" class="nav-link">Jurusan</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link :to="{ name: 'prodi' }" class="nav-link">Program Studi</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link :to="{ name: 'angkatan' }" class="nav-link">Angkatan</router-link>
-                        </li>
-                    </ul>
-                </div>
             </li>
         </ul>
     </nav>
