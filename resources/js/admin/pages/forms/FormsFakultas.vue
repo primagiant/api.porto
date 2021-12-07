@@ -9,7 +9,7 @@
         <div class="card-body">
           <form @submit.prevent="saveData" class="forms-sample">
             <div class="form-group">
-              <label for="nama_fakultas">Nama Fakultas</label>
+              <label for="nama_fakultas">Fakultas</label>
               <input v-model="datas.nama_fakultas" type="text" autofocus="autofocus" class="form-control" :class="{ 'is-invalid': invalid }" name="fakultas" id="fakultas" placeholder="Fakultas" />
               <div v-if="errors.nama_fakultas" class="invalid-feedback">
                 {{ errors.nama_fakultas[0] }}
