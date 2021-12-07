@@ -5797,6 +5797,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       fakultas: {},
+      jurusan: {},
       datas: {
         nama_jurusan: null,
         fakultas_id: null,
@@ -5804,13 +5805,14 @@ __webpack_require__.r(__webpack_exports__);
         deskripsi: null
       },
       errors: {},
-      invalid: false
+      invalid: false //   selectedFakultas: "",
+
     };
   },
   mounted: function mounted() {
     var _this = this;
 
-    axios.get("/api/prodi").then(function (response) {
+    axios.get("/api/fakultas").then(function (response) {
       _this.fakultas = response.data;
     });
 
@@ -5823,44 +5825,53 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
+  watch: {
+    selectedFakultas: function selectedFakultas(value) {
+      var _this2 = this;
+
+      axios.get("/api/jurusan/byFakultas", this.datas.fakultas_id).then(function (response) {
+        _this2.jurusan = response.data;
+      });
+    }
+  },
   methods: {
     saveData: function saveData(e) {
-      var _this2 = this;
+      var _this3 = this;
 
       s;
       e.preventDefault();
 
       if (this.$route.params.id) {
         axios.put("/api/prodi/" + this.$route.params.id, this.datas).then(function (response) {
-          _this2.$swal.fire({
+          _this3.$swal.fire({
             title: "Success!",
             text: response.data.message,
             icon: "success",
             timer: 1000
           });
 
-          _this2.$router.push({
+          _this3.$router.push({
             name: "prodi"
           });
         })["catch"](function (error) {
-          _this2.errors = error.response.data;
-          _this2.invalid = true;
+          _this3.errors = error.response.data;
+          _this3.invalid = true;
         });
       } else {
         axios.post("/api/jurusan", this.datas).then(function (response) {
-          _this2.$swal.fire({
+          _this3.$swal.fire({
             title: "Success!",
             text: response.data.message,
             icon: "success",
             timer: 1000
           });
 
-          _this2.$router.push({
+          _this3.$router.push({
             name: "prodi"
           });
         })["catch"](function (error) {
-          _this2.errors = error.response.data;
-          _this2.invalid = true;
+          _this3.errors = error.response.data;
+          _this3.invalid = true;
         });
       }
     }
@@ -6873,7 +6884,7 @@ var AdminRoutes = [{
   path: '/admin/prodi/create',
   component: _admin_pages_forms_FormsProdi_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
 }, {
-  name: 'prodiCreate',
+  name: 'prodiEdit',
   path: '/admin/prodi/edit:id',
   component: _admin_pages_forms_FormsProdi_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
 }, // Mahasiswa
@@ -6902,17 +6913,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "MahasiswaRoutes": () => (/* binding */ MahasiswaRoutes)
 /* harmony export */ });
 /* harmony import */ var _mahasiswa_pages_Dashboard_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../mahasiswa/pages/Dashboard.vue */ "./resources/js/mahasiswa/pages/Dashboard.vue");
-Object(function webpackMissingModule() { var e = new Error("Cannot find module '../'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
-
 
 var MahasiswaRoutes = [{
   name: 'dashboard',
   path: 'mahasiswa/dashboard',
   component: _mahasiswa_pages_Dashboard_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
-}, {
-  name: 'kegiatan',
-  path: 'mahasiswa/kegiatan',
-  component: Object(function webpackMissingModule() { var e = new Error("Cannot find module '../'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())
 }];
 
 /***/ }),
@@ -46672,7 +46677,7 @@ var render = function () {
             [
               _c("div", { staticClass: "form-group" }, [
                 _c("label", { attrs: { for: "nama_fakultas" } }, [
-                  _vm._v("Nama Fakultas"),
+                  _vm._v("Fakultas"),
                 ]),
                 _vm._v(" "),
                 _c("input", {
@@ -46826,7 +46831,7 @@ var render = function () {
             [
               _c("div", { staticClass: "form-group" }, [
                 _c("label", { attrs: { for: "nama_jurusan" } }, [
-                  _vm._v("Nama Jurusan"),
+                  _vm._v("Jurusan"),
                 ]),
                 _vm._v(" "),
                 _c("input", {
@@ -47265,7 +47270,7 @@ var render = function () {
                 "router-link",
                 {
                   staticClass: "btn btn-light",
-                  attrs: { to: { name: "jurusan" } },
+                  attrs: { to: { name: "prodi" } },
                 },
                 [_vm._v("Kembali")]
               ),
@@ -47720,53 +47725,87 @@ var render = function () {
     _vm._v(" "),
     _c("div", { staticClass: "col grid-margin stretch-card" }, [
       _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _vm._m(1),
-          _vm._v(" "),
-          _c("div", { staticClass: "table-responsive" }, [
-            _c("table", { staticClass: "table table-hover" }, [
-              _vm._m(2),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.prodi, function (item, index) {
-                  return _c("tr", { key: index }, [
-                    _c("td", [_vm._v(_vm._s(index + 1))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.nama_prodi))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.jurusan))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.fakultas))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.deskripsi))]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-center" }, [
-                      _c("div", { staticClass: "d-inline btn-group" }, [
-                        _vm._m(3, true),
-                        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "card-body" },
+          [
+            _c(
+              "router-link",
+              {
+                staticClass: "btn btn-primary mb-3",
+                attrs: { to: { name: "prodiCreate" } },
+              },
+              [
+                _c("i", { staticClass: "icon-plus mr-2" }),
+                _vm._v("\n          Tambah Data\n        "),
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "table-responsive" }, [
+              _c("table", { staticClass: "table table-hover" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.prodi, function (item, index) {
+                    return _c("tr", { key: index }, [
+                      _c("td", [_vm._v(_vm._s(index + 1))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(item.nama_prodi))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(item.fakultas))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(item.jurusan))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(item.deskripsi))]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-center" }, [
                         _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-sm btn-danger rounded-right",
-                            attrs: { type: "submit" },
-                            on: {
-                              click: function ($event) {
-                                return _vm.deleteData(item.id)
+                          "div",
+                          { staticClass: "d-inline btn-group" },
+                          [
+                            _c(
+                              "router-link",
+                              {
+                                staticClass:
+                                  "btn btn-sm btn-warning rounded-left",
+                                attrs: {
+                                  to: {
+                                    name: "prodiEdit",
+                                    params: { id: item.id },
+                                  },
+                                },
                               },
-                            },
-                          },
-                          [_c("i", { staticClass: "ti-trash" })]
+                              [_c("i", { staticClass: "ti-pencil-alt" })]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "btn btn-sm btn-danger rounded-right",
+                                attrs: { type: "submit" },
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.deleteData(item.id)
+                                  },
+                                },
+                              },
+                              [_c("i", { staticClass: "ti-trash" })]
+                            ),
+                          ],
+                          1
                         ),
                       ]),
-                    ]),
-                  ])
-                }),
-                0
-              ),
+                    ])
+                  }),
+                  0
+                ),
+              ]),
             ]),
-          ]),
-        ]),
+          ],
+          1
+        ),
       ]),
     ]),
   ])
@@ -47779,19 +47818,6 @@ var staticRenderFns = [
     return _c("div", { staticClass: "col mb-3 ml-2" }, [
       _c("h3", [_vm._v("Program Studi")]),
     ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      { staticClass: "btn btn-primary mb-3", attrs: { href: "" } },
-      [
-        _c("i", { staticClass: "icon-plus mr-2" }),
-        _vm._v("\n                    Tambah Data\n                "),
-      ]
-    )
   },
   function () {
     var _vm = this
@@ -47812,19 +47838,6 @@ var staticRenderFns = [
         _c("th", { staticClass: "text-center" }, [_vm._v("Action")]),
       ]),
     ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "btn btn-sm btn-warning rounded-left",
-        attrs: { href: "" },
-      },
-      [_c("i", { staticClass: "ti-pencil-alt" })]
-    )
   },
 ]
 render._withStripped = true

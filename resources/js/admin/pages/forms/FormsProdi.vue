@@ -46,7 +46,7 @@
               </div>
             </div>
             <button type="submit" class="btn btn-primary mr-2">Simpan</button>
-            <router-link :to="{ name: 'jurusan' }" class="btn btn-light">Kembali</router-link>
+            <router-link :to="{ name: 'prodi' }" class="btn btn-light">Kembali</router-link>
           </form>
         </div>
       </div>
@@ -59,6 +59,7 @@ export default {
   data() {
     return {
       fakultas: {},
+      jurusan: {},
       datas: {
         nama_jurusan: null,
         fakultas_id: null,
@@ -67,10 +68,11 @@ export default {
       },
       errors: {},
       invalid: false,
+      //   selectedFakultas: "",
     };
   },
   mounted() {
-    axios.get("/api/prodi").then((response) => {
+    axios.get("/api/fakultas").then((response) => {
       this.fakultas = response.data;
     });
     if (this.$route.params.id) {
@@ -81,6 +83,13 @@ export default {
         this.datas.deskripsi = response.data.data.deskripsi;
       });
     }
+  },
+  watch: {
+    selectedFakultas: function (value) {
+      axios.get("/api/jurusan/byFakultas", this.datas.fakultas_id).then((response) => {
+        this.jurusan = response.data;
+      });
+    },
   },
   methods: {
     saveData: function (e) {

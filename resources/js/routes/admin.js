@@ -29,7 +29,7 @@ export const AdminRoutes = [
     // Prodi
     { name: 'prodi', path: '/admin/prodi', component: Prodi },
     { name: 'prodiCreate', path: '/admin/prodi/create', component: FormsProdi },
-    { name: 'prodiCreate', path: '/admin/prodi/edit:id', component: FormsProdi },
+    { name: 'prodiEdit', path: '/admin/prodi/edit:id', component: FormsProdi },
     // Mahasiswa
     { name: 'mahasiswa', path: '/admin/mahasiswa', component: Mahasiswa },
     //Pembimbing Akademik
