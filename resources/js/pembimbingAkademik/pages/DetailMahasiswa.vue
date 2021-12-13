@@ -55,7 +55,7 @@ export default {
         };
     },
     mounted() {
-        axios.get("/api/portofolio/" + this.$route.params.nim).then((response) => {
+        axios.get("/api/portofolio/byNim/" + this.$route.params.nim).then((response) => {
             this.portofolio = response.data;
             console.log(this.portofolio);
         });

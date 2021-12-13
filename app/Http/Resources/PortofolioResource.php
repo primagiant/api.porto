@@ -17,7 +17,9 @@ class PortofolioResource extends JsonResource
         return [
             'id' => $this->id,
             'mahasiswa' => new MahasiswaResource($this->mahasiswa),
+            'kategori_kegiatan_id' => $this->kategori_kegiatan_id,
             'kategori_kegiatan' => $this->kategori_kegiatan->nama,
+            'jenis_kegiatan_id' => $this->jenis_kegiatan_id,
             'jenis_kegiatan' => $this->jenis_kegiatan->nama,
             'ref_point' => $this->jenis_kegiatan->ref_point,
             'valid_point' => $this->valid_point,
