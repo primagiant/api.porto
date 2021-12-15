@@ -111,6 +111,7 @@ class PortofolioController extends Controller
                 'tahun' => $request->tahun,
                 'bukti' => $bukti,
                 'valid_point' => '0',
+                'status' => '0',
             ]);
 
             $result = new PortofolioResource(
@@ -121,7 +122,29 @@ class PortofolioController extends Controller
                 'message' => "Portofolio Have Been Updated",
                 'data' => $result,
             ];
-            return response()->json($response, Response::HTTP_CREATED);
+            return response()->json($response, Response::HTTP_OK);
+        } catch (QueryException $e) {
+            return response()->json([
+                'message' => "Failed " . $e->errorInfo,
+            ]);
+        }
+    }
+
+    public function validasi(Request $request, $id)
+    {
+        $portofolio = Portofolio::findOrFail($id);
+        $request->validate([
+            'valid_point' => ['required', 'numeric'],
+        ]);
+
+        try {
+            $portofolio->valid_point = $request->valid_point;
+            $portofolio->status = 1;
+            $portofolio->save();
+            $response = [
+                'message' => "Portofolio Tervalidasi",
+            ];
+            return response()->json($response, Response::HTTP_OK);
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo,

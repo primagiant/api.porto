@@ -30,6 +30,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // Portofolio
     Route::resource('portofolio', PortofolioController::class)->except(['create', 'edit', 'update']);
     Route::post('portofolio/{portofolio}', [PortofolioController::class, 'update']);
+    Route::post('portofolio/validasi/{portofolio}', [PortofolioController::class, 'validasi']);
     Route::get('portofolio/byNim/{nim}', [PortofolioController::class, 'byNim']);
     // Fakultas
     Route::resource('fakultas', FakultasController::class)->except(['create', 'edit']);
