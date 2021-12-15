@@ -51926,7 +51926,32 @@ var render = function () {
                 ]),
               ]),
               _vm._v(" "),
-              _vm._m(1),
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-3 col-form-label",
+                    attrs: { for: "jenis_kegiatan" },
+                  },
+                  [_vm._v("Jenis Kegiatan")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-sm-9" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "btn btn-sm btn-primary mr-2 rounded-sm mt-2",
+                      on: {
+                        click: function ($event) {
+                          return _vm.alert("test")
+                        },
+                      },
+                    },
+                    [_c("small", [_vm._v("Lihat Bukti")])]
+                  ),
+                ]),
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group row" }, [
                 _c(
@@ -52039,32 +52064,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-12 mb-3" }, [
       _c("h3", [_vm._v("Validasi Portofolio")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-sm-3 col-form-label",
-          attrs: { for: "jenis_kegiatan" },
-        },
-        [_vm._v("Jenis Kegiatan")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-9" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-sm btn-primary mr-2 rounded-sm mt-2",
-            attrs: { type: "submit" },
-          },
-          [_c("small", [_vm._v("Lihat Bukti")])]
-        ),
-      ]),
     ])
   },
 ]

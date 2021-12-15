@@ -34,7 +34,7 @@
                         <div class="form-group row">
                             <label for="jenis_kegiatan" class="col-sm-3 col-form-label">Jenis Kegiatan</label>
                             <div class="col-sm-9">
-                                <button type="submit" class="btn btn-sm btn-primary mr-2 rounded-sm mt-2"><small>Lihat Bukti</small></button>
+                                <button @click="alert('test')" class="btn btn-sm btn-primary mr-2 rounded-sm mt-2"><small>Lihat Bukti</small></button>
                             </div>
                         </div>
                         <div class="form-group row">
