@@ -5576,7 +5576,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -6166,73 +6165,156 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       fakultas: {},
+      jurusan: {},
+      prodi: {},
       datas: {
-        nama_jurusan: null,
+        name: null,
         fakultas_id: null,
-        deskripsi: null
+        jurusan_id: null,
+        prodi_id: null,
+        email: null,
+        password: null,
+        password_confirmation: null
       },
       errors: {},
+      selectedFakultas: "",
+      selectedJurusan: "",
+      selectedProdi: "",
       invalid: false
     };
   },
   mounted: function mounted() {
     var _this = this;
 
-    axios.get("/api/fakultas").then(function (response) {
+    axios.get("/api/pembimbingakademik/").then(function (response) {
+      _this.pembimbingakademik = response.data;
+    });
+    axios.get("/api/fakultas/").then(function (response) {
       _this.fakultas = response.data;
     });
 
     if (this.$route.params.id) {
-      this.axios.get("/api/jurusan/" + this.$route.params.id).then(function (response) {
-        _this.datas.nama_jurusan = response.data.data.nama_jurusan;
+      this.axios.get("/api/pembimbingakademik/" + this.$route.params.id).then(function (response) {
+        console.log(response.data);
+        _this.datas.name = response.data.data.nama;
         _this.datas.fakultas_id = response.data.data.fakultas_id;
-        console.log(_this.datas.fakultas_id);
-        _this.datas.deskripsi = response.data.data.deskripsi;
+        _this.datas.jurusan_id = response.data.data.jurusan_id;
+        _this.datas.prodi_id = response.data.data.prodi_id;
       });
+    }
+  },
+  watch: {
+    selectedFakultas: function selectedFakultas(value) {
+      var _this2 = this;
+
+      axios.get("/api/jurusan/byFakultas/" + this.selectedFakultas).then(function (response) {
+        _this2.jurusan = response.data;
+        _this2.datas.fakultas_id = _this2.selectedFakultas;
+      });
+    },
+    selectedJurusan: function selectedJurusan(value) {
+      var _this3 = this;
+
+      axios.get("/api/prodi/byJurusan/" + this.selectedJurusan).then(function (response) {
+        _this3.prodi = response.data;
+        _this3.datas.jurusan_id = _this3.selectedJurusan;
+      });
+    },
+    selectedProdi: function selectedProdi(value) {
+      this.datas.prodi_id = this.selectedProdi;
     }
   },
   methods: {
     saveData: function saveData(e) {
-      var _this2 = this;
+      var _this4 = this;
 
-      console.log(this.datas.fakultas_id);
       e.preventDefault();
 
       if (this.$route.params.id) {
-        axios.put("/api/jurusan/" + this.$route.params.id, this.datas).then(function (response) {
-          _this2.$swal.fire({
+        axios.put("/api/pembimbingakademik/" + this.$route.params.id, this.datas).then(function (response) {
+          _this4.$swal.fire({
             title: "Success!",
             text: response.data.message,
             icon: "success",
             timer: 1000
           });
 
-          _this2.$router.push({
-            name: "jurusan"
+          _this4.$router.push({
+            name: "pembimbingakademik"
           });
         })["catch"](function (error) {
-          _this2.errors = error.response.data;
-          _this2.invalid = true;
+          _this4.errors = error.response.data;
+          _this4.invalid = true;
         });
       } else {
-        axios.post("/api/jurusan", this.datas).then(function (response) {
-          _this2.$swal.fire({
+        axios.post("/api/pembimbingakademik/", this.datas).then(function (response) {
+          _this4.$swal.fire({
             title: "Success!",
             text: response.data.message,
             icon: "success",
             timer: 1000
           });
 
-          _this2.$router.push({
-            name: "jurusan"
+          _this4.$router.push({
+            name: "pembimbingakademik"
           });
         })["catch"](function (error) {
-          _this2.errors = error.response.data;
-          _this2.invalid = true;
+          _this4.errors = error.response.data;
+          _this4.invalid = true;
         });
       }
     }
@@ -6314,14 +6396,14 @@ __webpack_require__.r(__webpack_exports__);
       fakultas: {},
       jurusan: {},
       datas: {
-        nama_jurusan: null,
         fakultas_id: null,
         jurusan_id: null,
         deskripsi: null
       },
       errors: {},
-      invalid: false //   selectedFakultas: "",
-
+      selectedFakultas: "",
+      selectedJurusan: "",
+      invalid: false
     };
   },
   mounted: function mounted() {
@@ -6333,9 +6415,11 @@ __webpack_require__.r(__webpack_exports__);
 
     if (this.$route.params.id) {
       this.axios.get("/api/prodi/" + this.$route.params.id).then(function (response) {
-        _this.datas.nama_jurusan = response.data.data.nama_jurusan;
+        _this.datas.nama_prodi = response.data.data.nama_prodi;
         _this.datas.fakultas_id = response.data.data.fakultas_id;
         _this.datas.jurusan_id = response.data.data.jurusan_id;
+        _this.selectedFakultas = response.data.data.fakultas_id;
+        _this.selectedJurusan = response.data.data.jurusan_id;
         _this.datas.deskripsi = response.data.data.deskripsi;
       });
     }
@@ -6344,16 +6428,19 @@ __webpack_require__.r(__webpack_exports__);
     selectedFakultas: function selectedFakultas(value) {
       var _this2 = this;
 
-      axios.get("/api/jurusan/byFakultas", this.datas.fakultas_id).then(function (response) {
+      axios.get("/api/jurusan/byFakultas/" + this.selectedFakultas).then(function (response) {
         _this2.jurusan = response.data;
+        _this2.datas.fakultas_id = _this2.selectedFakultas;
       });
+    },
+    selectedJurusan: function selectedJurusan(value) {
+      this.datas.jurusan_id = this.selectedJurusan;
     }
   },
   methods: {
     saveData: function saveData(e) {
       var _this3 = this;
 
-      s;
       e.preventDefault();
 
       if (this.$route.params.id) {
@@ -6373,7 +6460,7 @@ __webpack_require__.r(__webpack_exports__);
           _this3.invalid = true;
         });
       } else {
-        axios.post("/api/jurusan", this.datas).then(function (response) {
+        axios.post("/api/prodi/", this.datas).then(function (response) {
           _this3.$swal.fire({
             title: "Success!",
             text: response.data.message,
@@ -7608,19 +7695,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "MahasiswaRoutes": () => (/* binding */ MahasiswaRoutes)
 /* harmony export */ });
 /* harmony import */ var _mahasiswa_pages_Dashboard_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../mahasiswa/pages/Dashboard.vue */ "./resources/js/mahasiswa/pages/Dashboard.vue");
-<<<<<<< HEAD
 /* harmony import */ var _mahasiswa_pages_Kegiatan_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../mahasiswa/pages/Kegiatan.vue */ "./resources/js/mahasiswa/pages/Kegiatan.vue");
 /* harmony import */ var _mahasiswa_pages_Portofolio_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mahasiswa/pages/Portofolio.vue */ "./resources/js/mahasiswa/pages/Portofolio.vue");
 
 
-=======
->>>>>>> 546eb11f13430fd30aebb22394c5a32452d1139c
 
 var MahasiswaRoutes = [{
   name: 'dashboard',
   path: '/mahasiswa/dashboard',
   component: _mahasiswa_pages_Dashboard_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
-<<<<<<< HEAD
 }, {
   name: 'kegiatan',
   path: '/mahasiswa/kegiatan',
@@ -7629,8 +7712,6 @@ var MahasiswaRoutes = [{
   name: 'portofolio',
   path: '/mahasiswa/portofolio',
   component: _mahasiswa_pages_Portofolio_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
-=======
->>>>>>> 546eb11f13430fd30aebb22394c5a32452d1139c
 }];
 
 /***/ }),
@@ -47374,7 +47455,7 @@ var render = function () {
                   "tbody",
                   _vm._l(_vm.mahasiswa.data, function (item, index) {
                     return _c("tr", { key: index }, [
-                      _c("td", [_vm._v(_vm._s(index + 1))]),
+                      _vm._m(2, true),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(item.nama))]),
                       _vm._v(" "),
@@ -47458,7 +47539,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("#")]),
+        _c("th", [
+          _c("input", { attrs: { type: "checkbox", id: "checkAll" } }),
+        ]),
         _vm._v(" "),
         _c("th", [_vm._v("Nama Mahasiswa")]),
         _vm._v(" "),
@@ -47478,6 +47561,14 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("Action")]),
       ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("input", { staticClass: "checkClass", attrs: { type: "checkbox" } }),
     ])
   },
 ]
@@ -47536,13 +47627,11 @@ var render = function () {
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(item.nama))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(item.fakultas_id))]),
+                      _c("td", [_vm._v(_vm._s(item.fakultas))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(item.jurusan_id))]),
+                      _c("td", [_vm._v(_vm._s(item.jurusan))]),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(item.prodi))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(item.status))]),
                       _vm._v(" "),
                       _c("td", { staticClass: "text-center" }, [
                         _c(
@@ -47556,7 +47645,7 @@ var render = function () {
                                   "btn btn-sm btn-warning rounded-left",
                                 attrs: {
                                   to: {
-                                    name: "pembimbingAkademikCreate",
+                                    name: "pembimbingAkademikEdit",
                                     params: { id: item.id },
                                   },
                                 },
@@ -48401,191 +48490,417 @@ var render = function () {
           ]),
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "col-md-6 grid-margin stretch-card" }, [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c(
-            "form",
-            {
-              staticClass: "forms-sample",
-              on: {
-                submit: function ($event) {
-                  $event.preventDefault()
-                  return _vm.saveData.apply(null, arguments)
-                },
-              },
-            },
-            [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "nama" } }, [
-                  _vm._v("Nama Pembimbing Akademik"),
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.datas.nama,
-                      expression: "datas.nama",
-                    },
-                  ],
-                  staticClass: "form-control",
-                  class: { "is-invalid": _vm.invalid },
-                  attrs: {
-                    type: "text",
-                    autofocus: "",
-                    name: "nama",
-                    placeholder: "Nama Mahasiswa",
-                  },
-                  domProps: { value: _vm.datas.nama },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.datas, "nama", $event.target.value)
-                    },
-                  },
-                }),
-                _vm._v(" "),
-                _vm.errors.nama
-                  ? _c("div", { staticClass: "invalid-feedback" }, [
-                      _vm._v(
-                        "\n              " +
-                          _vm._s(_vm.errors.nama[0]) +
-                          "\n            "
-                      ),
-                    ])
-                  : _vm._e(),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "fakultas_id" } }, [
-                  _vm._v("Fakultas"),
-                ]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.datas.fakultas_id,
-                        expression: "datas.fakultas_id",
-                      },
-                    ],
-                    staticClass: "form-control",
-                    on: {
-                      change: function ($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function (o) {
-                            return o.selected
-                          })
-                          .map(function (o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.datas,
-                          "fakultas_id",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      },
-                    },
-                  },
-                  [
-                    _c("option", { attrs: { disabled: "", value: "" } }, [
-                      _vm._v("Select Fakultas"),
+    _c(
+      "form",
+      {
+        on: {
+          submit: function ($event) {
+            $event.preventDefault()
+            return _vm.saveData.apply(null, arguments)
+          },
+        },
+      },
+      [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "grid-margin stretch-card col-md-6" }, [
+            _c("div", { staticClass: "card rounded-lg" }, [
+              _c("div", { staticClass: "card-body" }, [
+                _c("div", [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "name" } }, [
+                      _vm._v("Nama Pembimbing Akademik"),
                     ]),
                     _vm._v(" "),
-                    _vm._l(_vm.fakultas.data, function (item) {
-                      return _c(
-                        "option",
-                        { key: item.id, domProps: { value: item.id } },
-                        [_vm._v(_vm._s(item.nama_fakultas))]
-                      )
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.datas.name,
+                          expression: "datas.name",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      class: { "is-invalid": _vm.invalid },
+                      attrs: {
+                        type: "text",
+                        autofocus: "",
+                        placeholder: "Nama Pembimbing Akademik",
+                      },
+                      domProps: { value: _vm.datas.name },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.datas, "name", $event.target.value)
+                        },
+                      },
                     }),
-                  ],
-                  2
-                ),
-                _vm._v(" "),
-                _vm.errors.fakultas_id
-                  ? _c("div", { staticClass: "invalid-feedback" }, [
-                      _vm._v(
-                        "\n              " +
-                          _vm._s(_vm.errors.fakultas_id[0]) +
-                          "\n            "
-                      ),
-                    ])
-                  : _vm._e(),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "deskripsi" } }, [
-                  _vm._v("Deskripsi"),
+                    _vm._v(" "),
+                    _vm.errors.name
+                      ? _c("div", { staticClass: "invalid-feedback" }, [
+                          _vm._v(
+                            "\n                  " +
+                              _vm._s(_vm.errors.name[0]) +
+                              "\n                "
+                          ),
+                        ])
+                      : _vm._e(),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "fakultas_id" } }, [
+                      _vm._v("Fakultas"),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selectedFakultas,
+                            expression: "selectedFakultas",
+                          },
+                        ],
+                        staticClass: "form-control",
+                        on: {
+                          change: function ($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function (o) {
+                                return o.selected
+                              })
+                              .map(function (o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.selectedFakultas = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          },
+                        },
+                      },
+                      [
+                        _c("option", { attrs: { disabled: "", value: "" } }, [
+                          _vm._v("Select Fakultas"),
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.fakultas.data, function (item) {
+                          return _c(
+                            "option",
+                            { key: item.id, domProps: { value: item.id } },
+                            [_vm._v(_vm._s(item.nama_fakultas))]
+                          )
+                        }),
+                      ],
+                      2
+                    ),
+                    _vm._v(" "),
+                    _vm.errors.fakultas_id
+                      ? _c("div", { staticClass: "invalid-feedback" }, [
+                          _vm._v(
+                            "\n                  " +
+                              _vm._s(_vm.errors.fakultas_id[0]) +
+                              "\n                "
+                          ),
+                        ])
+                      : _vm._e(),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "jurusan_id" } }, [
+                      _vm._v("Jurusan"),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selectedJurusan,
+                            expression: "selectedJurusan",
+                          },
+                        ],
+                        staticClass: "form-control",
+                        on: {
+                          change: function ($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function (o) {
+                                return o.selected
+                              })
+                              .map(function (o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.selectedJurusan = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          },
+                        },
+                      },
+                      [
+                        _c("option", { attrs: { disabled: "", value: "" } }, [
+                          _vm._v("Select Jurusan"),
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.jurusan.data, function (item) {
+                          return _c(
+                            "option",
+                            { key: item.id, domProps: { value: item.id } },
+                            [_vm._v(_vm._s(item.nama_jurusan))]
+                          )
+                        }),
+                      ],
+                      2
+                    ),
+                    _vm._v(" "),
+                    _vm.errors.jurusan_id
+                      ? _c("div", { staticClass: "invalid-feedback" }, [
+                          _vm._v(
+                            "\n                  " +
+                              _vm._s(_vm.errors.jurusan_id[0]) +
+                              "\n                "
+                          ),
+                        ])
+                      : _vm._e(),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "prodi_id" } }, [
+                      _vm._v("Prodi"),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selectedProdi,
+                            expression: "selectedProdi",
+                          },
+                        ],
+                        staticClass: "form-control",
+                        on: {
+                          change: function ($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function (o) {
+                                return o.selected
+                              })
+                              .map(function (o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.selectedProdi = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          },
+                        },
+                      },
+                      [
+                        _c("option", { attrs: { disabled: "", value: "" } }, [
+                          _vm._v("Select Prodi"),
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.prodi.data, function (item) {
+                          return _c(
+                            "option",
+                            { key: item.id, domProps: { value: item.id } },
+                            [_vm._v(_vm._s(item.nama_prodi))]
+                          )
+                        }),
+                      ],
+                      2
+                    ),
+                    _vm._v(" "),
+                    _vm.errors.prodi_id
+                      ? _c("div", { staticClass: "invalid-feedback" }, [
+                          _vm._v(
+                            "\n                  " +
+                              _vm._s(_vm.errors.prodi_id[0]) +
+                              "\n                "
+                          ),
+                        ])
+                      : _vm._e(),
+                  ]),
                 ]),
-                _vm._v(" "),
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.datas.deskripsi,
-                      expression: "datas.deskripsi",
-                    },
-                  ],
-                  staticClass: "form-control",
-                  class: { "is-invalid": _vm.invalid },
-                  attrs: { name: "deskripsi", rows: "6" },
-                  domProps: { value: _vm.datas.deskripsi },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.datas, "deskripsi", $event.target.value)
-                    },
-                  },
-                }),
-                _vm._v(" "),
-                _vm.errors.deskripsi
-                  ? _c("div", { staticClass: "invalid-feedback" }, [
-                      _vm._v(
-                        "\n              " +
-                          _vm._s(_vm.errors.deskripsi[0]) +
-                          "\n            "
-                      ),
-                    ])
-                  : _vm._e(),
               ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary mr-2",
-                  attrs: { type: "submit" },
-                },
-                [_vm._v("Simpan")]
-              ),
-              _vm._v(" "),
-              _c(
-                "router-link",
-                {
-                  staticClass: "btn btn-light",
-                  attrs: { to: { name: "jurusan" } },
-                },
-                [_vm._v("Kembali")]
-              ),
-            ],
-            1
-          ),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _c("div", { staticClass: "card rounded-lg" }, [
+              _c("div", { staticClass: "card-body" }, [
+                _c(
+                  "div",
+                  [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "nama" } }, [
+                        _vm._v("Email"),
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.datas.email,
+                            expression: "datas.email",
+                          },
+                        ],
+                        staticClass: "form-control",
+                        class: { "is-invalid": _vm.invalid },
+                        attrs: {
+                          type: "email",
+                          autofocus: "",
+                          name: "nama",
+                          placeholder: "Email",
+                        },
+                        domProps: { value: _vm.datas.email },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.datas, "email", $event.target.value)
+                          },
+                        },
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.nama
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(
+                              "\n                  " +
+                                _vm._s(_vm.errors.nama[0]) +
+                                "\n                "
+                            ),
+                          ])
+                        : _vm._e(),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "nama" } }, [
+                        _vm._v("Password"),
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.datas.password,
+                            expression: "datas.password",
+                          },
+                        ],
+                        staticClass: "form-control",
+                        class: { "is-invalid": _vm.invalid },
+                        attrs: {
+                          type: "password",
+                          autofocus: "",
+                          name: "nama",
+                          placeholder: "Password",
+                        },
+                        domProps: { value: _vm.datas.password },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.datas, "password", $event.target.value)
+                          },
+                        },
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.password
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(
+                              "\n                  " +
+                                _vm._s(_vm.errors.password[0]) +
+                                "\n                "
+                            ),
+                          ])
+                        : _vm._e(),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "nama" } }, [
+                        _vm._v("Konfirmasi Password"),
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.datas.password_confirmation,
+                            expression: "datas.password_confirmation",
+                          },
+                        ],
+                        staticClass: "form-control",
+                        class: { "is-invalid": _vm.invalid },
+                        attrs: {
+                          type: "password",
+                          autofocus: "",
+                          name: "nama",
+                          placeholder: "Konfirmasi Password",
+                        },
+                        domProps: { value: _vm.datas.password_confirmation },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.datas,
+                              "password_confirmation",
+                              $event.target.value
+                            )
+                          },
+                        },
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.password_confirmation
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(
+                              "\n                  " +
+                                _vm._s(_vm.errors.password_confirmation[0]) +
+                                "\n                "
+                            ),
+                          ])
+                        : _vm._e(),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary mr-2",
+                        attrs: { type: "submit" },
+                      },
+                      [_vm._v("Simpan")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "btn btn-light",
+                        attrs: { to: { name: "pembimbingakademik" } },
+                      },
+                      [_vm._v("Kembali")]
+                    ),
+                  ],
+                  1
+                ),
+              ]),
+            ]),
+          ]),
         ]),
-      ]),
-    ]),
+      ]
+    ),
   ])
 }
 var staticRenderFns = []
@@ -48689,8 +49004,8 @@ var render = function () {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.datas.fakultas_id,
-                        expression: "datas.fakultas_id",
+                        value: _vm.selectedFakultas,
+                        expression: "selectedFakultas",
                       },
                     ],
                     staticClass: "form-control",
@@ -48704,13 +49019,9 @@ var render = function () {
                             var val = "_value" in o ? o._value : o.value
                             return val
                           })
-                        _vm.$set(
-                          _vm.datas,
-                          "fakultas_id",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
+                        _vm.selectedFakultas = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
                       },
                     },
                   },
@@ -48753,8 +49064,8 @@ var render = function () {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.datas.jurusan_id,
-                        expression: "datas.jurusan_id",
+                        value: _vm.selectedJurusan,
+                        expression: "selectedJurusan",
                       },
                     ],
                     staticClass: "form-control",
@@ -48768,13 +49079,9 @@ var render = function () {
                             var val = "_value" in o ? o._value : o.value
                             return val
                           })
-                        _vm.$set(
-                          _vm.datas,
-                          "jurusan_id",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
+                        _vm.selectedJurusan = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
                       },
                     },
                   },

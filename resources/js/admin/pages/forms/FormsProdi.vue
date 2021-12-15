@@ -18,7 +18,7 @@
 
             <div class="form-group">
               <label for="fakultas_id">Fakultas</label>
-              <select v-model="datas.fakultas_id" class="form-control">
+              <select v-model="selectedFakultas" class="form-control">
                 <option disabled value="">Select Fakultas</option>
                 <option v-for="item in fakultas.data" :key="item.id" :value="item.id">{{ item.nama_fakultas }}</option>
               </select>
@@ -29,7 +29,7 @@
 
             <div class="form-group">
               <label for="jurusan_id">Jurusan</label>
-              <select v-model="datas.jurusan_id" class="form-control">
+              <select v-model="selectedJurusan" class="form-control">
                 <option disabled value="">Select Jurusan</option>
                 <option v-for="item in jurusan.data" :key="item.id" :value="item.id">{{ item.nama_jurusan }}</option>
               </select>
@@ -61,14 +61,14 @@ export default {
       fakultas: {},
       jurusan: {},
       datas: {
-        nama_jurusan: null,
         fakultas_id: null,
         jurusan_id: null,
         deskripsi: null,
       },
       errors: {},
+      selectedFakultas: "",
+      selectedJurusan: "",
       invalid: false,
-      //   selectedFakultas: "",
     };
   },
   mounted() {
@@ -77,23 +77,28 @@ export default {
     });
     if (this.$route.params.id) {
       this.axios.get("/api/prodi/" + this.$route.params.id).then((response) => {
-        this.datas.nama_jurusan = response.data.data.nama_jurusan;
+        this.datas.nama_prodi = response.data.data.nama_prodi;
         this.datas.fakultas_id = response.data.data.fakultas_id;
         this.datas.jurusan_id = response.data.data.jurusan_id;
+        this.selectedFakultas = response.data.data.fakultas_id;
+        this.selectedJurusan = response.data.data.jurusan_id;
         this.datas.deskripsi = response.data.data.deskripsi;
       });
     }
   },
   watch: {
     selectedFakultas: function (value) {
-      axios.get("/api/jurusan/byFakultas", this.datas.fakultas_id).then((response) => {
+      axios.get("/api/jurusan/byFakultas/" + this.selectedFakultas).then((response) => {
         this.jurusan = response.data;
+        this.datas.fakultas_id = this.selectedFakultas;
       });
+    },
+    selectedJurusan: function (value) {
+      this.datas.jurusan_id = this.selectedJurusan;
     },
   },
   methods: {
     saveData: function (e) {
-      s;
       e.preventDefault();
       if (this.$route.params.id) {
         axios
@@ -108,7 +113,7 @@ export default {
           });
       } else {
         axios
-          .post("/api/jurusan", this.datas)
+          .post("/api/prodi/", this.datas)
           .then((response) => {
             this.$swal.fire({ title: "Success!", text: response.data.message, icon: "success", timer: 1000 });
             this.$router.push({ name: "prodi" });

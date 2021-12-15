@@ -14,7 +14,7 @@
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th><input type="checkbox" id="checkAll" /></th>
                   <th>Nama Mahasiswa</th>
                   <th>NIM</th>
                   <th>Pembimbing Akademik</th>
@@ -28,7 +28,7 @@
               </thead>
               <tbody>
                 <tr v-for="(item, index) in mahasiswa.data" :key="index">
-                  <td>{{ index + 1 }}</td>
+                  <td><input type="checkbox" class="checkClass" /></td>
                   <td>{{ item.nama }}</td>
                   <td>{{ item.nim }}</td>
                   <td>{{ item.pembimbing_akademik_id }}</td>

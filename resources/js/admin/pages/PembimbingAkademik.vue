@@ -26,13 +26,12 @@
                 <tr v-for="(item, index) in pembimbingakademik.data" :key="index">
                   <td>{{ index + 1 }}</td>
                   <td>{{ item.nama }}</td>
-                  <td>{{ item.fakultas_id }}</td>
-                  <td>{{ item.jurusan_id }}</td>
+                  <td>{{ item.fakultas }}</td>
+                  <td>{{ item.jurusan }}</td>
                   <td>{{ item.prodi }}</td>
-                  <td>{{ item.status }}</td>
                   <td class="text-center">
                     <div class="d-inline btn-group">
-                      <router-link :to="{ name: 'pembimbingAkademikCreate', params: { id: item.id } }" class="btn btn-sm btn-warning rounded-left">
+                      <router-link :to="{ name: 'pembimbingAkademikEdit', params: { id: item.id } }" class="btn btn-sm btn-warning rounded-left">
                         <i class="ti-pencil-alt"></i>
                       </router-link>
                       <button @click="deleteData(item.id)" class="btn btn-sm btn-danger rounded-right" type="submit">
