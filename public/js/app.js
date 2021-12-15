@@ -7517,11 +7517,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -8112,8 +8107,6 @@ var MahasiswaRoutes = [{
   name: 'portofolio',
   path: '/mahasiswa/portofolio',
   component: _mahasiswa_pages_Portofolio_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
-<<<<<<< HEAD
-=======
 }, {
   name: 'portofolioCreate',
   path: '/mahasiswa/portofolio/create',
@@ -8122,7 +8115,6 @@ var MahasiswaRoutes = [{
   name: 'portofolioEdit',
   path: '/mahasiswa/portofolio/edit/:id',
   component: _mahasiswa_pages_forms_FormsPortofolio_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
->>>>>>> user
 }];
 
 /***/ }),
