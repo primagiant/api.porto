@@ -18,7 +18,7 @@ class KegiatanController extends Controller
 
     public function show($id)
     {
-        $kategori = KategoriKegiatan::findOrFail($id);
+        $kategori = new KegiatanResource(KategoriKegiatan::findOrFail($id));
         $response = [
             'message' => "Kegiatan with id " . $id,
             'data' => $kategori,

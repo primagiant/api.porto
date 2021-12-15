@@ -31,7 +31,7 @@ class PortofolioController extends Controller
             'nama_kegiatan' => ['required', 'string', 'max:191'],
             'penyelenggara' => ['required', 'string', 'max:191'],
             'tahun' => ['required', 'digits_between:4,4', 'numeric'],
-            'bukti' => ['file', 'mimes:jpg,png,jpeg,pdf', 'max:2048']
+            'bukti' => ['required', 'file', 'mimes:jpg,png,jpeg,pdf', 'max:2048']
         ]);
 
         if ($validator->fails()) {
@@ -55,7 +55,7 @@ class PortofolioController extends Controller
             );
 
             $response = [
-                'message' => "Mahasiswa Data created",
+                'message' => "Portofolio Data created",
                 'data' => $result,
             ];
             return response()->json($response, Response::HTTP_CREATED);
@@ -66,12 +66,90 @@ class PortofolioController extends Controller
         }
     }
 
-    public function show($nim)
+    public function show($id)
+    {
+        return new PortofolioResource(Portofolio::findOrFail($id));
+    }
+
+    public function byNim($nim)
     {
         $mhs_id = Mahasiswa::where('nim', $nim)->first()->id;
         return PortofolioResource::collection(
             Mahasiswa::find($mhs_id)->portofolio()->where('status', 0)->paginate(5)
         );
+    }
+
+    public function update(Request $request, $id)
+    {
+        $portofolio = Portofolio::findOrFail($id);
+        $validator = Validator::make($request->all(), [
+            'kategori_kegiatan_id' => ['required'],
+            'jenis_kegiatan_id' => ['required'],
+            'nama_kegiatan' => ['required', 'string', 'max:191'],
+            'penyelenggara' => ['required', 'string', 'max:191'],
+            'tahun' => ['required', 'digits_between:4,4', 'numeric'],
+            'bukti' => ['file', 'mimes:jpg,png,jpeg,pdf', 'max:2048']
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        try {
+            if ($request->file('bukti')) {
+                unlink('storage/' . $portofolio->bukti);
+                $bukti = $request->file('bukti')->store('bukti');
+            } else {
+                $bukti = $portofolio->bukti;
+            }
+            $portofolio->update([
+                'mahasiswa_id' => User::find(Auth::user()->id)->mahasiswa->id,
+                'kategori_kegiatan_id' => $request->kategori_kegiatan_id,
+                'jenis_kegiatan_id' => $request->jenis_kegiatan_id,
+                'nama_kegiatan' => $request->nama_kegiatan,
+                'penyelenggara' => $request->penyelenggara,
+                'tahun' => $request->tahun,
+                'bukti' => $bukti,
+                'valid_point' => '0',
+                'status' => '0',
+            ]);
+
+            $result = new PortofolioResource(
+                Portofolio::findOrFail($portofolio->id)
+            );
+
+            $response = [
+                'message' => "Portofolio Have Been Updated",
+                'data' => $result,
+            ];
+            return response()->json($response, Response::HTTP_OK);
+        } catch (QueryException $e) {
+            return response()->json([
+                'message' => "Failed " . $e->errorInfo,
+            ]);
+        }
+    }
+
+    public function validasi(Request $request, $id)
+    {
+        $portofolio = Portofolio::findOrFail($id);
+        $request->validate([
+            'valid_point' => ['required', 'numeric'],
+        ]);
+
+        try {
+            $portofolio->valid_point = $request->valid_point;
+            $portofolio->status = 1;
+            $portofolio->save();
+            $response = [
+                'message' => "Portofolio Tervalidasi",
+            ];
+            return response()->json($response, Response::HTTP_OK);
+        } catch (QueryException $e) {
+            return response()->json([
+                'message' => "Failed " . $e->errorInfo,
+            ]);
+        }
     }
 
     public function destroy($id)
