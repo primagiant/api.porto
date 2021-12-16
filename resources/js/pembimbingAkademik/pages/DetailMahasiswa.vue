@@ -11,8 +11,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">Nama Kegiatan</th>
-                                    <th class="text-center">Kategori</th>
-                                    <th class="text-center">Jenis</th>
+                                    <th class="text-center">Tahun</th>
                                     <th class="text-center">Penyelenggara</th>
                                     <th class="text-center" width="50">Action</th>
                                 </tr>
@@ -21,8 +20,7 @@
                                 <template v-if="portofolio.data.length !== 0">
                                     <tr v-for="(item, index) in portofolio.data" :key="index">
                                         <td class="text-center">{{ item.nama_kegiatan }}</td>
-                                        <td class="text-center">{{ item.kategori_kegiatan }}</td>
-                                        <td class="text-center">{{ item.jenis_kegiatan }}</td>
+                                        <td class="text-center">{{ item.tahun }}</td>
                                         <td class="text-center">{{ item.penyelenggara }}</td>
                                         <td class="text-center">
                                             <router-link :to="{ name: 'validasiPortofolio', params: { id: item.id } }" class="btn btn-sm btn-success" type="submit">

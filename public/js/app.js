@@ -7515,8 +7515,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -7748,6 +7746,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -7756,7 +7776,7 @@ __webpack_require__.r(__webpack_exports__);
       errors: {}
     };
   },
-  mounted: function mounted() {
+  created: function created() {
     var _this = this;
 
     axios.get("/api/portofolio/" + this.$route.params.id).then(function (response) {
@@ -7779,7 +7799,7 @@ __webpack_require__.r(__webpack_exports__);
       e.preventDefault();
       this.$swal.fire({
         title: "Apakah kamu yakin?",
-        text: "Jika anda validasi, maka data tidak akan kembali bisa diperbarui lagi.",
+        text: "Jika anda validasi, maka data tidak akan bisa diperbarui lagi.",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -7811,6 +7831,9 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       });
+    },
+    checkExtension: function checkExtension(src) {
+      return src.split(".").pop();
     }
   }
 });
@@ -51475,11 +51498,7 @@ var render = function () {
                           ]),
                           _vm._v(" "),
                           _c("td", { staticClass: "text-center" }, [
-                            _vm._v(_vm._s(item.kategori_kegiatan)),
-                          ]),
-                          _vm._v(" "),
-                          _c("td", { staticClass: "text-center" }, [
-                            _vm._v(_vm._s(item.jenis_kegiatan)),
+                            _vm._v(_vm._s(item.tahun)),
                           ]),
                           _vm._v(" "),
                           _c("td", { staticClass: "text-center" }, [
@@ -51550,9 +51569,7 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", { staticClass: "text-center" }, [_vm._v("Nama Kegiatan")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-center" }, [_vm._v("Kategori")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center" }, [_vm._v("Jenis")]),
+        _c("th", { staticClass: "text-center" }, [_vm._v("Tahun")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("Penyelenggara")]),
         _vm._v(" "),
@@ -51926,32 +51943,7 @@ var render = function () {
                 ]),
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "form-group row" }, [
-                _c(
-                  "label",
-                  {
-                    staticClass: "col-sm-3 col-form-label",
-                    attrs: { for: "jenis_kegiatan" },
-                  },
-                  [_vm._v("Jenis Kegiatan")]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-sm-9" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "btn btn-sm btn-primary mr-2 rounded-sm mt-2",
-                      on: {
-                        click: function ($event) {
-                          return _vm.alert("test")
-                        },
-                      },
-                    },
-                    [_c("small", [_vm._v("Lihat Bukti")])]
-                  ),
-                ]),
-              ]),
+              _vm._m(1),
               _vm._v(" "),
               _c("div", { staticClass: "form-group row" }, [
                 _c(
@@ -52055,6 +52047,63 @@ var render = function () {
         ]),
       ]),
     ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "exampleModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true",
+        },
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm.checkExtension(this.portofolio.bukti) == "pdf"
+                ? _c(
+                    "div",
+                    { staticClass: "embed-responsive embed-responsive-21by9" },
+                    [
+                      _c("iframe", {
+                        staticClass: "embed-responsive-item",
+                        staticStyle: { border: "none" },
+                        attrs: {
+                          src: "/storage/" + this.portofolio.bukti,
+                          allowfullscreen: "",
+                          width: "100%",
+                        },
+                      }),
+                    ]
+                  )
+                : _c(
+                    "div",
+                    {
+                      staticClass:
+                        "d-flex justify-content-center align-items-center collapse-hidden",
+                    },
+                    [
+                      _c("img", {
+                        attrs: {
+                          src: "/storage/" + this.portofolio.bukti,
+                          alt: "modal image",
+                        },
+                      }),
+                    ]
+                  ),
+            ]),
+            _vm._v(" "),
+            _vm._m(2),
+          ]
+        ),
+      ]
+    ),
   ])
 }
 var staticRenderFns = [
@@ -52065,6 +52114,60 @@ var staticRenderFns = [
     return _c("div", { staticClass: "col-md-12 mb-3" }, [
       _c("h3", [_vm._v("Validasi Portofolio")]),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-sm-3 col-form-label",
+          attrs: { for: "jenis_kegiatan" },
+        },
+        [_vm._v("Bukti")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-9" }, [
+        _c(
+          "button",
+          {
+            staticClass:
+              "btn btn-sm btn-primary d-inline-flex justify-content-center align-items-center",
+            attrs: {
+              type: "button",
+              "data-toggle": "modal",
+              "data-target": "#exampleModal",
+            },
+          },
+          [
+            _c("i", { staticClass: "ti-eye" }),
+            _vm._v(" "),
+            _c("small", { staticClass: "ml-2" }, [_vm._v("Lihat Bukti")]),
+          ]
+        ),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "mt-3 d-flex justify-content-center align-items-center" },
+      [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-sm btn-primary",
+            attrs: { type: "button", "data-dismiss": "modal" },
+          },
+          [_vm._v("Close")]
+        ),
+      ]
+    )
   },
 ]
 render._withStripped = true

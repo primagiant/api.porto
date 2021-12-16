@@ -19,7 +19,7 @@ class PembimbingAkademik extends Model
 
     public function account()
     {
-        return $this->hasOne(User::class);
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
     public function fakultas()
