@@ -22,7 +22,6 @@
                   <th>Jurusan</th>
                   <th>Program Studi</th>
                   <th>Angkatan</th>
-                  <th>Status</th>
                   <th class="text-center">Action</th>
                 </tr>
               </thead>
@@ -31,12 +30,11 @@
                   <td><input type="checkbox" class="checkClass" /></td>
                   <td>{{ item.nama }}</td>
                   <td>{{ item.nim }}</td>
-                  <td>{{ item.pembimbing_akademik_id }}</td>
-                  <td>{{ item.fakultas_id }}</td>
-                  <td>{{ item.jurusan_id }}</td>
+                  <td>{{ item.pembimbing_akademik }}</td>
+                  <td>{{ item.fakultas }}</td>
+                  <td>{{ item.jurusan }}</td>
                   <td>{{ item.prodi }}</td>
-                  <td>{{ item.status }}</td>
-                  <td>{{ item.deskripsi }}</td>
+                  <td>{{ item.angkatan }}</td>
                   <td class="text-center">
                     <div class="d-inline btn-group">
                       <router-link :to="{ name: 'mahasiswaEdit', params: { id: item.id } }" class="btn btn-sm btn-warning rounded-left">
