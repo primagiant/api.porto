@@ -6251,9 +6251,11 @@ __webpack_require__.r(__webpack_exports__);
       this.axios.get("/api/pembimbingakademik/" + this.$route.params.id).then(function (response) {
         console.log(response.data);
         _this.datas.name = response.data.data.nama;
-        _this.datas.fakultas_id = response.data.data.fakultas_id;
-        _this.datas.jurusan_id = response.data.data.jurusan_id;
-        _this.datas.prodi_id = response.data.data.prodi_id;
+        _this.selectedFakultas = response.data.data.fakultas_id;
+        _this.selectedJurusan = response.data.data.jurusan_id;
+        _this.selectedProdi = response.data.data.prodi_id;
+        _this.datas.email = response.data.data.user.email;
+        console.log(response.data.data);
       });
     }
   },
@@ -7517,11 +7519,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -8112,8 +8109,6 @@ var MahasiswaRoutes = [{
   name: 'portofolio',
   path: '/mahasiswa/portofolio',
   component: _mahasiswa_pages_Portofolio_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
-<<<<<<< HEAD
-=======
 }, {
   name: 'portofolioCreate',
   path: '/mahasiswa/portofolio/create',
@@ -8122,7 +8117,6 @@ var MahasiswaRoutes = [{
   name: 'portofolioEdit',
   path: '/mahasiswa/portofolio/edit/:id',
   component: _mahasiswa_pages_forms_FormsPortofolio_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
->>>>>>> user
 }];
 
 /***/ }),
@@ -49344,97 +49338,109 @@ var render = function () {
                         : _vm._e(),
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "nama" } }, [
-                        _vm._v("Password"),
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.datas.password,
-                            expression: "datas.password",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        class: { "is-invalid": _vm.invalid },
-                        attrs: {
-                          type: "password",
-                          autofocus: "",
-                          name: "nama",
-                          placeholder: "Password",
-                        },
-                        domProps: { value: _vm.datas.password },
-                        on: {
-                          input: function ($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.datas, "password", $event.target.value)
-                          },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm.errors.password
-                        ? _c("div", { staticClass: "invalid-feedback" }, [
-                            _vm._v(
-                              "\n                  " +
-                                _vm._s(_vm.errors.password[0]) +
-                                "\n                "
-                            ),
-                          ])
-                        : _vm._e(),
-                    ]),
+                    !_vm.$route.params.id
+                      ? _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "nama" } }, [
+                            _vm._v("Password"),
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.datas.password,
+                                expression: "datas.password",
+                              },
+                            ],
+                            staticClass: "form-control",
+                            class: { "is-invalid": _vm.invalid },
+                            attrs: {
+                              type: "password",
+                              autofocus: "",
+                              name: "nama",
+                              placeholder: "Password",
+                            },
+                            domProps: { value: _vm.datas.password },
+                            on: {
+                              input: function ($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.datas,
+                                  "password",
+                                  $event.target.value
+                                )
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _vm.errors.password
+                            ? _c("div", { staticClass: "invalid-feedback" }, [
+                                _vm._v(
+                                  "\n                  " +
+                                    _vm._s(_vm.errors.password[0]) +
+                                    "\n                "
+                                ),
+                              ])
+                            : _vm._e(),
+                        ])
+                      : _vm._e(),
                     _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "nama" } }, [
-                        _vm._v("Konfirmasi Password"),
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.datas.password_confirmation,
-                            expression: "datas.password_confirmation",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        class: { "is-invalid": _vm.invalid },
-                        attrs: {
-                          type: "password",
-                          autofocus: "",
-                          name: "nama",
-                          placeholder: "Konfirmasi Password",
-                        },
-                        domProps: { value: _vm.datas.password_confirmation },
-                        on: {
-                          input: function ($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.datas,
-                              "password_confirmation",
-                              $event.target.value
-                            )
-                          },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm.errors.password_confirmation
-                        ? _c("div", { staticClass: "invalid-feedback" }, [
-                            _vm._v(
-                              "\n                  " +
-                                _vm._s(_vm.errors.password_confirmation[0]) +
-                                "\n                "
-                            ),
-                          ])
-                        : _vm._e(),
-                    ]),
+                    !_vm.$route.params.id
+                      ? _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "nama" } }, [
+                            _vm._v("Konfirmasi Password"),
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.datas.password_confirmation,
+                                expression: "datas.password_confirmation",
+                              },
+                            ],
+                            staticClass: "form-control",
+                            class: { "is-invalid": _vm.invalid },
+                            attrs: {
+                              type: "password",
+                              autofocus: "",
+                              name: "nama",
+                              placeholder: "Konfirmasi Password",
+                            },
+                            domProps: {
+                              value: _vm.datas.password_confirmation,
+                            },
+                            on: {
+                              input: function ($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.datas,
+                                  "password_confirmation",
+                                  $event.target.value
+                                )
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _vm.errors.password_confirmation
+                            ? _c("div", { staticClass: "invalid-feedback" }, [
+                                _vm._v(
+                                  "\n                  " +
+                                    _vm._s(
+                                      _vm.errors.password_confirmation[0]
+                                    ) +
+                                    "\n                "
+                                ),
+                              ])
+                            : _vm._e(),
+                        ])
+                      : _vm._e(),
                     _vm._v(" "),
                     _c(
                       "button",

@@ -66,7 +66,7 @@
                   </div>
                 </div>
 
-                <div class="form-group">
+                <div v-if="!$route.params.id" class="form-group">
                   <label for="nama">Password</label>
                   <input v-model="datas.password" type="password" autofocus class="form-control" :class="{ 'is-invalid': invalid }" name="nama" placeholder="Password" />
                   <div v-if="errors.password" class="invalid-feedback">
@@ -74,7 +74,7 @@
                   </div>
                 </div>
 
-                <div class="form-group">
+                <div v-if="!$route.params.id" class="form-group">
                   <label for="nama">Konfirmasi Password</label>
                   <input v-model="datas.password_confirmation" type="password" autofocus class="form-control" :class="{ 'is-invalid': invalid }" name="nama" placeholder="Konfirmasi Password" />
                   <div v-if="errors.password_confirmation" class="invalid-feedback">
@@ -127,9 +127,11 @@ export default {
       this.axios.get("/api/pembimbingakademik/" + this.$route.params.id).then((response) => {
         console.log(response.data);
         this.datas.name = response.data.data.nama;
-        this.datas.fakultas_id = response.data.data.fakultas_id;
-        this.datas.jurusan_id = response.data.data.jurusan_id;
-        this.datas.prodi_id = response.data.data.prodi_id;
+        this.selectedFakultas = response.data.data.fakultas_id;
+        this.selectedJurusan = response.data.data.jurusan_id;
+        this.selectedProdi = response.data.data.prodi_id;
+        this.datas.email = response.data.data.user.email;
+        console.log(response.data.data);
       });
     }
   },
