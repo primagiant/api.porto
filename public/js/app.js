@@ -7187,6 +7187,40 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       });
+    },
+    redirectCheck: function redirectCheck(id) {
+      var _this3 = this;
+
+      axios.get("/api/portofolio/" + id).then(function (response) {
+        if (response.data.data.status === 0) {
+          _this3.$router.push({
+            name: "portofolioEdit",
+            params: {
+              id: id
+            }
+          });
+        } else {
+          _this3.$swal.fire({
+            title: "Apakah kamu yakin?",
+            text: "Jika anda mengedit data yang sudah tervalidasi, maka data point akan tereset ke 0 kembali.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yakin",
+            cancelButtonText: "Batal"
+          }).then(function (result) {
+            if (result.value) {
+              _this3.$router.push({
+                name: "portofolioEdit",
+                params: {
+                  id: id
+                }
+              });
+            }
+          });
+        }
+      });
     }
   }
 });
@@ -50761,27 +50795,17 @@ var render = function () {
                           ),
                           _vm._v(" "),
                           _c(
-                            "router-link",
+                            "button",
                             {
                               staticClass: "btn btn-sm btn-warning",
-                              attrs: {
-                                to: {
-                                  name: "portofolioEdit",
-                                  params: { id: item.id },
+                              attrs: { type: "submit" },
+                              on: {
+                                click: function ($event) {
+                                  return _vm.redirectCheck(item.id)
                                 },
-                                type: "submit",
                               },
                             },
-                            [
-                              _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "d-flex justify-content-center align-items-center",
-                                },
-                                [_c("i", { staticClass: "ti-marker-alt" })]
-                              ),
-                            ]
+                            [_vm._m(3, true)]
                           ),
                           _vm._v(" "),
                           item.status == 0
@@ -50796,7 +50820,7 @@ var render = function () {
                                     },
                                   },
                                 },
-                                [_vm._m(3, true)]
+                                [_vm._m(4, true)]
                               )
                             : _vm._e(),
                         ],
@@ -50857,6 +50881,16 @@ var staticRenderFns = [
     return _c("td", [
       _c("input", { staticClass: "checkClass", attrs: { type: "checkbox" } }),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "d-flex justify-content-center align-items-center" },
+      [_c("i", { staticClass: "ti-marker-alt" })]
+    )
   },
   function () {
     var _vm = this

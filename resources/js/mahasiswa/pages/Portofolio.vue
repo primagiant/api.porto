@@ -42,11 +42,11 @@
                                                 <i class="ti-eye"></i>
                                             </div>
                                         </router-link>
-                                        <router-link :to="{ name: 'portofolioEdit', params: { id: item.id } }" class="btn btn-sm btn-warning" type="submit">
+                                        <button @click="redirectCheck(item.id)" class="btn btn-sm btn-warning" type="submit">
                                             <div class="d-flex justify-content-center align-items-center">
                                                 <i class="ti-marker-alt"></i>
                                             </div>
-                                        </router-link>
+                                        </button>
                                         <button @click="deleteData(item.id)" v-if="item.status == 0" to="" class="btn btn-sm btn-danger">
                                             <div class="d-flex justify-content-center align-items-center">
                                                 <i class="ti-trash"></i>
@@ -98,6 +98,30 @@ export default {
                         this.$router.push({ name: "portofolio" });
                     }
                 });
+        },
+        redirectCheck: function (id) {
+            axios.get("/api/portofolio/" + id).then((response) => {
+                if (response.data.data.status === 0) {
+                    this.$router.push({ name: "portofolioEdit", params: { id: id } });
+                } else {
+                    this.$swal
+                        .fire({
+                            title: "Apakah kamu yakin?",
+                            text: "Jika anda mengedit data yang sudah tervalidasi, maka data point akan tereset ke 0 kembali.",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yakin",
+                            cancelButtonText: "Batal",
+                        })
+                        .then((result) => {
+                            if (result.value) {
+                                this.$router.push({ name: "portofolioEdit", params: { id: id } });
+                            }
+                        });
+                }
+            });
         },
     },
 };
