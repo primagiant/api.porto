@@ -32,9 +32,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="jenis_kegiatan" class="col-sm-3 col-form-label">Jenis Kegiatan</label>
+                            <label for="jenis_kegiatan" class="col-sm-3 col-form-label">Bukti</label>
                             <div class="col-sm-9">
-                                <button type="submit" class="btn btn-sm btn-primary mr-2 rounded-sm mt-2"><small>Lihat Bukti</small></button>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-sm btn-primary d-inline-flex justify-content-center align-items-center" data-toggle="modal" data-target="#exampleModal">
+                                    <i class="ti-eye"></i>
+                                    <small class="ml-2">Lihat Bukti</small>
+                                </button>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -58,6 +62,24 @@
                 </div>
             </div>
         </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <!-- <div class="modal-body"> -->
+                    <div v-if="checkExtension(this.portofolio.bukti) == 'pdf'" class="embed-responsive embed-responsive-21by9">
+                        <iframe :src="'/storage/' + this.portofolio.bukti" class="embed-responsive-item" allowfullscreen style="border: none" width="100%"></iframe>
+                    </div>
+                    <div v-else class="d-flex justify-content-center align-items-center collapse-hidden">
+                        <img :src="'/storage/' + this.portofolio.bukti" alt="modal image" />
+                    </div>
+                    <!-- </div> -->
+                </div>
+                <div class="mt-3 d-flex justify-content-center align-items-center">
+                    <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -70,7 +92,7 @@ export default {
             errors: {},
         };
     },
-    mounted() {
+    created() {
         axios.get("/api/portofolio/" + this.$route.params.id).then((response) => {
             this.portofolio = response.data.data;
             if (this.portofolio.status == 1) {
@@ -84,7 +106,7 @@ export default {
             this.$swal
                 .fire({
                     title: "Apakah kamu yakin?",
-                    text: "Jika anda validasi, maka data tidak akan kembali bisa diperbarui lagi.",
+                    text: "Jika anda validasi, maka data tidak akan bisa diperbarui lagi.",
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#3085d6",
@@ -108,6 +130,9 @@ export default {
                         this.$router.push({ name: "detailMahasiswa", params: { nim: this.portofolio.mahasiswa.nim } });
                     }
                 });
+        },
+        checkExtension: function (src) {
+            return src.split(".").pop();
         },
     },
 };

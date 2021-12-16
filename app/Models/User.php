@@ -51,6 +51,6 @@ class User extends Authenticatable
 
     public function pa()
     {
-        return $this->hasOne(PembimbingAkademik::class);
+        return $this->hasOne(PembimbingAkademik::class, 'user_id', 'id');
     }
 }
