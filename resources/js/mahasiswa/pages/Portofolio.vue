@@ -1,7 +1,15 @@
 <template>
     <div>
-        <div class="col-md-12 mb-3">
+        <div class="col-md-12 mb-3 d-flex justify-content-between align-items-center">
             <h3>Data Portofolio Mahasiswa</h3>
+            <button @click="showFilter()" class="btn btn-sm btn-primary">
+                <i class="icon-eye mb-1"></i>
+            </button>
+        </div>
+        <div id="filter" class="col-lg-12 mb-3 stretch-card" v-show="filterClass">
+            <div class="card">
+                <div class="card-body"></div>
+            </div>
         </div>
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
@@ -14,7 +22,6 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th><input type="checkbox" id="checkAll" /></th>
                                     <th class="text-center">Nama Kegiatan</th>
                                     <th class="text-center">Penyelenggara</th>
                                     <th class="text-center">Point</th>
@@ -24,7 +31,6 @@
                             </thead>
                             <tbody>
                                 <tr v-for="(item, index) in portofolio.data" :key="index">
-                                    <td><input type="checkbox" class="checkClass" /></td>
                                     <td class="text-center">{{ item.nama_kegiatan }}</td>
                                     <td class="text-center">{{ item.penyelenggara }}</td>
                                     <td class="text-center">{{ item.valid_point }}</td>
@@ -68,6 +74,7 @@ export default {
     data() {
         return {
             portofolio: {},
+            filterClass: false,
         };
     },
     mounted() {
@@ -122,6 +129,9 @@ export default {
                         });
                 }
             });
+        },
+        showFilter: function () {
+            this.filterClass = !this.filterClass;
         },
     },
 };

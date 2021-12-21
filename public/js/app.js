@@ -7246,10 +7246,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      portofolio: {}
+      portofolio: {},
+      filterClass: false
     };
   },
   mounted: function mounted() {
@@ -7326,6 +7333,9 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       });
+    },
+    showFilter: function showFilter() {
+      this.filterClass = !this.filterClass;
     }
   }
 });
@@ -51124,7 +51134,46 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._m(0),
+    _c(
+      "div",
+      {
+        staticClass:
+          "col-md-12 mb-3 d-flex justify-content-between align-items-center",
+      },
+      [
+        _c("h3", [_vm._v("Data Portofolio Mahasiswa")]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-sm btn-primary",
+            on: {
+              click: function ($event) {
+                return _vm.showFilter()
+              },
+            },
+          },
+          [_c("i", { staticClass: "icon-eye mb-1" })]
+        ),
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.filterClass,
+            expression: "filterClass",
+          },
+        ],
+        staticClass: "col-lg-12 mb-3 stretch-card",
+        attrs: { id: "filter" },
+      },
+      [_vm._m(0)]
+    ),
     _vm._v(" "),
     _c("div", { staticClass: "col-lg-12 grid-margin stretch-card" }, [
       _c("div", { staticClass: "card" }, [
@@ -51152,8 +51201,6 @@ var render = function () {
                   "tbody",
                   _vm._l(_vm.portofolio.data, function (item, index) {
                     return _c("tr", { key: index }, [
-                      _vm._m(2, true),
-                      _vm._v(" "),
                       _c("td", { staticClass: "text-center" }, [
                         _vm._v(_vm._s(item.nama_kegiatan)),
                       ]),
@@ -51219,7 +51266,7 @@ var render = function () {
                                 },
                               },
                             },
-                            [_vm._m(3, true)]
+                            [_vm._m(2, true)]
                           ),
                           _vm._v(" "),
                           item.status == 0
@@ -51234,7 +51281,7 @@ var render = function () {
                                     },
                                   },
                                 },
-                                [_vm._m(4, true)]
+                                [_vm._m(3, true)]
                               )
                             : _vm._e(),
                         ],
@@ -51258,8 +51305,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12 mb-3" }, [
-      _c("h3", [_vm._v("Data Portofolio Mahasiswa")]),
+    return _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-body" }),
     ])
   },
   function () {
@@ -51268,10 +51315,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [
-          _c("input", { attrs: { type: "checkbox", id: "checkAll" } }),
-        ]),
-        _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("Nama Kegiatan")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("Penyelenggara")]),
@@ -51286,14 +51329,6 @@ var staticRenderFns = [
           _vm._v("Action"),
         ]),
       ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("input", { staticClass: "checkClass", attrs: { type: "checkbox" } }),
     ])
   },
   function () {
