@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="col-md-12 mb-3">
-            <h3>Detail Portofolio</h3>
+            <h3>Detail Portofolio Valid</h3>
         </div>
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
@@ -23,9 +23,9 @@
                                         <td class="text-center">{{ item.tahun }}</td>
                                         <td class="text-center">{{ item.penyelenggara }}</td>
                                         <td class="text-center">
-                                            <router-link :to="{ name: 'validasiPortofolio', params: { id: item.id } }" class="btn btn-sm btn-success" type="submit">
+                                            <router-link :to="{ name: 'validasi', params: { id: item.id } }" class="btn btn-sm btn-primary" type="submit">
                                                 <div class="d-flex justify-content-center align-items-center">
-                                                    <i class="ti-bookmark-alt"></i>
+                                                    <i class="ti-eye"></i>
                                                 </div>
                                             </router-link>
                                         </td>

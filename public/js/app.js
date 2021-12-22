@@ -7106,6 +7106,123 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/Dashboard.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/Dashboard.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      portofolio: {},
+      mhs: {},
+      totalPoint: 0,
+      belumValid: 0,
+      valid: 0,
+      totalPortofolio: 0
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get("/api/portofolio").then(function (response) {
+      _this.portofolio = response.data.data;
+
+      _this.portofolio.forEach(function (e) {
+        _this.totalPoint += e.valid_point;
+
+        if (e.status === 1) {
+          _this.valid++;
+        } else {
+          _this.belumValid++;
+        }
+
+        _this.totalPortofolio++;
+      });
+    });
+    axios.get("/api/mahasiswa").then(function (response) {
+      _this.mhs = response.data.data;
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/Kegiatan.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/Kegiatan.vue?vue&type=script&lang=js& ***!
@@ -7606,10 +7723,201 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/DetailMahasiswa.vue?vue&type=script&lang=js&":
-/*!************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/DetailMahasiswa.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      // portofolio: {},
+      pembimbingAkademik: {} // totalPoint: 0,
+      // belumValid: 0,
+      // valid: 0,
+      // totalPortofolio: 0,
+
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    // axios.get("/api/portofolio").then((response) => {
+    //     this.portofolio = response.data.data;
+    //     this.portofolio.forEach((e) => {
+    //         this.totalPoint += e.valid_point;
+    //         if (e.status === 1) {
+    //             this.valid++;
+    //         } else {
+    //             this.belumValid++;
+    //         }
+    //         this.totalPortofolio++;
+    //     });
+    // });
+    axios.get("/api/pembimbingakademik").then(function (response) {
+      _this.pembimbingAkademik = response.data.data;
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/DetailPerluValidasi.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/DetailPerluValidasi.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      portofolio: {}
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get("/api/portofolio/byNim/" + this.$route.params.nim).then(function (response) {
+      _this.portofolio = response.data;
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/DetailSudahValidasi.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/DetailSudahValidasi.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -7745,10 +8053,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/Mahasiswa.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/Mahasiswa.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/PerluValidasi.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/PerluValidasi.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -7813,7 +8121,81 @@ __webpack_require__.r(__webpack_exports__);
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       axios.get("/api/mahasiswa?page=" + page).then(function (response) {
         _this.mahasiswa = response.data;
-        console.log(_this.mahasiswa);
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/SudahValidasi.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/SudahValidasi.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      mahasiswa: {}
+    };
+  },
+  mounted: function mounted() {
+    this.getResults();
+  },
+  methods: {
+    getResults: function getResults() {
+      var _this = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get("/api/mahasiswa?page=" + page).then(function (response) {
+        _this.mahasiswa = response.data;
       });
     }
   }
@@ -8304,9 +8686,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _pembimbingAkademik_pages_Dashboard_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../pembimbingAkademik/pages/Dashboard.vue */ "./resources/js/pembimbingAkademik/pages/Dashboard.vue");
 /* harmony import */ var _pembimbingAkademik_pages_Kegiatan_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../pembimbingAkademik/pages/Kegiatan.vue */ "./resources/js/pembimbingAkademik/pages/Kegiatan.vue");
-/* harmony import */ var _pembimbingAkademik_pages_Mahasiswa_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../pembimbingAkademik/pages/Mahasiswa.vue */ "./resources/js/pembimbingAkademik/pages/Mahasiswa.vue");
-/* harmony import */ var _pembimbingAkademik_pages_DetailMahasiswa_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../pembimbingAkademik/pages/DetailMahasiswa.vue */ "./resources/js/pembimbingAkademik/pages/DetailMahasiswa.vue");
+/* harmony import */ var _pembimbingAkademik_pages_PerluValidasi_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../pembimbingAkademik/pages/PerluValidasi.vue */ "./resources/js/pembimbingAkademik/pages/PerluValidasi.vue");
+/* harmony import */ var _pembimbingAkademik_pages_DetailPerluValidasi_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../pembimbingAkademik/pages/DetailPerluValidasi.vue */ "./resources/js/pembimbingAkademik/pages/DetailPerluValidasi.vue");
 /* harmony import */ var _pembimbingAkademik_pages_Validasi_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../pembimbingAkademik/pages/Validasi.vue */ "./resources/js/pembimbingAkademik/pages/Validasi.vue");
+/* harmony import */ var _pembimbingAkademik_pages_SudahValidasi_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../pembimbingAkademik/pages/SudahValidasi.vue */ "./resources/js/pembimbingAkademik/pages/SudahValidasi.vue");
+/* harmony import */ var _pembimbingAkademik_pages_DetailSudahValidasi_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../pembimbingAkademik/pages/DetailSudahValidasi.vue */ "./resources/js/pembimbingAkademik/pages/DetailSudahValidasi.vue");
+
+
 
 
 
@@ -8321,17 +8707,25 @@ var PembimbingAkademikRoutes = [{
   path: '/pembimbing-akademik/kegiatan',
   component: _pembimbingAkademik_pages_Kegiatan_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
 }, {
-  name: 'mahasiswa',
-  path: '/pembimbing-akademik/mahasiswa/',
-  component: _pembimbingAkademik_pages_Mahasiswa_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+  name: 'perluValidasi',
+  path: '/pembimbing-akademik/mahasiswa/non-valid',
+  component: _pembimbingAkademik_pages_PerluValidasi_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
 }, {
-  name: 'detailMahasiswa',
-  path: '/pembimbing-akademik/mahasiswa/:nim',
-  component: _pembimbingAkademik_pages_DetailMahasiswa_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+  name: 'detailPerluValidasi',
+  path: '/pembimbing-akademik/mahasiswa/:nim/non-valid',
+  component: _pembimbingAkademik_pages_DetailPerluValidasi_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
 }, {
-  name: 'validasiPortofolio',
+  name: 'validasi',
   path: '/pembimbing-akademik/portofolio/:id',
   component: _pembimbingAkademik_pages_Validasi_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+}, {
+  name: 'sudahValidasi',
+  path: '/pembimbing-akademik/mahasiswa/valid',
+  component: _pembimbingAkademik_pages_SudahValidasi_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+}, {
+  name: 'detailSudahValidasi',
+  path: '/pembimbing-akademik/mahasiswa/:nim/valid',
+  component: _pembimbingAkademik_pages_DetailSudahValidasi_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
 }];
 
 /***/ }),
@@ -46280,15 +46674,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Dashboard_vue_vue_type_template_id_69b1fe46___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=template&id=69b1fe46& */ "./resources/js/mahasiswa/pages/Dashboard.vue?vue&type=template&id=69b1fe46&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=script&lang=js& */ "./resources/js/mahasiswa/pages/Dashboard.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 ;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _Dashboard_vue_vue_type_template_id_69b1fe46___WEBPACK_IMPORTED_MODULE_0__.render,
   _Dashboard_vue_vue_type_template_id_69b1fe46___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
@@ -46510,15 +46906,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Dashboard_vue_vue_type_template_id_a3870a86___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=template&id=a3870a86& */ "./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=template&id=a3870a86&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=script&lang=js& */ "./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 ;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _Dashboard_vue_vue_type_template_id_a3870a86___WEBPACK_IMPORTED_MODULE_0__.render,
   _Dashboard_vue_vue_type_template_id_a3870a86___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
@@ -46535,10 +46933,10 @@ component.options.__file = "resources/js/pembimbingAkademik/pages/Dashboard.vue"
 
 /***/ }),
 
-/***/ "./resources/js/pembimbingAkademik/pages/DetailMahasiswa.vue":
-/*!*******************************************************************!*\
-  !*** ./resources/js/pembimbingAkademik/pages/DetailMahasiswa.vue ***!
-  \*******************************************************************/
+/***/ "./resources/js/pembimbingAkademik/pages/DetailPerluValidasi.vue":
+/*!***********************************************************************!*\
+  !*** ./resources/js/pembimbingAkademik/pages/DetailPerluValidasi.vue ***!
+  \***********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -46546,8 +46944,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _DetailMahasiswa_vue_vue_type_template_id_5c98dadc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DetailMahasiswa.vue?vue&type=template&id=5c98dadc& */ "./resources/js/pembimbingAkademik/pages/DetailMahasiswa.vue?vue&type=template&id=5c98dadc&");
-/* harmony import */ var _DetailMahasiswa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DetailMahasiswa.vue?vue&type=script&lang=js& */ "./resources/js/pembimbingAkademik/pages/DetailMahasiswa.vue?vue&type=script&lang=js&");
+/* harmony import */ var _DetailPerluValidasi_vue_vue_type_template_id_0642a699___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DetailPerluValidasi.vue?vue&type=template&id=0642a699& */ "./resources/js/pembimbingAkademik/pages/DetailPerluValidasi.vue?vue&type=template&id=0642a699&");
+/* harmony import */ var _DetailPerluValidasi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DetailPerluValidasi.vue?vue&type=script&lang=js& */ "./resources/js/pembimbingAkademik/pages/DetailPerluValidasi.vue?vue&type=script&lang=js&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -46557,9 +46955,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 ;
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _DetailMahasiswa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _DetailMahasiswa_vue_vue_type_template_id_5c98dadc___WEBPACK_IMPORTED_MODULE_0__.render,
-  _DetailMahasiswa_vue_vue_type_template_id_5c98dadc___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _DetailPerluValidasi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DetailPerluValidasi_vue_vue_type_template_id_0642a699___WEBPACK_IMPORTED_MODULE_0__.render,
+  _DetailPerluValidasi_vue_vue_type_template_id_0642a699___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
   null,
@@ -46569,7 +46967,46 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/pembimbingAkademik/pages/DetailMahasiswa.vue"
+component.options.__file = "resources/js/pembimbingAkademik/pages/DetailPerluValidasi.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pembimbingAkademik/pages/DetailSudahValidasi.vue":
+/*!***********************************************************************!*\
+  !*** ./resources/js/pembimbingAkademik/pages/DetailSudahValidasi.vue ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _DetailSudahValidasi_vue_vue_type_template_id_562f509c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DetailSudahValidasi.vue?vue&type=template&id=562f509c& */ "./resources/js/pembimbingAkademik/pages/DetailSudahValidasi.vue?vue&type=template&id=562f509c&");
+/* harmony import */ var _DetailSudahValidasi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DetailSudahValidasi.vue?vue&type=script&lang=js& */ "./resources/js/pembimbingAkademik/pages/DetailSudahValidasi.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _DetailSudahValidasi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DetailSudahValidasi_vue_vue_type_template_id_562f509c___WEBPACK_IMPORTED_MODULE_0__.render,
+  _DetailSudahValidasi_vue_vue_type_template_id_562f509c___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pembimbingAkademik/pages/DetailSudahValidasi.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -46613,10 +47050,10 @@ component.options.__file = "resources/js/pembimbingAkademik/pages/Kegiatan.vue"
 
 /***/ }),
 
-/***/ "./resources/js/pembimbingAkademik/pages/Mahasiswa.vue":
-/*!*************************************************************!*\
-  !*** ./resources/js/pembimbingAkademik/pages/Mahasiswa.vue ***!
-  \*************************************************************/
+/***/ "./resources/js/pembimbingAkademik/pages/PerluValidasi.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/pembimbingAkademik/pages/PerluValidasi.vue ***!
+  \*****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -46624,8 +47061,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Mahasiswa_vue_vue_type_template_id_26d46023___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Mahasiswa.vue?vue&type=template&id=26d46023& */ "./resources/js/pembimbingAkademik/pages/Mahasiswa.vue?vue&type=template&id=26d46023&");
-/* harmony import */ var _Mahasiswa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Mahasiswa.vue?vue&type=script&lang=js& */ "./resources/js/pembimbingAkademik/pages/Mahasiswa.vue?vue&type=script&lang=js&");
+/* harmony import */ var _PerluValidasi_vue_vue_type_template_id_1c3043aa___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PerluValidasi.vue?vue&type=template&id=1c3043aa& */ "./resources/js/pembimbingAkademik/pages/PerluValidasi.vue?vue&type=template&id=1c3043aa&");
+/* harmony import */ var _PerluValidasi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PerluValidasi.vue?vue&type=script&lang=js& */ "./resources/js/pembimbingAkademik/pages/PerluValidasi.vue?vue&type=script&lang=js&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -46635,9 +47072,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 ;
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _Mahasiswa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Mahasiswa_vue_vue_type_template_id_26d46023___WEBPACK_IMPORTED_MODULE_0__.render,
-  _Mahasiswa_vue_vue_type_template_id_26d46023___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _PerluValidasi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PerluValidasi_vue_vue_type_template_id_1c3043aa___WEBPACK_IMPORTED_MODULE_0__.render,
+  _PerluValidasi_vue_vue_type_template_id_1c3043aa___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
   null,
@@ -46647,7 +47084,46 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/pembimbingAkademik/pages/Mahasiswa.vue"
+component.options.__file = "resources/js/pembimbingAkademik/pages/PerluValidasi.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pembimbingAkademik/pages/SudahValidasi.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/pembimbingAkademik/pages/SudahValidasi.vue ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _SudahValidasi_vue_vue_type_template_id_6c1cedad___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SudahValidasi.vue?vue&type=template&id=6c1cedad& */ "./resources/js/pembimbingAkademik/pages/SudahValidasi.vue?vue&type=template&id=6c1cedad&");
+/* harmony import */ var _SudahValidasi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SudahValidasi.vue?vue&type=script&lang=js& */ "./resources/js/pembimbingAkademik/pages/SudahValidasi.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _SudahValidasi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SudahValidasi_vue_vue_type_template_id_6c1cedad___WEBPACK_IMPORTED_MODULE_0__.render,
+  _SudahValidasi_vue_vue_type_template_id_6c1cedad___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pembimbingAkademik/pages/SudahValidasi.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -46947,6 +47423,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/mahasiswa/pages/Dashboard.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/mahasiswa/pages/Dashboard.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Dashboard.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/Dashboard.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/mahasiswa/pages/Kegiatan.vue?vue&type=script&lang=js&":
 /*!****************************************************************************!*\
   !*** ./resources/js/mahasiswa/pages/Kegiatan.vue?vue&type=script&lang=js& ***!
@@ -47011,10 +47503,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/pembimbingAkademik/pages/DetailMahasiswa.vue?vue&type=script&lang=js&":
-/*!********************************************************************************************!*\
-  !*** ./resources/js/pembimbingAkademik/pages/DetailMahasiswa.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************/
+/***/ "./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -47022,8 +47514,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailMahasiswa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DetailMahasiswa.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/DetailMahasiswa.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailMahasiswa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Dashboard.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pembimbingAkademik/pages/DetailPerluValidasi.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/pembimbingAkademik/pages/DetailPerluValidasi.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPerluValidasi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DetailPerluValidasi.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/DetailPerluValidasi.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPerluValidasi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pembimbingAkademik/pages/DetailSudahValidasi.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/pembimbingAkademik/pages/DetailSudahValidasi.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailSudahValidasi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DetailSudahValidasi.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/DetailSudahValidasi.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailSudahValidasi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -47043,10 +47567,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/pembimbingAkademik/pages/Mahasiswa.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************!*\
-  !*** ./resources/js/pembimbingAkademik/pages/Mahasiswa.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************/
+/***/ "./resources/js/pembimbingAkademik/pages/PerluValidasi.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/pembimbingAkademik/pages/PerluValidasi.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -47054,8 +47578,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Mahasiswa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Mahasiswa.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/Mahasiswa.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Mahasiswa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PerluValidasi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PerluValidasi.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/PerluValidasi.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PerluValidasi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pembimbingAkademik/pages/SudahValidasi.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/pembimbingAkademik/pages/SudahValidasi.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SudahValidasi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./SudahValidasi.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/SudahValidasi.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SudahValidasi_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -47534,19 +48074,36 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/pembimbingAkademik/pages/DetailMahasiswa.vue?vue&type=template&id=5c98dadc&":
-/*!**************************************************************************************************!*\
-  !*** ./resources/js/pembimbingAkademik/pages/DetailMahasiswa.vue?vue&type=template&id=5c98dadc& ***!
-  \**************************************************************************************************/
+/***/ "./resources/js/pembimbingAkademik/pages/DetailPerluValidasi.vue?vue&type=template&id=0642a699&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/pembimbingAkademik/pages/DetailPerluValidasi.vue?vue&type=template&id=0642a699& ***!
+  \******************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailMahasiswa_vue_vue_type_template_id_5c98dadc___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailMahasiswa_vue_vue_type_template_id_5c98dadc___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPerluValidasi_vue_vue_type_template_id_0642a699___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPerluValidasi_vue_vue_type_template_id_0642a699___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailMahasiswa_vue_vue_type_template_id_5c98dadc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DetailMahasiswa.vue?vue&type=template&id=5c98dadc& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/DetailMahasiswa.vue?vue&type=template&id=5c98dadc&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPerluValidasi_vue_vue_type_template_id_0642a699___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DetailPerluValidasi.vue?vue&type=template&id=0642a699& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/DetailPerluValidasi.vue?vue&type=template&id=0642a699&");
+
+
+/***/ }),
+
+/***/ "./resources/js/pembimbingAkademik/pages/DetailSudahValidasi.vue?vue&type=template&id=562f509c&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/pembimbingAkademik/pages/DetailSudahValidasi.vue?vue&type=template&id=562f509c& ***!
+  \******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailSudahValidasi_vue_vue_type_template_id_562f509c___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailSudahValidasi_vue_vue_type_template_id_562f509c___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailSudahValidasi_vue_vue_type_template_id_562f509c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DetailSudahValidasi.vue?vue&type=template&id=562f509c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/DetailSudahValidasi.vue?vue&type=template&id=562f509c&");
 
 
 /***/ }),
@@ -47568,19 +48125,36 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/pembimbingAkademik/pages/Mahasiswa.vue?vue&type=template&id=26d46023&":
-/*!********************************************************************************************!*\
-  !*** ./resources/js/pembimbingAkademik/pages/Mahasiswa.vue?vue&type=template&id=26d46023& ***!
-  \********************************************************************************************/
+/***/ "./resources/js/pembimbingAkademik/pages/PerluValidasi.vue?vue&type=template&id=1c3043aa&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/pembimbingAkademik/pages/PerluValidasi.vue?vue&type=template&id=1c3043aa& ***!
+  \************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Mahasiswa_vue_vue_type_template_id_26d46023___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Mahasiswa_vue_vue_type_template_id_26d46023___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PerluValidasi_vue_vue_type_template_id_1c3043aa___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PerluValidasi_vue_vue_type_template_id_1c3043aa___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Mahasiswa_vue_vue_type_template_id_26d46023___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Mahasiswa.vue?vue&type=template&id=26d46023& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/Mahasiswa.vue?vue&type=template&id=26d46023&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PerluValidasi_vue_vue_type_template_id_1c3043aa___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PerluValidasi.vue?vue&type=template&id=1c3043aa& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/PerluValidasi.vue?vue&type=template&id=1c3043aa&");
+
+
+/***/ }),
+
+/***/ "./resources/js/pembimbingAkademik/pages/SudahValidasi.vue?vue&type=template&id=6c1cedad&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/pembimbingAkademik/pages/SudahValidasi.vue?vue&type=template&id=6c1cedad& ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SudahValidasi_vue_vue_type_template_id_6c1cedad___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SudahValidasi_vue_vue_type_template_id_6c1cedad___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SudahValidasi_vue_vue_type_template_id_6c1cedad___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./SudahValidasi.vue?vue&type=template&id=6c1cedad& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/SudahValidasi.vue?vue&type=template&id=6c1cedad&");
 
 
 /***/ }),
@@ -51002,14 +51576,105 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12 grid-margin" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-12 col-xl-8 mb-4 mb-xl-0" }, [
+            _c("h3", { staticClass: "font-weight-bold" }, [
+              _vm._v("Selamat Datang " + _vm._s(_vm.mhs.nama)),
+            ]),
+          ]),
+        ]),
+      ]),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-6 mb-4 stretch-card transparent" }, [
+            _c("div", { staticClass: "card card-tale" }, [
+              _c("div", { staticClass: "card-body" }, [
+                _c("p", { staticClass: "mb-4" }, [_vm._v("Point Terkumpul")]),
+                _vm._v(" "),
+                _c("p", { staticClass: "fs-30 mb-2" }, [
+                  _vm._v(_vm._s(_vm.totalPoint)),
+                ]),
+              ]),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6 mb-4 stretch-card transparent" }, [
+            _c("div", { staticClass: "card card-dark-blue" }, [
+              _c("div", { staticClass: "card-body" }, [
+                _c("p", { staticClass: "mb-4" }, [_vm._v("Total Portofolio")]),
+                _vm._v(" "),
+                _c("p", { staticClass: "fs-30 mb-2" }, [
+                  _vm._v(_vm._s(_vm.totalPortofolio)),
+                ]),
+              ]),
+            ]),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-6 mb-4 stretch-card transparent" }, [
+            _c("div", { staticClass: "card card-light-blue" }, [
+              _c("div", { staticClass: "card-body" }, [
+                _c("p", { staticClass: "mb-4" }, [_vm._v("Sudah Tervalidasi")]),
+                _vm._v(" "),
+                _c("p", { staticClass: "fs-30 mb-2" }, [
+                  _vm._v(_vm._s(_vm.valid)),
+                ]),
+              ]),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6 mb-4 stretch-card transparent" }, [
+            _c("div", { staticClass: "card card-light-danger" }, [
+              _c("div", { staticClass: "card-body" }, [
+                _c("p", { staticClass: "mb-4" }, [_vm._v("Belum Tervalidasi")]),
+                _vm._v(" "),
+                _c("p", { staticClass: "fs-30 mb-2" }, [
+                  _vm._v(_vm._s(_vm.belumValid)),
+                ]),
+              ]),
+            ]),
+          ]),
+        ]),
+      ]),
+    ]),
+  ])
 }
 var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("h3", [_vm._v("Dashboard")])])
+    return _c("div", { staticClass: "col-md-6 grid-margin stretch-card" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "d-flex justify-content-between" }, [
+            _c("p", { staticClass: "card-title" }, [_vm._v("Laporan Point")]),
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "font-weight-500" }, [
+            _vm._v("Total point yang terkumpul setiap semesternya."),
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "d-flex justify-content-center align-items-center mt-3 pt-3",
+            },
+            [_c("h1", [_vm._v("chart")])]
+          ),
+        ]),
+      ]),
+    ])
   },
 ]
 render._withStripped = true
@@ -51883,29 +52548,75 @@ var render = function () {
           1
         ),
         _vm._v(" "),
-        _c(
-          "li",
-          { staticClass: "nav-item" },
-          [
-            _c(
-              "router-link",
-              { staticClass: "nav-link", attrs: { to: { name: "mahasiswa" } } },
-              [
-                _c("i", { staticClass: "ti-user menu-icon" }),
-                _vm._v(" "),
-                _c("span", { staticClass: "menu-title" }, [
-                  _vm._v("Mahasiswa"),
-                ]),
-              ]
-            ),
-          ],
-          1
-        ),
+        _c("li", { staticClass: "nav-item" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "collapse", attrs: { id: "ui-basic" } }, [
+            _c("ul", { staticClass: "nav flex-column sub-menu" }, [
+              _c(
+                "li",
+                { staticClass: "nav-item" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "nav-link",
+                      attrs: { to: { name: "perluValidasi" } },
+                    },
+                    [_vm._v("Perlu Validasi")]
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                { staticClass: "nav-item" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "nav-link",
+                      attrs: { to: { name: "sudahValidasi" } },
+                    },
+                    [_vm._v("Sudah Validasi")]
+                  ),
+                ],
+                1
+              ),
+            ]),
+          ]),
+        ]),
       ]),
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "nav-link",
+        attrs: {
+          "data-toggle": "collapse",
+          href: "#ui-basic",
+          "aria-expanded": "false",
+          "aria-controls": "ui-basic",
+        },
+      },
+      [
+        _c("i", { staticClass: "ti-package menu-icon" }),
+        _vm._v(" "),
+        _c("span", { staticClass: "menu-title" }, [_vm._v("Mahasiswa")]),
+        _vm._v(" "),
+        _c("i", { staticClass: "menu-arrow" }),
+      ]
+    )
+  },
+]
 render._withStripped = true
 
 
@@ -51928,14 +52639,33 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12 grid-margin" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-12 col-xl-8 mb-4 mb-xl-0" }, [
+            _c("h3", { staticClass: "font-weight-bold" }, [
+              _vm._v("Selamat Datang " + _vm._s(_vm.pembimbingAkademik.nama)),
+            ]),
+            _vm._v(" "),
+            _vm._m(0),
+          ]),
+        ]),
+      ]),
+    ]),
+  ])
 }
 var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("h3", [_vm._v("Dashboard")])])
+    return _c("h6", { staticClass: "font-weight-normal mb-0" }, [
+      _vm._v(
+        "\n                        All systems are running smoothly! You have\n                        "
+      ),
+      _c("span", { staticClass: "text-primary" }, [_vm._v("3 unread alerts!")]),
+    ])
   },
 ]
 render._withStripped = true
@@ -51944,10 +52674,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/DetailMahasiswa.vue?vue&type=template&id=5c98dadc&":
-/*!*****************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/DetailMahasiswa.vue?vue&type=template&id=5c98dadc& ***!
-  \*****************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/DetailPerluValidasi.vue?vue&type=template&id=0642a699&":
+/*!*********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/DetailPerluValidasi.vue?vue&type=template&id=0642a699& ***!
+  \*********************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -51998,7 +52728,7 @@ var render = function () {
                                   staticClass: "btn btn-sm btn-success",
                                   attrs: {
                                     to: {
-                                      name: "validasiPortofolio",
+                                      name: "validasi",
                                       params: { id: item.id },
                                     },
                                     type: "submit",
@@ -52041,7 +52771,140 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-12 mb-3" }, [
-      _c("h3", [_vm._v("Detail Portofolio")]),
+      _c("h3", [_vm._v("Detail Portofolio Non Valid")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { staticClass: "text-center" }, [_vm._v("Nama Kegiatan")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center" }, [_vm._v("Tahun")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center" }, [_vm._v("Penyelenggara")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center", attrs: { width: "50" } }, [
+          _vm._v("Action"),
+        ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { staticClass: "text-center", attrs: { colspan: "5" } }, [
+        _vm._v(
+          "Tidak Ada Portofolio yang Harus Divalidasi Untuk Mahasiswa Terkait"
+        ),
+      ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/DetailSudahValidasi.vue?vue&type=template&id=562f509c&":
+/*!*********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/DetailSudahValidasi.vue?vue&type=template&id=562f509c& ***!
+  \*********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-12 grid-margin stretch-card" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "table-responsive" }, [
+            _c("table", { staticClass: "table table-hover" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                [
+                  _vm.portofolio.data.length !== 0
+                    ? _vm._l(_vm.portofolio.data, function (item, index) {
+                        return _c("tr", { key: index }, [
+                          _c("td", { staticClass: "text-center" }, [
+                            _vm._v(_vm._s(item.nama_kegiatan)),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-center" }, [
+                            _vm._v(_vm._s(item.tahun)),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-center" }, [
+                            _vm._v(_vm._s(item.penyelenggara)),
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            { staticClass: "text-center" },
+                            [
+                              _c(
+                                "router-link",
+                                {
+                                  staticClass: "btn btn-sm btn-primary",
+                                  attrs: {
+                                    to: {
+                                      name: "validasi",
+                                      params: { id: item.id },
+                                    },
+                                    type: "submit",
+                                  },
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "d-flex justify-content-center align-items-center",
+                                    },
+                                    [_c("i", { staticClass: "ti-eye" })]
+                                  ),
+                                ]
+                              ),
+                            ],
+                            1
+                          ),
+                        ])
+                      })
+                    : [_vm._m(2)],
+                ],
+                2
+              ),
+            ]),
+          ]),
+        ]),
+      ]),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12 mb-3" }, [
+      _c("h3", [_vm._v("Detail Portofolio Valid")]),
     ])
   },
   function () {
@@ -52180,10 +53043,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/Mahasiswa.vue?vue&type=template&id=26d46023&":
-/*!***********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/Mahasiswa.vue?vue&type=template&id=26d46023& ***!
-  \***********************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/PerluValidasi.vue?vue&type=template&id=1c3043aa&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/PerluValidasi.vue?vue&type=template&id=1c3043aa& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -52225,7 +53088,7 @@ var render = function () {
                             staticClass: "btn btn-sm btn-primary",
                             attrs: {
                               to: {
-                                name: "detailMahasiswa",
+                                name: "detailPerluValidasi",
                                 params: { nim: item.nim },
                               },
                               type: "submit",
@@ -52268,7 +53131,123 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-12 mb-3" }, [
-      _c("h3", [_vm._v("Mahasiswa")]),
+      _c("h3", [_vm._v("Perlu Validasi")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Nama")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("NIM")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Program Studi")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-right", attrs: { width: "50" } }, [
+          _vm._v("Action"),
+        ]),
+      ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/SudahValidasi.vue?vue&type=template&id=6c1cedad&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/SudahValidasi.vue?vue&type=template&id=6c1cedad& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-12 grid-margin stretch-card" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "table-responsive" }, [
+            _c("table", { staticClass: "table table-hover" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.mahasiswa.data, function (item, index) {
+                  return _c("tr", { key: index }, [
+                    _c("td", [_vm._v(_vm._s(item.nama))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.nim))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.prodi))]),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "btn btn-sm btn-primary",
+                            attrs: {
+                              to: {
+                                name: "DetailPerluValidasi",
+                                params: { nim: item.nim },
+                              },
+                              type: "submit",
+                            },
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "d-flex justify-content-center align-items-center px-2",
+                              },
+                              [
+                                _c("i", { staticClass: "ti-eye" }),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "ml-2" }, [
+                                  _vm._v("Detail"),
+                                ]),
+                              ]
+                            ),
+                          ]
+                        ),
+                      ],
+                      1
+                    ),
+                  ])
+                }),
+                0
+              ),
+            ]),
+          ]),
+        ]),
+      ]),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12 mb-3" }, [
+      _c("h3", [_vm._v("Sudah Validasi")]),
     ])
   },
   function () {
