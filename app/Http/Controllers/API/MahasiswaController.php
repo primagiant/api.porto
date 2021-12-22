@@ -36,6 +36,8 @@ class MahasiswaController extends Controller
                     PembimbingAkademik::find(Auth::user()->pa->id)->mahasiswas
                 );
             }
+        } else if (Auth::user()->hasRole('mahasiswa')) {
+            return new MahasiswaResource(Mahasiswa::where('user_id', Auth::user()->id)->first());
         }
     }
 

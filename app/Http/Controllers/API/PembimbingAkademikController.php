@@ -10,6 +10,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,9 +20,15 @@ class PembimbingAkademikController extends Controller
 {
     public function index()
     {
-        return PembimbingAkademikResource::collection(
-            PembimbingAkademik::paginate(4)
-        );
+        if (Auth::user()->hasRole('admin')) {
+            return PembimbingAkademikResource::collection(
+                PembimbingAkademik::paginate(4)
+            );
+        } else if (Auth::user()->hasRole('pembimbingakademik')) {
+            return new PembimbingAkademikResource(
+                PembimbingAkademik::where('user_id', Auth::user()->id)->first()
+            );
+        }
     }
 
     public function store(Request $request)

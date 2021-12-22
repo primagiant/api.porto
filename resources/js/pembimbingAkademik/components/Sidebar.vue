@@ -16,10 +16,21 @@
             </li>
 
             <li class="nav-item">
-                <router-link :to="{ name: 'mahasiswa' }" class="nav-link">
-                    <i class="ti-user menu-icon"></i>
+                <div class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                    <i class="ti-package menu-icon"></i>
                     <span class="menu-title">Mahasiswa</span>
-                </router-link>
+                    <i class="menu-arrow"></i>
+                </div>
+                <div class="collapse" id="ui-basic">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <router-link :to="{ name: 'perluValidasi' }" class="nav-link">Perlu Validasi</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link :to="{ name: 'sudahValidasi' }" class="nav-link">Sudah Validasi</router-link>
+                        </li>
+                    </ul>
+                </div>
             </li>
         </ul>
     </nav>

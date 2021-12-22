@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="col-md-12 mb-3">
-            <h3>Mahasiswa</h3>
+            <h3>Sudah Validasi</h3>
         </div>
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
@@ -22,7 +22,7 @@
                                     <td>{{ item.nim }}</td>
                                     <td>{{ item.prodi }}</td>
                                     <td>
-                                        <router-link :to="{ name: 'detailMahasiswa', params: { nim: item.nim } }" class="btn btn-sm btn-primary" type="submit">
+                                        <router-link :to="{ name: 'DetailPerluValidasi', params: { nim: item.nim } }" class="btn btn-sm btn-primary" type="submit">
                                             <div class="d-flex justify-content-center align-items-center px-2">
                                                 <i class="ti-eye"></i>
                                                 <span class="ml-2">Detail</span>
@@ -53,7 +53,6 @@ export default {
         getResults: function (page = 1) {
             axios.get("/api/mahasiswa?page=" + page).then((response) => {
                 this.mahasiswa = response.data;
-                console.log(this.mahasiswa);
             });
         },
     },
