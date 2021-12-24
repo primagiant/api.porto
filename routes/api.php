@@ -43,4 +43,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('prodi/byJurusan/{jurusan_id}', [ProdiController::class, 'byJurusan']);
     // Angkatan
     Route::resource('angkatan', AngkatanController::class)->except(['create', 'edit']);
+    Route::get('angkatans', [AngkatanController::class, 'alldata']);
 });

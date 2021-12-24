@@ -72,7 +72,7 @@ class MahasiswaController extends Controller
                 'nim' => $request->nim,
                 'nama' => $user->name,
                 'user_id' => $user->id,
-                'pembimbing_akademik_id' => null,
+                'pembimbing_akademik_id' => $request->pembimbing_akademik_id,
                 'angkatan_id' => $request->angkatan_id,
                 'fakultas_id' => $request->fakultas_id,
                 'jurusan_id' => $request->jurusan_id,
