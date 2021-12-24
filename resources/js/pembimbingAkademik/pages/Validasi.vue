@@ -66,14 +66,12 @@
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                    <!-- <div class="modal-body"> -->
                     <div v-if="checkExtension(this.portofolio.bukti) == 'pdf'" class="embed-responsive embed-responsive-21by9">
                         <iframe :src="'/storage/' + this.portofolio.bukti" class="embed-responsive-item" allowfullscreen style="border: none" width="100%"></iframe>
                     </div>
                     <div v-else class="d-flex justify-content-center align-items-center collapse-hidden">
                         <img :src="'/storage/' + this.portofolio.bukti" alt="modal image" />
                     </div>
-                    <!-- </div> -->
                 </div>
                 <div class="mt-3 d-flex justify-content-center align-items-center">
                     <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Close</button>

@@ -7898,11 +7898,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       portofolio: {},
-      selected: {},
+      portofolioPoint: [],
       isCheckAll: false
     };
   },
@@ -7914,23 +7930,46 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
-    checkAll: function checkAll() {
-      this.isCheckAll = !this.isCheckAll;
-      this.selected = [];
+    validasi: function validasi(e) {
+      var _this2 = this;
 
-      if (this.isCheckAll) {
-        for (var key in this.portofolio.data) {
-          this.selected.push(this.portofolio.data[key]);
-          console.log(this.selected);
+      e.preventDefault();
+      this.$swal.fire({
+        title: "Apakah kamu yakin?",
+        text: "Jika anda validasi, maka data tidak akan bisa diperbarui lagi.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Validasi",
+        cancelButtonText: "Batal"
+      }).then(function (result) {
+        for (var i in _this2.portofolio.data) {
+          var formData = new FormData();
+          formData.append("valid_point", _this2.portofolioPoint[i]);
+
+          if (result.value) {
+            axios.post("/api/portofolio/validasi/" + _this2.portofolio.data[i].id, formData);
+          }
         }
-      }
+
+        _this2.$swal.fire({
+          title: "Success!",
+          text: "Portofolio Tervalidasi",
+          icon: "success",
+          timer: 1000
+        });
+
+        _this2.$router.push({
+          name: "detailMahasiswa",
+          params: {
+            nim: _this2.portofolio.data[0].mahasiswa.nim
+          }
+        });
+      });
     },
-    updateCheckall: function updateCheckall() {
-      if (this.selected.length == this.portofolio.length) {
-        this.isCheckAll = true;
-      } else {
-        this.isCheckAll = false;
-      }
+    checkExtension: function checkExtension(src) {
+      return src.split(".").pop();
     }
   }
 });
@@ -8237,8 +8276,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
 //
 //
 //
@@ -53142,159 +53179,168 @@ var render = function () {
     _vm._v(" "),
     _c("div", { staticClass: "col-lg-12 grid-margin stretch-card" }, [
       _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "table-responsive" }, [
-            _c("table", { staticClass: "table table-hover" }, [
-              _c("thead", [
-                _c("tr", [
-                  _c(
-                    "th",
-                    { staticClass: "text-center", attrs: { width: "10" } },
-                    [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.isCheckAll,
-                            expression: "isCheckAll",
-                          },
-                        ],
-                        attrs: { type: "checkbox" },
-                        domProps: {
-                          checked: Array.isArray(_vm.isCheckAll)
-                            ? _vm._i(_vm.isCheckAll, null) > -1
-                            : _vm.isCheckAll,
-                        },
-                        on: {
-                          click: function ($event) {
-                            return _vm.checkAll()
-                          },
-                          change: function ($event) {
-                            var $$a = _vm.isCheckAll,
-                              $$el = $event.target,
-                              $$c = $$el.checked ? true : false
-                            if (Array.isArray($$a)) {
-                              var $$v = null,
-                                $$i = _vm._i($$a, $$v)
-                              if ($$el.checked) {
-                                $$i < 0 && (_vm.isCheckAll = $$a.concat([$$v]))
-                              } else {
-                                $$i > -1 &&
-                                  (_vm.isCheckAll = $$a
-                                    .slice(0, $$i)
-                                    .concat($$a.slice($$i + 1)))
-                              }
-                            } else {
-                              _vm.isCheckAll = $$c
-                            }
-                          },
-                        },
-                      }),
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("th", { staticClass: "text-center" }, [
-                    _vm._v("Nama Kegiatan"),
-                  ]),
-                  _vm._v(" "),
-                  _c("th", { staticClass: "text-center" }, [_vm._v("Tahun")]),
-                  _vm._v(" "),
-                  _c("th", { staticClass: "text-center" }, [
-                    _vm._v("Penyelenggara"),
-                  ]),
-                  _vm._v(" "),
-                  _c("th", { staticClass: "text-center th-width" }, [
-                    _vm._v("Point Referensi"),
-                  ]),
-                  _vm._v(" "),
-                  _c("th", { staticClass: "text-center th-width" }, [
-                    _vm._v("Valid Point"),
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "th",
-                    { staticClass: "text-center", attrs: { width: "50" } },
-                    [_vm._v("Action")]
-                  ),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.portofolio.data, function (item, index) {
-                  return _c("tr", { key: index }, [
-                    _c("td", { staticClass: "text-center" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.selected,
-                            expression: "selected",
-                          },
-                        ],
-                        attrs: { type: "checkbox" },
-                        domProps: {
-                          checked: Array.isArray(_vm.selected)
-                            ? _vm._i(_vm.selected, null) > -1
-                            : _vm.selected,
-                        },
-                        on: {
-                          change: [
-                            function ($event) {
-                              var $$a = _vm.selected,
-                                $$el = $event.target,
-                                $$c = $$el.checked ? true : false
-                              if (Array.isArray($$a)) {
-                                var $$v = null,
-                                  $$i = _vm._i($$a, $$v)
-                                if ($$el.checked) {
-                                  $$i < 0 && (_vm.selected = $$a.concat([$$v]))
-                                } else {
-                                  $$i > -1 &&
-                                    (_vm.selected = $$a
-                                      .slice(0, $$i)
-                                      .concat($$a.slice($$i + 1)))
-                                }
-                              } else {
-                                _vm.selected = $$c
-                              }
-                            },
-                            function ($event) {
-                              return _vm.updateCheckall()
+        _c(
+          "form",
+          {
+            staticClass: "card-body",
+            on: {
+              submit: function ($event) {
+                $event.preventDefault()
+                return _vm.validasi.apply(null, arguments)
+              },
+            },
+          },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary mb-3",
+                attrs: { type: "submit" },
+              },
+              [_vm._v("Validasi Semua Portofolio")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "table-responsive" }, [
+              _c("table", { staticClass: "table table-hover" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.portofolio.data, function (item, index) {
+                    return _c("tr", { key: index }, [
+                      _c("td", { staticClass: "text-center" }, [
+                        _vm._v(_vm._s(item.nama_kegiatan)),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-center" }, [
+                        _vm._v(_vm._s(item.tahun)),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-center" }, [
+                        _vm._v(_vm._s(item.penyelenggara)),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-center" }, [
+                        _vm._v(_vm._s(item.ref_point)),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-center" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model.number",
+                              value: _vm.portofolioPoint[index],
+                              expression: "portofolioPoint[index]",
+                              modifiers: { number: true },
                             },
                           ],
+                          staticClass: "form-control text-center",
+                          attrs: { type: "number", min: "0" },
+                          domProps: { value: _vm.portofolioPoint[index] },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.portofolioPoint,
+                                index,
+                                _vm._n($event.target.value)
+                              )
+                            },
+                            blur: function ($event) {
+                              return _vm.$forceUpdate()
+                            },
+                          },
+                        }),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-center" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm btn-primary",
+                            attrs: {
+                              type: "button",
+                              "data-toggle": "modal",
+                              "data-target": "#exampleModal" + index,
+                            },
+                          },
+                          [_vm._m(2, true)]
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "modal fade",
+                          attrs: {
+                            id: "exampleModal" + index,
+                            tabindex: "-1",
+                            role: "dialog",
+                            "aria-labelledby": "exampleModalLabel",
+                            "aria-hidden": "true",
+                          },
                         },
-                      }),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-center" }, [
-                      _vm._v(_vm._s(item.nama_kegiatan)),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-center" }, [
-                      _vm._v(_vm._s(item.tahun)),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-center" }, [
-                      _vm._v(_vm._s(item.penyelenggara)),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-center" }, [
-                      _vm._v(_vm._s(item.ref_point)),
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(1, true),
-                    _vm._v(" "),
-                    _vm._m(2, true),
-                  ])
-                }),
-                0
-              ),
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "modal-dialog modal-lg",
+                              attrs: { role: "document" },
+                            },
+                            [
+                              _c("div", { staticClass: "modal-content" }, [
+                                _vm.checkExtension(item.bukti) == "pdf"
+                                  ? _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "embed-responsive embed-responsive-21by9",
+                                      },
+                                      [
+                                        _c("iframe", {
+                                          staticClass: "embed-responsive-item",
+                                          staticStyle: { border: "none" },
+                                          attrs: {
+                                            src: "/storage/" + item.bukti,
+                                            allowfullscreen: "",
+                                            width: "100%",
+                                          },
+                                        }),
+                                      ]
+                                    )
+                                  : _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "d-flex justify-content-center align-items-center collapse-hidden",
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src: "/storage/" + item.bukti,
+                                            alt: "modal image",
+                                          },
+                                        }),
+                                      ]
+                                    ),
+                              ]),
+                              _vm._v(" "),
+                              _vm._m(3, true),
+                            ]
+                          ),
+                        ]
+                      ),
+                    ])
+                  }),
+                  0
+                ),
+              ]),
             ]),
-          ]),
-        ]),
+          ]
+        ),
       ]),
     ]),
   ])
@@ -53312,26 +53358,61 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "text-center" }, [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "number", min: "0", max: "50" },
-      }),
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { staticClass: "text-center" }, [_vm._v("Nama Kegiatan")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center" }, [_vm._v("Tahun")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center" }, [_vm._v("Penyelenggara")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center th-width" }, [
+          _vm._v("Point Referensi"),
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center th-width" }, [
+          _vm._v("Valid Point"),
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center", attrs: { width: "50" } }, [
+          _vm._v("Action"),
+        ]),
+      ]),
     ])
   },
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "text-center" }, [
-      _c("button", { staticClass: "btn btn-sm btn-primary" }, [
+    return _c(
+      "div",
+      { staticClass: "d-flex justify-content-center align-items-center" },
+      [_c("i", { staticClass: "ti-eye" })]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "mt-3 d-flex justify-content-center align-items-center" },
+      [
         _c(
-          "div",
-          { staticClass: "d-flex justify-content-center align-items-center" },
-          [_c("i", { staticClass: "ti-eye" })]
+          "button",
+          {
+            staticClass:
+              "btn btn-sm btn-primary d-inline-flex justify-content-center align-items-center",
+            attrs: {
+              type: "button",
+              "data-toggle": "modal",
+              "data-target": "#exampleModal",
+            },
+          },
+          [_vm._v("Close")]
         ),
-      ]),
-    ])
+      ]
+    )
   },
 ]
 render._withStripped = true
