@@ -6517,6 +6517,7 @@ __webpack_require__.r(__webpack_exports__);
       fakultas: {},
       jurusan: {},
       datas: {
+        nama_prodi: null,
         fakultas_id: null,
         jurusan_id: null,
         deskripsi: null
@@ -6958,10 +6959,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
-//
-//
 //
 //
 //
@@ -50910,9 +50907,9 @@ var render = function () {
                 _vm.errors.nama_prodi
                   ? _c("div", { staticClass: "invalid-feedback" }, [
                       _vm._v(
-                        "\n              " +
+                        "\n                            " +
                           _vm._s(_vm.errors.nama_prodi[0]) +
-                          "\n            "
+                          "\n                        "
                       ),
                     ])
                   : _vm._e(),
@@ -50970,9 +50967,9 @@ var render = function () {
                 _vm.errors.fakultas_id
                   ? _c("div", { staticClass: "invalid-feedback" }, [
                       _vm._v(
-                        "\n              " +
+                        "\n                            " +
                           _vm._s(_vm.errors.fakultas_id[0]) +
-                          "\n            "
+                          "\n                        "
                       ),
                     ])
                   : _vm._e(),
@@ -51030,9 +51027,9 @@ var render = function () {
                 _vm.errors.jurusan_id
                   ? _c("div", { staticClass: "invalid-feedback" }, [
                       _vm._v(
-                        "\n              " +
+                        "\n                            " +
                           _vm._s(_vm.errors.jurusan_id[0]) +
-                          "\n            "
+                          "\n                        "
                       ),
                     ])
                   : _vm._e(),
@@ -51069,9 +51066,9 @@ var render = function () {
                 _vm.errors.deskripsi
                   ? _c("div", { staticClass: "invalid-feedback" }, [
                       _vm._v(
-                        "\n              " +
+                        "\n                            " +
                           _vm._s(_vm.errors.deskripsi[0]) +
-                          "\n            "
+                          "\n                        "
                       ),
                     ])
                   : _vm._e(),
@@ -51557,7 +51554,7 @@ var render = function () {
               },
               [
                 _c("i", { staticClass: "icon-plus mr-2" }),
-                _vm._v("\n          Tambah Data\n        "),
+                _vm._v("\n                    Tambah Data\n                "),
               ]
             ),
             _vm._v(" "),
