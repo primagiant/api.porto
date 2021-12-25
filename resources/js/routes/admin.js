@@ -31,13 +31,13 @@ export const AdminRoutes = [
     // Prodi
     { name: 'prodi', path: '/admin/prodi', component: Prodi },
     { name: 'prodiCreate', path: '/admin/prodi/create', component: FormsProdi },
-    { name: 'prodiEdit', path: '/admin/prodi/edit:id', component: FormsProdi },
+    { name: 'prodiEdit', path: '/admin/prodi/edit/:id', component: FormsProdi },
     // Mahasiswa
     { name: 'mahasiswa', path: '/admin/mahasiswa', component: Mahasiswa },
     { name: 'mahasiswaCreate', path: '/admin/mahasiswa/create', component: FormsMahasiswa },
-    { name: 'mahasiswaEdit', path: '/admin/mahasiswa/edit:id', component: FormsMahasiswa },
+    { name: 'mahasiswaEdit', path: '/admin/mahasiswa/edit/:id', component: FormsMahasiswa },
     //Pembimbing Akademik
     { name: 'pembimbingakademik', path: '/admin/pembimbingakademik', component: PembimbingAkademik },
     { name: 'pembimbingAkademikCreate', path: '/admin/pembimbingakademik/create', component: FormsPembimbingAkademik },
-    { name: 'pembimbingAkademikEdit', path: '/admin/pembimbingakademik/edit:id', component: FormsPembimbingAkademik },
+    { name: 'pembimbingAkademikEdit', path: '/admin/pembimbingakademik/edit/:id', component: FormsPembimbingAkademik },
 ];

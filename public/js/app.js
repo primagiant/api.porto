@@ -6134,22 +6134,21 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios.get("/api/mahasiswa/").then(function (response) {
+    axios.get("/api/mahasiswa").then(function (response) {
       _this.mahasiswa = response.data;
     });
-    axios.get("/api/fakultas/").then(function (response) {
+    axios.get("/api/fakultas").then(function (response) {
       _this.fakultas = response.data;
     });
-    axios.get("/api/angkatans").then(function (response) {
+    axios.get("/api/angkatan").then(function (response) {
       _this.angkatan = response.data;
     });
-    axios.get("/api/pembimbingakademik/").then(function (response) {
+    axios.get("/api/pembimbingakademik").then(function (response) {
       _this.pa = response.data;
     });
 
     if (this.$route.params.id) {
-      this.axios.get("/api/mahasiswa/" + this.$route.params.id).then(function (response) {
-        console.log(response.data);
+      this.axios.get("/api/mahasiswa" + this.$route.params.id).then(function (response) {
         _this.datas.nim = response.data.data.nim;
         _this.datas.name = response.data.data.nama;
         _this.selectedFakultas = response.data.data.fakultas_id;
@@ -6158,7 +6157,6 @@ __webpack_require__.r(__webpack_exports__);
         _this.datas.email = response.data.data.user.email;
         _this.datas.tahun = response.data.data.tahun;
         _this.datas.pembimbing_akademik_id = response.data.data.pembimbing_akademik_id;
-        console.log(response.data.data);
       });
     }
   },
@@ -6190,7 +6188,7 @@ __webpack_require__.r(__webpack_exports__);
       e.preventDefault();
 
       if (this.$route.params.id) {
-        axios.put("/api/mahasiswa/" + this.$route.params.id, this.datas).then(function (response) {
+        axios.put("/api/mahasiswa" + this.$route.params.id, this.datas).then(function (response) {
           _this4.$swal.fire({
             title: "Success!",
             text: response.data.message,
@@ -6206,7 +6204,7 @@ __webpack_require__.r(__webpack_exports__);
           _this4.invalid = true;
         });
       } else {
-        axios.post("/api/mahasiswa/", this.datas).then(function (response) {
+        axios.post("/api/mahasiswa", this.datas).then(function (response) {
           _this4.$swal.fire({
             title: "Success!",
             text: response.data.message,
@@ -6359,7 +6357,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios.get("/api/pembimbingakademik/").then(function (response) {
+    axios.get("/api/pembimbingakademik").then(function (response) {
       _this.pembimbingakademik = response.data;
     });
     axios.get("/api/fakultas/").then(function (response) {
@@ -6422,7 +6420,7 @@ __webpack_require__.r(__webpack_exports__);
           _this4.invalid = true;
         });
       } else {
-        axios.post("/api/pembimbingakademik/", this.datas).then(function (response) {
+        axios.post("/api/pembimbingakademik", this.datas).then(function (response) {
           _this4.$swal.fire({
             title: "Success!",
             text: response.data.message,
@@ -6582,7 +6580,8 @@ __webpack_require__.r(__webpack_exports__);
           _this3.invalid = true;
         });
       } else {
-        axios.post("/api/prodi/", this.datas).then(function (response) {
+        console.log(this.datas);
+        axios.post("/api/prodi", this.datas).then(function (response) {
           _this3.$swal.fire({
             title: "Success!",
             text: response.data.message,
@@ -8505,7 +8504,7 @@ var AdminRoutes = [{
   component: _admin_pages_forms_FormsProdi_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
 }, {
   name: 'prodiEdit',
-  path: '/admin/prodi/edit:id',
+  path: '/admin/prodi/edit/:id',
   component: _admin_pages_forms_FormsProdi_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
 }, // Mahasiswa
 {
@@ -8518,7 +8517,7 @@ var AdminRoutes = [{
   component: _admin_pages_forms_FormsMahasiswa_vue__WEBPACK_IMPORTED_MODULE_12__["default"]
 }, {
   name: 'mahasiswaEdit',
-  path: '/admin/mahasiswa/edit:id',
+  path: '/admin/mahasiswa/edit/:id',
   component: _admin_pages_forms_FormsMahasiswa_vue__WEBPACK_IMPORTED_MODULE_12__["default"]
 }, //Pembimbing Akademik
 {
@@ -8531,7 +8530,7 @@ var AdminRoutes = [{
   component: _admin_pages_forms_FormsPembimbingAkademik__WEBPACK_IMPORTED_MODULE_13__["default"]
 }, {
   name: 'pembimbingAkademikEdit',
-  path: '/admin/pembimbingakademik/edit:id',
+  path: '/admin/pembimbingakademik/edit/:id',
   component: _admin_pages_forms_FormsPembimbingAkademik__WEBPACK_IMPORTED_MODULE_13__["default"]
 }];
 
@@ -50118,70 +50117,6 @@ var render = function () {
                         ])
                       : _vm._e(),
                   ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "angkatan_id" } }, [
-                      _vm._v("Pembimbing Akademik"),
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.datas.pembimbing_akademik_id,
-                            expression: "datas.pembimbing_akademik_id",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        on: {
-                          change: function ($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function (o) {
-                                return o.selected
-                              })
-                              .map(function (o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              _vm.datas,
-                              "pembimbing_akademik_id",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            )
-                          },
-                        },
-                      },
-                      [
-                        _c("option", { attrs: { disabled: "", value: "" } }, [
-                          _vm._v("Select Pembimbing Akademik"),
-                        ]),
-                        _vm._v(" "),
-                        _vm._l(_vm.pa.data, function (item) {
-                          return _c(
-                            "option",
-                            { key: item.id, domProps: { value: item.id } },
-                            [_vm._v(_vm._s(item.nama))]
-                          )
-                        }),
-                      ],
-                      2
-                    ),
-                    _vm._v(" "),
-                    _vm.errors.angkatan_id
-                      ? _c("div", { staticClass: "invalid-feedback" }, [
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(_vm.errors.angkatan_id[0]) +
-                              "\n                                "
-                          ),
-                        ])
-                      : _vm._e(),
-                  ]),
                 ]),
               ]),
             ]),
@@ -50212,6 +50147,7 @@ var render = function () {
                         attrs: {
                           type: "email",
                           autofocus: "",
+                          autocomplete: "username",
                           name: "nama",
                           placeholder: "Email",
                         },
@@ -50256,6 +50192,7 @@ var render = function () {
                             class: { "is-invalid": _vm.invalid },
                             attrs: {
                               type: "password",
+                              autocomplete: "current-password",
                               name: "nama",
                               placeholder: "Password",
                             },
@@ -50305,6 +50242,7 @@ var render = function () {
                             class: { "is-invalid": _vm.invalid },
                             attrs: {
                               type: "password",
+                              autocomplete: "current-password",
                               name: "nama",
                               placeholder: "Konfirmasi Password",
                             },
@@ -50452,9 +50390,9 @@ var render = function () {
                     _vm.errors.name
                       ? _c("div", { staticClass: "invalid-feedback" }, [
                           _vm._v(
-                            "\n                  " +
+                            "\n                                    " +
                               _vm._s(_vm.errors.name[0]) +
-                              "\n                "
+                              "\n                                "
                           ),
                         ])
                       : _vm._e(),
@@ -50512,9 +50450,9 @@ var render = function () {
                     _vm.errors.fakultas_id
                       ? _c("div", { staticClass: "invalid-feedback" }, [
                           _vm._v(
-                            "\n                  " +
+                            "\n                                    " +
                               _vm._s(_vm.errors.fakultas_id[0]) +
-                              "\n                "
+                              "\n                                "
                           ),
                         ])
                       : _vm._e(),
@@ -50572,9 +50510,9 @@ var render = function () {
                     _vm.errors.jurusan_id
                       ? _c("div", { staticClass: "invalid-feedback" }, [
                           _vm._v(
-                            "\n                  " +
+                            "\n                                    " +
                               _vm._s(_vm.errors.jurusan_id[0]) +
-                              "\n                "
+                              "\n                                "
                           ),
                         ])
                       : _vm._e(),
@@ -50632,9 +50570,9 @@ var render = function () {
                     _vm.errors.prodi_id
                       ? _c("div", { staticClass: "invalid-feedback" }, [
                           _vm._v(
-                            "\n                  " +
+                            "\n                                    " +
                               _vm._s(_vm.errors.prodi_id[0]) +
-                              "\n                "
+                              "\n                                "
                           ),
                         ])
                       : _vm._e(),
@@ -50686,9 +50624,9 @@ var render = function () {
                       _vm.errors.nama
                         ? _c("div", { staticClass: "invalid-feedback" }, [
                             _vm._v(
-                              "\n                  " +
+                              "\n                                    " +
                                 _vm._s(_vm.errors.nama[0]) +
-                                "\n                "
+                                "\n                                "
                             ),
                           ])
                         : _vm._e(),
@@ -50735,9 +50673,9 @@ var render = function () {
                           _vm.errors.password
                             ? _c("div", { staticClass: "invalid-feedback" }, [
                                 _vm._v(
-                                  "\n                  " +
+                                  "\n                                    " +
                                     _vm._s(_vm.errors.password[0]) +
-                                    "\n                "
+                                    "\n                                "
                                 ),
                               ])
                             : _vm._e(),
@@ -50787,11 +50725,11 @@ var render = function () {
                           _vm.errors.password_confirmation
                             ? _c("div", { staticClass: "invalid-feedback" }, [
                                 _vm._v(
-                                  "\n                  " +
+                                  "\n                                    " +
                                     _vm._s(
                                       _vm.errors.password_confirmation[0]
                                     ) +
-                                    "\n                "
+                                    "\n                                "
                                 ),
                               ])
                             : _vm._e(),

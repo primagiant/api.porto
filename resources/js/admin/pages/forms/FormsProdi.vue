@@ -113,8 +113,9 @@ export default {
                         this.invalid = true;
                     });
             } else {
+                console.log(this.datas);
                 axios
-                    .post("/api/prodi/", this.datas)
+                    .post("/api/prodi", this.datas)
                     .then((response) => {
                         this.$swal.fire({ title: "Success!", text: response.data.message, icon: "success", timer: 1000 });
                         this.$router.push({ name: "prodi" });

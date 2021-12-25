@@ -12,14 +12,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AngkatanController extends Controller
 {
-    public function alldata()
+    public function index(Request $request)
     {
-        return AngkatanResource::collection(Angkatan::all());
-    }
-
-    public function index()
-    {
-        return AngkatanResource::collection(Angkatan::orderBy('tahun')->paginate(3));
+        if (isset($request->page)) {
+            return AngkatanResource::collection(Angkatan::orderBy('tahun')->paginate(3));
+        } else {
+            return AngkatanResource::collection(Angkatan::all());
+        }
     }
 
     public function store(Request $request)

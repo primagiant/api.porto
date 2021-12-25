@@ -19,10 +19,14 @@ use Illuminate\Support\Facades\DB;
 
 class MahasiswaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         if (Auth::user()->hasRole('admin')) {
-            return MahasiswaResource::collection(Mahasiswa::orderBy('nim')->paginate(4));
+            if (isset($request->page)) {
+                return MahasiswaResource::collection(Mahasiswa::orderBy('nim')->paginate(4));
+            } else {
+                return MahasiswaResource::collection(Mahasiswa::all());
+            }
         } else if (Auth::user()->hasRole('pembimbingakademik')) {
             if (request('keyword') != null) {
                 return MahasiswaResource::collection(

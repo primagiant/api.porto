@@ -69,7 +69,7 @@
                                         {{ errors.angkatan_id[0] }}
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="angkatan_id">Pembimbing Akademik</label>
                                     <select v-model="datas.pembimbing_akademik_id" class="form-control">
                                         <option disabled value="">Select Pembimbing Akademik</option>
@@ -78,7 +78,7 @@
                                     <div v-if="errors.angkatan_id" class="invalid-feedback">
                                         {{ errors.angkatan_id[0] }}
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -90,7 +90,7 @@
                             <div>
                                 <div class="form-group">
                                     <label for="nama">Email</label>
-                                    <input v-model="datas.email" type="email" autofocus class="form-control" :class="{ 'is-invalid': invalid }" name="nama" placeholder="Email" />
+                                    <input v-model="datas.email" type="email" autofocus autocomplete="username" class="form-control" :class="{ 'is-invalid': invalid }" name="nama" placeholder="Email" />
                                     <div v-if="errors.nama" class="invalid-feedback">
                                         {{ errors.nama[0] }}
                                     </div>
@@ -98,7 +98,7 @@
 
                                 <div v-if="!$route.params.id" class="form-group">
                                     <label for="nama">Password</label>
-                                    <input v-model="datas.password" type="password" class="form-control" :class="{ 'is-invalid': invalid }" name="nama" placeholder="Password" />
+                                    <input v-model="datas.password" type="password" autocomplete="current-password" class="form-control" :class="{ 'is-invalid': invalid }" name="nama" placeholder="Password" />
                                     <div v-if="errors.password" class="invalid-feedback">
                                         {{ errors.password[0] }}
                                     </div>
@@ -106,7 +106,7 @@
 
                                 <div v-if="!$route.params.id" class="form-group">
                                     <label for="nama">Konfirmasi Password</label>
-                                    <input v-model="datas.password_confirmation" type="password" class="form-control" :class="{ 'is-invalid': invalid }" name="nama" placeholder="Konfirmasi Password" />
+                                    <input v-model="datas.password_confirmation" type="password" autocomplete="current-password" class="form-control" :class="{ 'is-invalid': invalid }" name="nama" placeholder="Konfirmasi Password" />
                                     <div v-if="errors.password_confirmation" class="invalid-feedback">
                                         {{ errors.password_confirmation[0] }}
                                     </div>
@@ -152,21 +152,20 @@ export default {
         };
     },
     mounted() {
-        axios.get("/api/mahasiswa/").then((response) => {
+        axios.get("/api/mahasiswa").then((response) => {
             this.mahasiswa = response.data;
         });
-        axios.get("/api/fakultas/").then((response) => {
+        axios.get("/api/fakultas").then((response) => {
             this.fakultas = response.data;
         });
-        axios.get("/api/angkatans").then((response) => {
+        axios.get("/api/angkatan").then((response) => {
             this.angkatan = response.data;
         });
-        axios.get("/api/pembimbingakademik/").then((response) => {
+        axios.get("/api/pembimbingakademik").then((response) => {
             this.pa = response.data;
         });
         if (this.$route.params.id) {
-            this.axios.get("/api/mahasiswa/" + this.$route.params.id).then((response) => {
-                console.log(response.data);
+            this.axios.get("/api/mahasiswa" + this.$route.params.id).then((response) => {
                 this.datas.nim = response.data.data.nim;
                 this.datas.name = response.data.data.nama;
                 this.selectedFakultas = response.data.data.fakultas_id;
@@ -175,11 +174,9 @@ export default {
                 this.datas.email = response.data.data.user.email;
                 this.datas.tahun = response.data.data.tahun;
                 this.datas.pembimbing_akademik_id = response.data.data.pembimbing_akademik_id;
-                console.log(response.data.data);
             });
         }
     },
-
     watch: {
         selectedFakultas: function (value) {
             axios.get("/api/jurusan/byFakultas/" + this.selectedFakultas).then((response) => {
@@ -202,7 +199,7 @@ export default {
             e.preventDefault();
             if (this.$route.params.id) {
                 axios
-                    .put("/api/mahasiswa/" + this.$route.params.id, this.datas)
+                    .put("/api/mahasiswa" + this.$route.params.id, this.datas)
                     .then((response) => {
                         this.$swal.fire({ title: "Success!", text: response.data.message, icon: "success", timer: 1000 });
                         this.$router.push({ name: "mahasiswa" });
@@ -213,7 +210,7 @@ export default {
                     });
             } else {
                 axios
-                    .post("/api/mahasiswa/", this.datas)
+                    .post("/api/mahasiswa", this.datas)
                     .then((response) => {
                         this.$swal.fire({ title: "Success!", text: response.data.message, icon: "success", timer: 1000 });
                         this.$router.push({ name: "mahasiswa" });
