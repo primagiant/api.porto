@@ -26,6 +26,8 @@ class PortofolioResource extends JsonResource
             'nama_kegiatan' => $this->nama_kegiatan,
             'penyelenggara' => $this->penyelenggara,
             'tahun' => $this->tahun,
+            'semester_id' => $this->semester_id,
+            'semester' => $this->semester->name,
             'bukti' => $this->bukti,
             'status' => $this->status,
         ];

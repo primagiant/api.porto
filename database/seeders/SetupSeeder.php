@@ -28,10 +28,10 @@ class SetupSeeder extends Seeder
         ]);
 
         Prodi::create([
-            'nama_prodi' => 'Pendidikan Teknik Informatika',
+            'nama_prodi' => 'Ilmu Komputer',
             'fakultas_id' => $fakultas->id,
             'jurusan_id' => $jurusan->id,
-            'deskripsi' => "PTI",
+            'deskripsi' => "ILKOM",
         ]);
     }
 }

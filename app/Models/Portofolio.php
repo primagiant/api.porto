@@ -17,6 +17,7 @@ class Portofolio extends Model
         'nama_kegiatan',
         'penyelenggara',
         'tahun',
+        'semester_id',
         'bukti',
         'status',
     ];
@@ -34,5 +35,10 @@ class Portofolio extends Model
     public function jenis_kegiatan()
     {
         return $this->belongsTo(JenisKegiatan::class, 'jenis_kegiatan_id', 'id');
+    }
+
+    public function semester()
+    {
+        return $this->belongsTo(Semester::class, 'semester_id', 'id');
     }
 }

@@ -31,6 +31,7 @@ class PortofolioController extends Controller
             'nama_kegiatan' => ['required', 'string', 'max:191'],
             'penyelenggara' => ['required', 'string', 'max:191'],
             'tahun' => ['required', 'digits_between:4,4', 'numeric'],
+            'semester_id' => ['required'],
             'bukti' => ['required', 'file', 'mimes:jpg,png,jpeg,pdf', 'max:2048']
         ]);
 
@@ -46,6 +47,7 @@ class PortofolioController extends Controller
                 'nama_kegiatan' => $request->nama_kegiatan,
                 'penyelenggara' => $request->penyelenggara,
                 'tahun' => $request->tahun,
+                'semester_id' => $request->semester_id,
                 'bukti' => $request->file('bukti')->store('bukti'),
                 'valid_point' => '0',
             ]);
@@ -88,7 +90,8 @@ class PortofolioController extends Controller
             'nama_kegiatan' => ['required', 'string', 'max:191'],
             'penyelenggara' => ['required', 'string', 'max:191'],
             'tahun' => ['required', 'digits_between:4,4', 'numeric'],
-            'bukti' => ['file', 'mimes:jpg,png,jpeg,pdf', 'max:2048']
+            'semester_id' => ['required'],
+            'bukti' => ['file', 'mimes:jpg,png,jpeg,pdf', 'max:2048'],
         ]);
 
         if ($validator->fails()) {
@@ -110,6 +113,7 @@ class PortofolioController extends Controller
                 'penyelenggara' => $request->penyelenggara,
                 'tahun' => $request->tahun,
                 'bukti' => $bukti,
+                'semester_id' => $request->semester_id,
                 'valid_point' => '0',
                 'status' => '0',
             ]);

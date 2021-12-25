@@ -22,11 +22,14 @@ class CreateTbPortofolio extends Migration
             $table->string('nama_kegiatan', 191);
             $table->string('penyelenggara', 191);
             $table->string('tahun', 4);
+            $table->unsignedBigInteger('semester_id');
             $table->string('bukti', 255);
             $table->boolean('status')->default(0);
             $table->timestamps();
 
             $table->foreign('mahasiswa_id')->references('id')->on('tb_mahasiswa')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('semester_id')->references('id')->on('tb_semester')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('kategori_kegiatan_id')->references('id')->on('tb_kategori_kegiatan')
                 ->onUpdate('cascade')->onDelete('cascade');
