@@ -43,12 +43,12 @@
                                         </div>
                                     </td>
                                     <td class="text-center">
-                                        <router-link to="" class="btn btn-sm btn-primary" type="submit">
+                                        <button class="btn btn-sm btn-primary" type="button" data-toggle="modal" :data-target="'#exampleModal' + index">
                                             <div class="d-flex justify-content-center align-items-center">
                                                 <i class="ti-eye"></i>
                                             </div>
-                                        </router-link>
-                                        <button @click="redirectCheck(item.id)" class="btn btn-sm btn-warning" type="submit">
+                                        </button>
+                                        <button @click="redirectCheck(item.id)" class="btn btn-sm btn-warning" type="button">
                                             <div class="d-flex justify-content-center align-items-center">
                                                 <i class="ti-marker-alt"></i>
                                             </div>
@@ -59,6 +59,76 @@
                                             </div>
                                         </button>
                                     </td>
+                                    <!-- Modal -->
+                                    <div class="modal fade" :id="'exampleModal' + index" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="row">
+                                                    <div class="col-md-6 card">
+                                                        <div class="card-body">
+                                                            <div class="form-group row">
+                                                                <h3>Detail Portofolio</h3>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-sm-3 col-form-label">Nama Kegiatan</label>
+                                                                <label class="col-sm-9 col-form-label">
+                                                                    {{ item.nama_kegiatan }}
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-sm-3 col-form-label">Penyelenggara</label>
+                                                                <label class="col-sm-9 col-form-label">
+                                                                    {{ item.penyelenggara }}
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-sm-3 col-form-label">Kategori Kegiatan</label>
+                                                                <label class="col-sm-9 col-form-label">
+                                                                    {{ item.kategori_kegiatan }}
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-sm-3 col-form-label">Jenis Kegiatan</label>
+                                                                <label class="col-sm-9 col-form-label">
+                                                                    {{ item.jenis_kegiatan }}
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-sm-3 col-form-label">Tahun</label>
+                                                                <label class="col-sm-9 col-form-label">
+                                                                    {{ item.tahun }}
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-sm-3 col-form-label">Semester</label>
+                                                                <label class="col-sm-9 col-form-label text-capitalize">
+                                                                    {{ item.semester }}
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-sm-3 col-form-label">Valid Point</label>
+                                                                <label class="col-sm-9 col-form-label">
+                                                                    {{ item.valid_point }}
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div v-if="checkExtension(item.bukti) == 'pdf'" class="embed-responsive embed-responsive-1by1">
+                                                            <iframe :src="'/storage/' + item.bukti" class="embed-responsive-item" allowfullscreen style="border: none" width="100%"></iframe>
+                                                        </div>
+                                                        <div v-else class="d-flex justify-content-center align-items-center collapse-hidden">
+                                                            <img :src="'/storage/' + item.bukti" alt="modal image" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-3 d-flex justify-content-center align-items-center">
+                                                <button type="button" class="btn btn-sm btn-primary d-inline-flex justify-content-center align-items-center" data-toggle="modal" data-target="#exampleModal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Modal -->
                                 </tr>
                             </tbody>
                         </table>
@@ -133,7 +203,16 @@ export default {
         showFilter: function () {
             this.filterClass = !this.filterClass;
         },
+        checkExtension: function (src) {
+            return src.split(".").pop();
+        },
     },
 };
 </script>
+
+<style scoped>
+.select-text {
+    color: #1f1f1f;
+}
+</style>
 
