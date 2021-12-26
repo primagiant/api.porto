@@ -31,8 +31,8 @@
                   <td>{{ item.prodi }}</td>
                   <td class="text-center">
                     <div class="d-inline btn-group">
-                      <router-link :to="{ name: 'pembimbingAkademikEdit', params: { id: item.id } }" class="btn btn-sm btn-warning rounded-left">
-                        <i class="ti-pencil-alt"></i>
+                      <router-link :to="{ name: 'assignMahasiswa', params: { id: item.id } }" class="btn btn-sm btn-primary rounded-left">
+                        <i class="ti-check-box"></i>
                       </router-link>
                       <button @click="deleteData(item.id)" class="btn btn-sm btn-danger rounded-right" type="submit">
                         <i class="ti-trash"></i>
@@ -42,10 +42,6 @@
                 </tr>
               </tbody>
             </table>
-            <!-- <div class="d-flex justify-content-between align-items-center mt-4 px-3">
-                            <small class="text-secondary">Showing {{ $fakultas->firstItem() }} to {{ $fakultas->lastItem() }} of {{ $fakultas->total() }} results.</small>
-                            {{ $fakultas->links() }}
-                        </div> -->
           </div>
         </div>
       </div>

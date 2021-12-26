@@ -48,10 +48,6 @@
                 </tr>
               </tbody>
             </table>
-            <!-- <div class="d-flex justify-content-between align-items-center mt-4 px-3">
-                            <small class="text-secondary">Showing {{ $fakultas->firstItem() }} to {{ $fakultas->lastItem() }} of {{ $fakultas->total() }} results.</small>
-                            {{ $fakultas->links() }}
-                        </div> -->
           </div>
         </div>
       </div>

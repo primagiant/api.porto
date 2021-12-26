@@ -5452,10 +5452,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5570,10 +5566,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5619,6 +5611,125 @@ __webpack_require__.r(__webpack_exports__);
 
           _this2.showAllData();
         }
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/admin/pages/forms/AssignMahasiswa.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/admin/pages/forms/AssignMahasiswa.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      mahasiswa: {},
+      selected: [],
+      checkAll: false
+    };
+  },
+  mounted: function mounted() {
+    this.showAllData();
+  },
+  methods: {
+    showAllData: function showAllData() {
+      var _this = this;
+
+      axios.get("/api/mahasiswa").then(function (response) {
+        _this.mahasiswa = response.data;
+      });
+    },
+    select: function select() {
+      this.selected = [];
+
+      if (!this.checkAll) {
+        for (var i in this.mahasiswa.data) {
+          this.selected.push(this.mahasiswa.data[i].id);
+        }
+      }
+    },
+    updateSelected: function updateSelected() {
+      if (this.selected.length == this.mahasiswa.data.length) {
+        this.checkAll = true;
+      } else {
+        this.checkAll = false;
+      }
+
+      console.log(this.selected);
+    },
+    assignMahasiswa: function assignMahasiswa(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      var formdata = new FormData();
+      formdata.append("pembimbing_akademik_id", this.$route.params.id);
+
+      for (var i in this.selected) {
+        axios.put("/api/mahasiswa/" + this.selected[i], formdata).then(function (response) {})["catch"](function (error) {
+          _this2.errors = error.response.data;
+          _this2.invalid = true;
+        });
+      }
+
+      this.$swal.fire({
+        title: "Success!",
+        icon: "success",
+        timer: 1000
+      });
+      this.$router.push({
+        name: "pembimbingakademik"
       });
     }
   }
@@ -8432,6 +8543,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _admin_pages_forms_FormsProdi_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../admin/pages/forms/FormsProdi.vue */ "./resources/js/admin/pages/forms/FormsProdi.vue");
 /* harmony import */ var _admin_pages_forms_FormsMahasiswa_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../admin/pages/forms/FormsMahasiswa.vue */ "./resources/js/admin/pages/forms/FormsMahasiswa.vue");
 /* harmony import */ var _admin_pages_forms_FormsPembimbingAkademik__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../admin/pages/forms/FormsPembimbingAkademik */ "./resources/js/admin/pages/forms/FormsPembimbingAkademik.vue");
+/* harmony import */ var _admin_pages_forms_AssignMahasiswa__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../admin/pages/forms/AssignMahasiswa */ "./resources/js/admin/pages/forms/AssignMahasiswa.vue");
+
 
 
 
@@ -8532,6 +8645,10 @@ var AdminRoutes = [{
   name: 'pembimbingAkademikEdit',
   path: '/admin/pembimbingakademik/edit/:id',
   component: _admin_pages_forms_FormsPembimbingAkademik__WEBPACK_IMPORTED_MODULE_13__["default"]
+}, {
+  name: 'assignMahasiswa',
+  path: '/admin/assignmahasiswa/:id',
+  component: _admin_pages_forms_AssignMahasiswa__WEBPACK_IMPORTED_MODULE_14__["default"]
 }];
 
 /***/ }),
@@ -46505,6 +46622,45 @@ component.options.__file = "resources/js/admin/pages/PembimbingAkademik.vue"
 
 /***/ }),
 
+/***/ "./resources/js/admin/pages/forms/AssignMahasiswa.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/admin/pages/forms/AssignMahasiswa.vue ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _AssignMahasiswa_vue_vue_type_template_id_33db5372___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AssignMahasiswa.vue?vue&type=template&id=33db5372& */ "./resources/js/admin/pages/forms/AssignMahasiswa.vue?vue&type=template&id=33db5372&");
+/* harmony import */ var _AssignMahasiswa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AssignMahasiswa.vue?vue&type=script&lang=js& */ "./resources/js/admin/pages/forms/AssignMahasiswa.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AssignMahasiswa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AssignMahasiswa_vue_vue_type_template_id_33db5372___WEBPACK_IMPORTED_MODULE_0__.render,
+  _AssignMahasiswa_vue_vue_type_template_id_33db5372___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/admin/pages/forms/AssignMahasiswa.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/admin/pages/forms/FormsAngkatan.vue":
 /*!**********************************************************!*\
   !*** ./resources/js/admin/pages/forms/FormsAngkatan.vue ***!
@@ -47519,6 +47675,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/admin/pages/forms/AssignMahasiswa.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/admin/pages/forms/AssignMahasiswa.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AssignMahasiswa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./AssignMahasiswa.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/admin/pages/forms/AssignMahasiswa.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AssignMahasiswa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/admin/pages/forms/FormsAngkatan.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************!*\
   !*** ./resources/js/admin/pages/forms/FormsAngkatan.vue?vue&type=script&lang=js& ***!
@@ -48016,6 +48188,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PembimbingAkademik_vue_vue_type_template_id_1cb8186e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PembimbingAkademik_vue_vue_type_template_id_1cb8186e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PembimbingAkademik.vue?vue&type=template&id=1cb8186e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/admin/pages/PembimbingAkademik.vue?vue&type=template&id=1cb8186e&");
+
+
+/***/ }),
+
+/***/ "./resources/js/admin/pages/forms/AssignMahasiswa.vue?vue&type=template&id=33db5372&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/admin/pages/forms/AssignMahasiswa.vue?vue&type=template&id=33db5372& ***!
+  \*******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AssignMahasiswa_vue_vue_type_template_id_33db5372___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AssignMahasiswa_vue_vue_type_template_id_33db5372___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AssignMahasiswa_vue_vue_type_template_id_33db5372___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./AssignMahasiswa.vue?vue&type=template&id=33db5372& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/admin/pages/forms/AssignMahasiswa.vue?vue&type=template&id=33db5372&");
 
 
 /***/ }),
@@ -49189,15 +49378,15 @@ var render = function () {
                               "router-link",
                               {
                                 staticClass:
-                                  "btn btn-sm btn-warning rounded-left",
+                                  "btn btn-sm btn-primary rounded-left",
                                 attrs: {
                                   to: {
-                                    name: "pembimbingAkademikEdit",
+                                    name: "assignMahasiswa",
                                     params: { id: item.id },
                                   },
                                 },
                               },
-                              [_c("i", { staticClass: "ti-pencil-alt" })]
+                              [_c("i", { staticClass: "ti-check-box" })]
                             ),
                             _vm._v(" "),
                             _c(
@@ -49258,6 +49447,200 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("Action")]),
       ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/admin/pages/forms/AssignMahasiswa.vue?vue&type=template&id=33db5372&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/admin/pages/forms/AssignMahasiswa.vue?vue&type=template&id=33db5372& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        on: {
+          submit: function ($event) {
+            $event.preventDefault()
+            return _vm.assignMahasiswa.apply(null, arguments)
+          },
+        },
+      },
+      [
+        _c("div", { staticClass: "col-lg-12 grid-margin stretch-card" }, [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "table-responsive" }, [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _c("thead", [
+                    _c("tr", [
+                      _c("th", [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.checkAll,
+                              expression: "checkAll",
+                            },
+                          ],
+                          attrs: { type: "checkbox" },
+                          domProps: {
+                            checked: Array.isArray(_vm.checkAll)
+                              ? _vm._i(_vm.checkAll, null) > -1
+                              : _vm.checkAll,
+                          },
+                          on: {
+                            click: function ($event) {
+                              return _vm.select()
+                            },
+                            change: function ($event) {
+                              var $$a = _vm.checkAll,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = null,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 && (_vm.checkAll = $$a.concat([$$v]))
+                                } else {
+                                  $$i > -1 &&
+                                    (_vm.checkAll = $$a
+                                      .slice(0, $$i)
+                                      .concat($$a.slice($$i + 1)))
+                                }
+                              } else {
+                                _vm.checkAll = $$c
+                              }
+                            },
+                          },
+                        }),
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Nama Mahasiswa")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("NIM")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Fakultas")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Jurusan")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Program Studi")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Semester")]),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.mahasiswa.data, function (item, index) {
+                      return _c("tr", { key: index }, [
+                        _c("td", [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.selected,
+                                expression: "selected",
+                              },
+                            ],
+                            attrs: { type: "checkbox" },
+                            domProps: {
+                              value: item.id,
+                              checked: Array.isArray(_vm.selected)
+                                ? _vm._i(_vm.selected, item.id) > -1
+                                : _vm.selected,
+                            },
+                            on: {
+                              change: [
+                                function ($event) {
+                                  var $$a = _vm.selected,
+                                    $$el = $event.target,
+                                    $$c = $$el.checked ? true : false
+                                  if (Array.isArray($$a)) {
+                                    var $$v = item.id,
+                                      $$i = _vm._i($$a, $$v)
+                                    if ($$el.checked) {
+                                      $$i < 0 &&
+                                        (_vm.selected = $$a.concat([$$v]))
+                                    } else {
+                                      $$i > -1 &&
+                                        (_vm.selected = $$a
+                                          .slice(0, $$i)
+                                          .concat($$a.slice($$i + 1)))
+                                    }
+                                  } else {
+                                    _vm.selected = $$c
+                                  }
+                                },
+                                function ($event) {
+                                  return _vm.updateSelected()
+                                },
+                              ],
+                            },
+                          }),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.nama))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.nim))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.fakultas))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.jurusan))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.prodi))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.angkatan))]),
+                      ])
+                    }),
+                    0
+                  ),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary float-right mt-3",
+                    attrs: { type: "submit" },
+                  },
+                  [_vm._v("Assign")]
+                ),
+              ]),
+            ]),
+          ]),
+        ]),
+      ]
+    ),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col mb-3 ml-2" }, [
+      _c("h3", [_vm._v("Daftar Mahasiswa")]),
     ])
   },
 ]
@@ -50390,9 +50773,9 @@ var render = function () {
                     _vm.errors.name
                       ? _c("div", { staticClass: "invalid-feedback" }, [
                           _vm._v(
-                            "\n                                    " +
+                            "\n                  " +
                               _vm._s(_vm.errors.name[0]) +
-                              "\n                                "
+                              "\n                "
                           ),
                         ])
                       : _vm._e(),
@@ -50450,9 +50833,9 @@ var render = function () {
                     _vm.errors.fakultas_id
                       ? _c("div", { staticClass: "invalid-feedback" }, [
                           _vm._v(
-                            "\n                                    " +
+                            "\n                  " +
                               _vm._s(_vm.errors.fakultas_id[0]) +
-                              "\n                                "
+                              "\n                "
                           ),
                         ])
                       : _vm._e(),
@@ -50510,9 +50893,9 @@ var render = function () {
                     _vm.errors.jurusan_id
                       ? _c("div", { staticClass: "invalid-feedback" }, [
                           _vm._v(
-                            "\n                                    " +
+                            "\n                  " +
                               _vm._s(_vm.errors.jurusan_id[0]) +
-                              "\n                                "
+                              "\n                "
                           ),
                         ])
                       : _vm._e(),
@@ -50570,9 +50953,9 @@ var render = function () {
                     _vm.errors.prodi_id
                       ? _c("div", { staticClass: "invalid-feedback" }, [
                           _vm._v(
-                            "\n                                    " +
+                            "\n                  " +
                               _vm._s(_vm.errors.prodi_id[0]) +
-                              "\n                                "
+                              "\n                "
                           ),
                         ])
                       : _vm._e(),
@@ -50624,9 +51007,9 @@ var render = function () {
                       _vm.errors.nama
                         ? _c("div", { staticClass: "invalid-feedback" }, [
                             _vm._v(
-                              "\n                                    " +
+                              "\n                  " +
                                 _vm._s(_vm.errors.nama[0]) +
-                                "\n                                "
+                                "\n                "
                             ),
                           ])
                         : _vm._e(),
@@ -50673,9 +51056,9 @@ var render = function () {
                           _vm.errors.password
                             ? _c("div", { staticClass: "invalid-feedback" }, [
                                 _vm._v(
-                                  "\n                                    " +
+                                  "\n                  " +
                                     _vm._s(_vm.errors.password[0]) +
-                                    "\n                                "
+                                    "\n                "
                                 ),
                               ])
                             : _vm._e(),
@@ -50725,11 +51108,11 @@ var render = function () {
                           _vm.errors.password_confirmation
                             ? _c("div", { staticClass: "invalid-feedback" }, [
                                 _vm._v(
-                                  "\n                                    " +
+                                  "\n                  " +
                                     _vm._s(
                                       _vm.errors.password_confirmation[0]
                                     ) +
-                                    "\n                                "
+                                    "\n                "
                                 ),
                               ])
                             : _vm._e(),

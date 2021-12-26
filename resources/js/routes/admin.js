@@ -12,6 +12,7 @@ import FormsJurusan from '../admin/pages/forms/FormsJurusan.vue';
 import FormsProdi from '../admin/pages/forms/FormsProdi.vue';
 import FormsMahasiswa from '../admin/pages/forms/FormsMahasiswa.vue';
 import FormsPembimbingAkademik from '../admin/pages/forms/FormsPembimbingAkademik';
+import AssignMahasiswa from '../admin/pages/forms/AssignMahasiswa';
 
 export const AdminRoutes = [
     { name: 'dashboard', path: '/admin/dashboard', component: Dashboard },
@@ -40,4 +41,5 @@ export const AdminRoutes = [
     { name: 'pembimbingakademik', path: '/admin/pembimbingakademik', component: PembimbingAkademik },
     { name: 'pembimbingAkademikCreate', path: '/admin/pembimbingakademik/create', component: FormsPembimbingAkademik },
     { name: 'pembimbingAkademikEdit', path: '/admin/pembimbingakademik/edit/:id', component: FormsPembimbingAkademik },
+    { name: 'assignMahasiswa', path: '/admin/assignmahasiswa/:id', component: AssignMahasiswa },
 ];
