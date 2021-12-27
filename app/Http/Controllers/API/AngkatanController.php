@@ -15,9 +15,9 @@ class AngkatanController extends Controller
     public function index(Request $request)
     {
         if (isset($request->page)) {
-            return AngkatanResource::collection(Angkatan::orderBy('tahun')->paginate(3));
+            return AngkatanResource::collection(Angkatan::orderBy('tahun', 'desc')->paginate(3));
         } else {
-            return AngkatanResource::collection(Angkatan::all());
+            return AngkatanResource::collection(Angkatan::orderBy('tahun', 'desc')->get());
         }
     }
 

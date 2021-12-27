@@ -10,7 +10,7 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th class="text-center">Nama Kegiatan</th>
+                                    <th>Nama Kegiatan</th>
                                     <th class="text-center">Tahun</th>
                                     <th class="text-center">Penyelenggara</th>
                                     <th class="text-center th-width">Point Referensi</th>
@@ -20,7 +20,7 @@
                             </thead>
                             <tbody>
                                 <tr v-for="(item, index) in portofolio.perluValidasi" :key="index">
-                                    <td class="text-center">{{ item.nama_kegiatan }}</td>
+                                    <td>{{ item.nama_kegiatan }}</td>
                                     <td class="text-center">{{ item.tahun }}</td>
                                     <td class="text-center">{{ item.penyelenggara }}</td>
                                     <td class="text-center">{{ item.ref_point }}</td>
@@ -109,6 +109,7 @@
                         </table>
                     </div>
                     <button type="submit" class="btn btn-primary mt-3 float-right">Validasi Semua Portofolio</button>
+                    <router-link :to="{ name: 'perluValidasi' }" class="btn btn-light mt-3">Kembali</router-link>
                 </form>
             </div>
         </div>
