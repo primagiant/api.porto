@@ -6,7 +6,6 @@
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <form @submit.prevent="validasi" class="card-body">
-                    <button type="submit" class="btn btn-primary mb-3">Validasi Semua Portofolio</button>
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
@@ -20,7 +19,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(item, index) in portofolio.data" :key="index">
+                                <tr v-for="(item, index) in portofolio.perluValidasi" :key="index">
                                     <td class="text-center">{{ item.nama_kegiatan }}</td>
                                     <td class="text-center">{{ item.tahun }}</td>
                                     <td class="text-center">{{ item.penyelenggara }}</td>
@@ -39,11 +38,64 @@
                                     <div class="modal fade" :id="'exampleModal' + index" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
-                                                <div v-if="checkExtension(item.bukti) == 'pdf'" class="embed-responsive embed-responsive-21by9">
-                                                    <iframe :src="'/storage/' + item.bukti" class="embed-responsive-item" allowfullscreen style="border: none" width="100%"></iframe>
-                                                </div>
-                                                <div v-else class="d-flex justify-content-center align-items-center collapse-hidden">
-                                                    <img :src="'/storage/' + item.bukti" alt="modal image" />
+                                                <div class="row">
+                                                    <div class="col-md-6 card">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <h3>Detail Portofolio</h3>
+                                                            </div>
+                                                            <div class="row">
+                                                                <strong class="col-sm-3 col-form-label">Nama Kegiatan</strong>
+                                                                <label class="col-sm-9 col-form-label">
+                                                                    {{ item.nama_kegiatan }}
+                                                                </label>
+                                                            </div>
+                                                            <div class="row">
+                                                                <strong class="col-sm-3 col-form-label">Penyelenggara</strong>
+                                                                <label class="col-sm-9 col-form-label">
+                                                                    {{ item.penyelenggara }}
+                                                                </label>
+                                                            </div>
+                                                            <div class="row">
+                                                                <strong class="col-sm-3 col-form-label">Kategori Kegiatan</strong>
+                                                                <label class="col-sm-9 col-form-label">
+                                                                    {{ item.kategori_kegiatan }}
+                                                                </label>
+                                                            </div>
+                                                            <div class="row">
+                                                                <strong class="col-sm-3 col-form-label">Jenis Kegiatan</strong>
+                                                                <label class="col-sm-9 col-form-label">
+                                                                    {{ item.jenis_kegiatan }}
+                                                                </label>
+                                                            </div>
+                                                            <div class="row">
+                                                                <strong class="col-sm-3 col-form-label">Tahun</strong>
+                                                                <label class="col-sm-9 col-form-label">
+                                                                    {{ item.tahun }}
+                                                                </label>
+                                                            </div>
+                                                            <div class="row">
+                                                                <strong class="col-sm-3 col-form-label">Semester</strong>
+                                                                <label class="col-sm-9 col-form-label text-capitalize">
+                                                                    {{ item.semester }}
+                                                                </label>
+                                                            </div>
+                                                            <div class="row">
+                                                                <strong class="col-sm-3 col-form-label">Valid Point</strong>
+                                                                <label class="col-sm-9 col-form-label">
+                                                                    {{ item.valid_point }}
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div v-if="checkExtension(item.bukti) == 'pdf'" class="embed-responsive embed-responsive-1by1">
+                                                            <iframe :src="'/storage/' + item.bukti" class="embed-responsive-item" allowfullscreen style="border: none" width="100%"></iframe>
+                                                        </div>
+                                                        <div v-else class="d-flex justify-content-center align-items-center collapse-hidden">
+                                                            <img :src="'/storage/' + item.bukti" alt="modal image" />
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="mt-3 d-flex justify-content-center align-items-center">
@@ -56,6 +108,7 @@
                             </tbody>
                         </table>
                     </div>
+                    <button type="submit" class="btn btn-primary mt-3 float-right">Validasi Semua Portofolio</button>
                 </form>
             </div>
         </div>
@@ -68,12 +121,11 @@ export default {
         return {
             portofolio: {},
             portofolioPoint: [],
-            isCheckAll: false,
         };
     },
     mounted() {
         axios.get("/api/portofolio/byNim/" + this.$route.params.nim).then((response) => {
-            this.portofolio = response.data;
+            this.portofolio = response.data.data;
         });
     },
     methods: {
@@ -91,15 +143,15 @@ export default {
                     cancelButtonText: "Batal",
                 })
                 .then((result) => {
-                    for (let i in this.portofolio.data) {
+                    for (let i in this.portofolio.perluValidasi) {
                         let formData = new FormData();
                         formData.append("valid_point", this.portofolioPoint[i]);
                         if (result.value) {
-                            axios.post("/api/portofolio/validasi/" + this.portofolio.data[i].id, formData);
+                            axios.post("/api/portofolio/validasi/" + this.portofolio.perluValidasi[i].id, formData);
                         }
                     }
                     this.$swal.fire({ title: "Success!", text: "Portofolio Tervalidasi", icon: "success", timer: 1000 });
-                    this.$router.push({ name: "detailMahasiswa", params: { nim: this.portofolio.data[0].mahasiswa.nim } });
+                    this.$router.push({ name: "perluValidasi" });
                 });
         },
         checkExtension: function (src) {

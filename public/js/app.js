@@ -8016,19 +8016,71 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       portofolio: {},
-      portofolioPoint: [],
-      isCheckAll: false
+      portofolioPoint: []
     };
   },
   mounted: function mounted() {
     var _this = this;
 
     axios.get("/api/portofolio/byNim/" + this.$route.params.nim).then(function (response) {
-      _this.portofolio = response.data;
+      _this.portofolio = response.data.data;
     });
   },
   methods: {
@@ -8046,12 +8098,12 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: "Validasi",
         cancelButtonText: "Batal"
       }).then(function (result) {
-        for (var i in _this2.portofolio.data) {
+        for (var i in _this2.portofolio.perluValidasi) {
           var formData = new FormData();
           formData.append("valid_point", _this2.portofolioPoint[i]);
 
           if (result.value) {
-            axios.post("/api/portofolio/validasi/" + _this2.portofolio.data[i].id, formData);
+            axios.post("/api/portofolio/validasi/" + _this2.portofolio.perluValidasi[i].id, formData);
           }
         }
 
@@ -8063,10 +8115,7 @@ __webpack_require__.r(__webpack_exports__);
         });
 
         _this2.$router.push({
-          name: "detailMahasiswa",
-          params: {
-            nim: _this2.portofolio.data[0].mahasiswa.nim
-          }
+          name: "perluValidasi"
         });
       });
     },
@@ -8136,6 +8185,69 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -8146,8 +8258,13 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get("/api/portofolio/byNim/" + this.$route.params.nim).then(function (response) {
-      _this.portofolio = response.data;
+      _this.portofolio = response.data.data;
     });
+  },
+  methods: {
+    checkExtension: function checkExtension(src) {
+      return src.split(".").pop();
+    }
   }
 });
 
@@ -8269,6 +8386,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -8284,6 +8408,22 @@ __webpack_require__.r(__webpack_exports__);
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       axios.get("/api/mahasiswa?page=" + page).then(function (response) {
+        var _loop = function _loop(_i) {
+          axios.get("/api/portofolio/byNim/" + response.data.data[_i].nim).then(function (res) {
+            // console.log(res.data.data);
+            if (res.data.data.perluValidasi.length == 0) {
+              response.data.data.splice(_i, 1);
+              _i--;
+            }
+          });
+          i = _i;
+        };
+
+        for (var i = 0; i < response.data.data.length; i++) {
+          _loop(i);
+        } // console.log(response.data.data);
+
+
         _this.mahasiswa = response.data;
       });
     }
@@ -8344,6 +8484,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -8359,6 +8506,21 @@ __webpack_require__.r(__webpack_exports__);
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       axios.get("/api/mahasiswa?page=" + page).then(function (response) {
+        var _loop = function _loop(_i) {
+          axios.get("/api/portofolio/byNim/" + response.data.data[_i].nim).then(function (res) {
+            // console.log(res.data.data);
+            if (res.data.data.sudahValidasi.length == 0) {
+              response.data.data.splice(_i, 1);
+              _i--;
+            }
+          });
+          i = _i;
+        };
+
+        for (var i = 0; i < response.data.data.length; i++) {
+          _loop(i);
+        }
+
         _this.mahasiswa = response.data;
       });
     }
@@ -52450,217 +52612,187 @@ var render = function () {
                                     _c("div", { staticClass: "card-body" }, [
                                       _vm._m(5, true),
                                       _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "form-group row" },
-                                        [
-                                          _c(
-                                            "label",
-                                            {
-                                              staticClass:
-                                                "col-sm-3 col-form-label",
-                                            },
-                                            [_vm._v("Nama Kegiatan")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "label",
-                                            {
-                                              staticClass:
-                                                "col-sm-9 col-form-label",
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                                                " +
-                                                  _vm._s(item.nama_kegiatan) +
-                                                  "\n                                                            "
-                                              ),
-                                            ]
-                                          ),
-                                        ]
-                                      ),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Nama Kegiatan")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.nama_kegiatan) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
                                       _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "form-group row" },
-                                        [
-                                          _c(
-                                            "label",
-                                            {
-                                              staticClass:
-                                                "col-sm-3 col-form-label",
-                                            },
-                                            [_vm._v("Penyelenggara")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "label",
-                                            {
-                                              staticClass:
-                                                "col-sm-9 col-form-label",
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                                                " +
-                                                  _vm._s(item.penyelenggara) +
-                                                  "\n                                                            "
-                                              ),
-                                            ]
-                                          ),
-                                        ]
-                                      ),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Penyelenggara")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.penyelenggara) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
                                       _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "form-group row" },
-                                        [
-                                          _c(
-                                            "label",
-                                            {
-                                              staticClass:
-                                                "col-sm-3 col-form-label",
-                                            },
-                                            [_vm._v("Kategori Kegiatan")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "label",
-                                            {
-                                              staticClass:
-                                                "col-sm-9 col-form-label",
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                                                " +
-                                                  _vm._s(
-                                                    item.kategori_kegiatan
-                                                  ) +
-                                                  "\n                                                            "
-                                              ),
-                                            ]
-                                          ),
-                                        ]
-                                      ),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Kategori Kegiatan")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.kategori_kegiatan) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
                                       _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "form-group row" },
-                                        [
-                                          _c(
-                                            "label",
-                                            {
-                                              staticClass:
-                                                "col-sm-3 col-form-label",
-                                            },
-                                            [_vm._v("Jenis Kegiatan")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "label",
-                                            {
-                                              staticClass:
-                                                "col-sm-9 col-form-label",
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                                                " +
-                                                  _vm._s(item.jenis_kegiatan) +
-                                                  "\n                                                            "
-                                              ),
-                                            ]
-                                          ),
-                                        ]
-                                      ),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Jenis Kegiatan")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.jenis_kegiatan) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
                                       _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "form-group row" },
-                                        [
-                                          _c(
-                                            "label",
-                                            {
-                                              staticClass:
-                                                "col-sm-3 col-form-label",
-                                            },
-                                            [_vm._v("Tahun")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "label",
-                                            {
-                                              staticClass:
-                                                "col-sm-9 col-form-label",
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                                                " +
-                                                  _vm._s(item.tahun) +
-                                                  "\n                                                            "
-                                              ),
-                                            ]
-                                          ),
-                                        ]
-                                      ),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Tahun")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.tahun) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
                                       _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "form-group row" },
-                                        [
-                                          _c(
-                                            "label",
-                                            {
-                                              staticClass:
-                                                "col-sm-3 col-form-label",
-                                            },
-                                            [_vm._v("Semester")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "label",
-                                            {
-                                              staticClass:
-                                                "col-sm-9 col-form-label text-capitalize",
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                                                " +
-                                                  _vm._s(item.semester) +
-                                                  "\n                                                            "
-                                              ),
-                                            ]
-                                          ),
-                                        ]
-                                      ),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Semester")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label text-capitalize",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.semester) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
                                       _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "form-group row" },
-                                        [
-                                          _c(
-                                            "label",
-                                            {
-                                              staticClass:
-                                                "col-sm-3 col-form-label",
-                                            },
-                                            [_vm._v("Valid Point")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "label",
-                                            {
-                                              staticClass:
-                                                "col-sm-9 col-form-label",
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                                                " +
-                                                  _vm._s(item.valid_point) +
-                                                  "\n                                                            "
-                                              ),
-                                            ]
-                                          ),
-                                        ]
-                                      ),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Valid Point")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.valid_point) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
                                     ]),
                                   ]),
                                   _vm._v(" "),
@@ -52787,7 +52919,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
+    return _c("div", { staticClass: "row" }, [
       _c("h3", [_vm._v("Detail Portofolio")]),
     ])
   },
@@ -53568,22 +53700,13 @@ var render = function () {
             },
           },
           [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary mb-3",
-                attrs: { type: "submit" },
-              },
-              [_vm._v("Validasi Semua Portofolio")]
-            ),
-            _vm._v(" "),
             _c("div", { staticClass: "table-responsive" }, [
               _c("table", { staticClass: "table table-hover" }, [
                 _vm._m(1),
                 _vm._v(" "),
                 _c(
                   "tbody",
-                  _vm._l(_vm.portofolio.data, function (item, index) {
+                  _vm._l(_vm.portofolio.perluValidasi, function (item, index) {
                     return _c("tr", { key: index }, [
                       _c("td", { staticClass: "text-center" }, [
                         _vm._v(_vm._s(item.nama_kegiatan)),
@@ -53669,43 +53792,236 @@ var render = function () {
                             },
                             [
                               _c("div", { staticClass: "modal-content" }, [
-                                _vm.checkExtension(item.bukti) == "pdf"
-                                  ? _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "embed-responsive embed-responsive-21by9",
-                                      },
-                                      [
-                                        _c("iframe", {
-                                          staticClass: "embed-responsive-item",
-                                          staticStyle: { border: "none" },
-                                          attrs: {
-                                            src: "/storage/" + item.bukti,
-                                            allowfullscreen: "",
-                                            width: "100%",
+                                _c("div", { staticClass: "row" }, [
+                                  _c("div", { staticClass: "col-md-6 card" }, [
+                                    _c("div", { staticClass: "card-body" }, [
+                                      _vm._m(3, true),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
                                           },
-                                        }),
-                                      ]
-                                    )
-                                  : _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "d-flex justify-content-center align-items-center collapse-hidden",
-                                      },
-                                      [
-                                        _c("img", {
-                                          attrs: {
-                                            src: "/storage/" + item.bukti,
-                                            alt: "modal image",
+                                          [_vm._v("Nama Kegiatan")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
                                           },
-                                        }),
-                                      ]
-                                    ),
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.nama_kegiatan) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Penyelenggara")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.penyelenggara) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Kategori Kegiatan")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.kategori_kegiatan) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Jenis Kegiatan")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.jenis_kegiatan) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Tahun")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.tahun) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Semester")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label text-capitalize",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.semester) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Valid Point")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.valid_point) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                    ]),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-6" }, [
+                                    _vm.checkExtension(item.bukti) == "pdf"
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "embed-responsive embed-responsive-1by1",
+                                          },
+                                          [
+                                            _c("iframe", {
+                                              staticClass:
+                                                "embed-responsive-item",
+                                              staticStyle: { border: "none" },
+                                              attrs: {
+                                                src: "/storage/" + item.bukti,
+                                                allowfullscreen: "",
+                                                width: "100%",
+                                              },
+                                            }),
+                                          ]
+                                        )
+                                      : _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "d-flex justify-content-center align-items-center collapse-hidden",
+                                          },
+                                          [
+                                            _c("img", {
+                                              attrs: {
+                                                src: "/storage/" + item.bukti,
+                                                alt: "modal image",
+                                              },
+                                            }),
+                                          ]
+                                        ),
+                                  ]),
+                                ]),
                               ]),
                               _vm._v(" "),
-                              _vm._m(3, true),
+                              _vm._m(4, true),
                             ]
                           ),
                         ]
@@ -53716,6 +54032,15 @@ var render = function () {
                 ),
               ]),
             ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary mt-3 float-right",
+                attrs: { type: "submit" },
+              },
+              [_vm._v("Validasi Semua Portofolio")]
+            ),
           ]
         ),
       ]),
@@ -53766,6 +54091,14 @@ var staticRenderFns = [
       { staticClass: "d-flex justify-content-center align-items-center" },
       [_c("i", { staticClass: "ti-eye" })]
     )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("h3", [_vm._v("Detail Portofolio")]),
+    ])
   },
   function () {
     var _vm = this
@@ -53826,57 +54159,293 @@ var render = function () {
               _vm._v(" "),
               _c(
                 "tbody",
-                [
-                  _vm.portofolio.data.length !== 0
-                    ? _vm._l(_vm.portofolio.data, function (item, index) {
-                        return _c("tr", { key: index }, [
-                          _c("td", { staticClass: "text-center" }, [
-                            _vm._v(_vm._s(item.nama_kegiatan)),
-                          ]),
-                          _vm._v(" "),
-                          _c("td", { staticClass: "text-center" }, [
-                            _vm._v(_vm._s(item.tahun)),
-                          ]),
-                          _vm._v(" "),
-                          _c("td", { staticClass: "text-center" }, [
-                            _vm._v(_vm._s(item.penyelenggara)),
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "td",
-                            { staticClass: "text-center" },
-                            [
-                              _c(
-                                "router-link",
-                                {
-                                  staticClass: "btn btn-sm btn-primary",
-                                  attrs: {
-                                    to: {
-                                      name: "validasi",
-                                      params: { id: item.id },
-                                    },
-                                    type: "submit",
-                                  },
-                                },
-                                [
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "d-flex justify-content-center align-items-center",
-                                    },
-                                    [_c("i", { staticClass: "ti-eye" })]
-                                  ),
-                                ]
-                              ),
-                            ],
-                            1
-                          ),
-                        ])
-                      })
-                    : [_vm._m(2)],
-                ],
-                2
+                _vm._l(_vm.portofolio.sudahValidasi, function (item, index) {
+                  return _c("tr", { key: index }, [
+                    _c("td", { staticClass: "text-center" }, [
+                      _vm._v(_vm._s(item.nama_kegiatan)),
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-center" }, [
+                      _vm._v(_vm._s(item.tahun)),
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-center" }, [
+                      _vm._v(_vm._s(item.penyelenggara)),
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-center" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-sm btn-primary",
+                          attrs: {
+                            type: "button",
+                            "data-toggle": "modal",
+                            "data-target": "#exampleModal" + index,
+                          },
+                        },
+                        [_vm._m(2, true)]
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "modal fade",
+                        attrs: {
+                          id: "exampleModal" + index,
+                          tabindex: "-1",
+                          role: "dialog",
+                          "aria-labelledby": "exampleModalLabel",
+                          "aria-hidden": "true",
+                        },
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "modal-dialog modal-lg",
+                            attrs: { role: "document" },
+                          },
+                          [
+                            _c("div", { staticClass: "modal-content" }, [
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-md-6 card" }, [
+                                  _c("div", { staticClass: "card-body" }, [
+                                    _vm._m(3, true),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "row" }, [
+                                      _c(
+                                        "strong",
+                                        {
+                                          staticClass:
+                                            "col-sm-3 col-form-label",
+                                        },
+                                        [_vm._v("Nama Kegiatan")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass:
+                                            "col-sm-9 col-form-label",
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                                " +
+                                              _vm._s(item.nama_kegiatan) +
+                                              "\n                                                            "
+                                          ),
+                                        ]
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "row" }, [
+                                      _c(
+                                        "strong",
+                                        {
+                                          staticClass:
+                                            "col-sm-3 col-form-label",
+                                        },
+                                        [_vm._v("Penyelenggara")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass:
+                                            "col-sm-9 col-form-label",
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                                " +
+                                              _vm._s(item.penyelenggara) +
+                                              "\n                                                            "
+                                          ),
+                                        ]
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "row" }, [
+                                      _c(
+                                        "strong",
+                                        {
+                                          staticClass:
+                                            "col-sm-3 col-form-label",
+                                        },
+                                        [_vm._v("Kategori Kegiatan")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass:
+                                            "col-sm-9 col-form-label",
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                                " +
+                                              _vm._s(item.kategori_kegiatan) +
+                                              "\n                                                            "
+                                          ),
+                                        ]
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "row" }, [
+                                      _c(
+                                        "strong",
+                                        {
+                                          staticClass:
+                                            "col-sm-3 col-form-label",
+                                        },
+                                        [_vm._v("Jenis Kegiatan")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass:
+                                            "col-sm-9 col-form-label",
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                                " +
+                                              _vm._s(item.jenis_kegiatan) +
+                                              "\n                                                            "
+                                          ),
+                                        ]
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "row" }, [
+                                      _c(
+                                        "strong",
+                                        {
+                                          staticClass:
+                                            "col-sm-3 col-form-label",
+                                        },
+                                        [_vm._v("Tahun")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass:
+                                            "col-sm-9 col-form-label",
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                                " +
+                                              _vm._s(item.tahun) +
+                                              "\n                                                            "
+                                          ),
+                                        ]
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "row" }, [
+                                      _c(
+                                        "strong",
+                                        {
+                                          staticClass:
+                                            "col-sm-3 col-form-label",
+                                        },
+                                        [_vm._v("Semester")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass:
+                                            "col-sm-9 col-form-label text-capitalize",
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                                " +
+                                              _vm._s(item.semester) +
+                                              "\n                                                            "
+                                          ),
+                                        ]
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "row" }, [
+                                      _c(
+                                        "strong",
+                                        {
+                                          staticClass:
+                                            "col-sm-3 col-form-label",
+                                        },
+                                        [_vm._v("Valid Point")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass:
+                                            "col-sm-9 col-form-label",
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                                " +
+                                              _vm._s(item.valid_point) +
+                                              "\n                                                            "
+                                          ),
+                                        ]
+                                      ),
+                                    ]),
+                                  ]),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-md-6" }, [
+                                  _vm.checkExtension(item.bukti) == "pdf"
+                                    ? _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "embed-responsive embed-responsive-1by1",
+                                        },
+                                        [
+                                          _c("iframe", {
+                                            staticClass:
+                                              "embed-responsive-item",
+                                            staticStyle: { border: "none" },
+                                            attrs: {
+                                              src: "/storage/" + item.bukti,
+                                              allowfullscreen: "",
+                                              width: "100%",
+                                            },
+                                          }),
+                                        ]
+                                      )
+                                    : _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "d-flex justify-content-center align-items-center collapse-hidden",
+                                        },
+                                        [
+                                          _c("img", {
+                                            attrs: {
+                                              src: "/storage/" + item.bukti,
+                                              alt: "modal image",
+                                            },
+                                          }),
+                                        ]
+                                      ),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _vm._m(4, true),
+                          ]
+                        ),
+                      ]
+                    ),
+                  ])
+                }),
+                0
               ),
             ]),
           ]),
@@ -53916,13 +54485,43 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", { staticClass: "text-center", attrs: { colspan: "5" } }, [
-        _vm._v(
-          "Tidak Ada Portofolio yang Harus Divalidasi Untuk Mahasiswa Terkait"
-        ),
-      ]),
+    return _c(
+      "div",
+      { staticClass: "d-flex justify-content-center align-items-center" },
+      [_c("i", { staticClass: "ti-eye" })]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("h3", [_vm._v("Detail Portofolio")]),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "mt-3 d-flex justify-content-center align-items-center" },
+      [
+        _c(
+          "button",
+          {
+            staticClass:
+              "btn btn-sm btn-primary d-inline-flex justify-content-center align-items-center",
+            attrs: {
+              type: "button",
+              "data-toggle": "modal",
+              "data-target": "#exampleModal",
+            },
+          },
+          [_vm._v("Close")]
+        ),
+      ]
+    )
   },
 ]
 render._withStripped = true
@@ -54058,52 +54657,56 @@ var render = function () {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.mahasiswa.data, function (item, index) {
-                  return _c("tr", { key: index }, [
-                    _c("td", [_vm._v(_vm._s(item.nama))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.nim))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.prodi))]),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            staticClass: "btn btn-sm btn-primary",
-                            attrs: {
-                              to: {
-                                name: "detailPerluValidasi",
-                                params: { nim: item.nim },
-                              },
-                              type: "submit",
-                            },
-                          },
-                          [
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "d-flex justify-content-center align-items-center px-2",
-                              },
-                              [
-                                _c("i", { staticClass: "ti-eye" }),
-                                _vm._v(" "),
-                                _c("span", { staticClass: "ml-2" }, [
-                                  _vm._v("Detail"),
-                                ]),
-                              ]
-                            ),
-                          ]
-                        ),
-                      ],
-                      1
-                    ),
-                  ])
-                }),
-                0
+                [
+                  _vm.mahasiswa.data.length != 0
+                    ? _vm._l(_vm.mahasiswa.data, function (item, index) {
+                        return _c("tr", { key: index }, [
+                          _c("td", [_vm._v(_vm._s(item.nama))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.nim))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.prodi))]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            [
+                              _c(
+                                "router-link",
+                                {
+                                  staticClass: "btn btn-sm btn-primary",
+                                  attrs: {
+                                    to: {
+                                      name: "detailPerluValidasi",
+                                      params: { nim: item.nim },
+                                    },
+                                    type: "submit",
+                                  },
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "d-flex justify-content-center align-items-center px-2",
+                                    },
+                                    [
+                                      _c("i", { staticClass: "ti-eye" }),
+                                      _vm._v(" "),
+                                      _c("span", { staticClass: "ml-2" }, [
+                                        _vm._v("Detail"),
+                                      ]),
+                                    ]
+                                  ),
+                                ]
+                              ),
+                            ],
+                            1
+                          ),
+                        ])
+                      })
+                    : [_vm._m(2)],
+                ],
+                2
               ),
             ]),
           ]),
@@ -54136,6 +54739,16 @@ var staticRenderFns = [
         _c("th", { staticClass: "text-right", attrs: { width: "50" } }, [
           _vm._v("Action"),
         ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { staticClass: "text-center", attrs: { colspan: "4" } }, [
+        _vm._v("Tidak Ada Data Yang Perlu Divalidasi"),
       ]),
     ])
   },
@@ -54174,52 +54787,56 @@ var render = function () {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.mahasiswa.data, function (item, index) {
-                  return _c("tr", { key: index }, [
-                    _c("td", [_vm._v(_vm._s(item.nama))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.nim))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.prodi))]),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            staticClass: "btn btn-sm btn-primary",
-                            attrs: {
-                              to: {
-                                name: "DetailPerluValidasi",
-                                params: { nim: item.nim },
-                              },
-                              type: "submit",
-                            },
-                          },
-                          [
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "d-flex justify-content-center align-items-center px-2",
-                              },
-                              [
-                                _c("i", { staticClass: "ti-eye" }),
-                                _vm._v(" "),
-                                _c("span", { staticClass: "ml-2" }, [
-                                  _vm._v("Detail"),
-                                ]),
-                              ]
-                            ),
-                          ]
-                        ),
-                      ],
-                      1
-                    ),
-                  ])
-                }),
-                0
+                [
+                  _vm.mahasiswa.data.length != 0
+                    ? _vm._l(_vm.mahasiswa.data, function (item, index) {
+                        return _c("tr", { key: index }, [
+                          _c("td", [_vm._v(_vm._s(item.nama))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.nim))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.prodi))]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            [
+                              _c(
+                                "router-link",
+                                {
+                                  staticClass: "btn btn-sm btn-primary",
+                                  attrs: {
+                                    to: {
+                                      name: "detailSudahValidasi",
+                                      params: { nim: item.nim },
+                                    },
+                                    type: "submit",
+                                  },
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "d-flex justify-content-center align-items-center px-2",
+                                    },
+                                    [
+                                      _c("i", { staticClass: "ti-eye" }),
+                                      _vm._v(" "),
+                                      _c("span", { staticClass: "ml-2" }, [
+                                        _vm._v("Detail"),
+                                      ]),
+                                    ]
+                                  ),
+                                ]
+                              ),
+                            ],
+                            1
+                          ),
+                        ])
+                      })
+                    : [_vm._m(2)],
+                ],
+                2
               ),
             ]),
           ]),
@@ -54252,6 +54869,16 @@ var staticRenderFns = [
         _c("th", { staticClass: "text-right", attrs: { width: "50" } }, [
           _vm._v("Action"),
         ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { staticClass: "text-center", attrs: { colspan: "4" } }, [
+        _vm._v("Tidak Ada Data Yang Divalidasi"),
       ]),
     ])
   },

@@ -66,47 +66,47 @@
                                                 <div class="row">
                                                     <div class="col-md-6 card">
                                                         <div class="card-body">
-                                                            <div class="form-group row">
+                                                            <div class="row">
                                                                 <h3>Detail Portofolio</h3>
                                                             </div>
-                                                            <div class="form-group row">
-                                                                <label class="col-sm-3 col-form-label">Nama Kegiatan</label>
+                                                            <div class="row">
+                                                                <strong class="col-sm-3 col-form-label">Nama Kegiatan</strong>
                                                                 <label class="col-sm-9 col-form-label">
                                                                     {{ item.nama_kegiatan }}
                                                                 </label>
                                                             </div>
-                                                            <div class="form-group row">
-                                                                <label class="col-sm-3 col-form-label">Penyelenggara</label>
+                                                            <div class="row">
+                                                                <strong class="col-sm-3 col-form-label">Penyelenggara</strong>
                                                                 <label class="col-sm-9 col-form-label">
                                                                     {{ item.penyelenggara }}
                                                                 </label>
                                                             </div>
-                                                            <div class="form-group row">
-                                                                <label class="col-sm-3 col-form-label">Kategori Kegiatan</label>
+                                                            <div class="row">
+                                                                <strong class="col-sm-3 col-form-label">Kategori Kegiatan</strong>
                                                                 <label class="col-sm-9 col-form-label">
                                                                     {{ item.kategori_kegiatan }}
                                                                 </label>
                                                             </div>
-                                                            <div class="form-group row">
-                                                                <label class="col-sm-3 col-form-label">Jenis Kegiatan</label>
+                                                            <div class="row">
+                                                                <strong class="col-sm-3 col-form-label">Jenis Kegiatan</strong>
                                                                 <label class="col-sm-9 col-form-label">
                                                                     {{ item.jenis_kegiatan }}
                                                                 </label>
                                                             </div>
-                                                            <div class="form-group row">
-                                                                <label class="col-sm-3 col-form-label">Tahun</label>
+                                                            <div class="row">
+                                                                <strong class="col-sm-3 col-form-label">Tahun</strong>
                                                                 <label class="col-sm-9 col-form-label">
                                                                     {{ item.tahun }}
                                                                 </label>
                                                             </div>
-                                                            <div class="form-group row">
-                                                                <label class="col-sm-3 col-form-label">Semester</label>
+                                                            <div class="row">
+                                                                <strong class="col-sm-3 col-form-label">Semester</strong>
                                                                 <label class="col-sm-9 col-form-label text-capitalize">
                                                                     {{ item.semester }}
                                                                 </label>
                                                             </div>
-                                                            <div class="form-group row">
-                                                                <label class="col-sm-3 col-form-label">Valid Point</label>
+                                                            <div class="row">
+                                                                <strong class="col-sm-3 col-form-label">Valid Point</strong>
                                                                 <label class="col-sm-9 col-form-label">
                                                                     {{ item.valid_point }}
                                                                 </label>

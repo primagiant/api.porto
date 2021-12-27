@@ -76,9 +76,18 @@ class PortofolioController extends Controller
     public function byNim($nim)
     {
         $mhs_id = Mahasiswa::where('nim', $nim)->first()->id;
-        return PortofolioResource::collection(
-            Mahasiswa::find($mhs_id)->portofolio()->where('status', 0)->paginate(5)
-        );
+        $response = [
+            'message' => "Portofolio Have Been Updated",
+            'data' => [
+                'perluValidasi' => PortofolioResource::collection(
+                    Mahasiswa::find($mhs_id)->portofolio()->where('status', 0)->get()
+                ),
+                'sudahValidasi' => PortofolioResource::collection(
+                    Mahasiswa::find($mhs_id)->portofolio()->paginate(5)->where('status', 1)
+                ),
+            ],
+        ];
+        return response()->json($response, Response::HTTP_OK);
     }
 
     public function update(Request $request, $id)
