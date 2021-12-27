@@ -17,19 +17,26 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(item, index) in mahasiswa.data" :key="index">
-                                    <td>{{ item.nama }}</td>
-                                    <td>{{ item.nim }}</td>
-                                    <td>{{ item.prodi }}</td>
-                                    <td>
-                                        <router-link :to="{ name: 'DetailPerluValidasi', params: { nim: item.nim } }" class="btn btn-sm btn-primary" type="submit">
-                                            <div class="d-flex justify-content-center align-items-center px-2">
-                                                <i class="ti-eye"></i>
-                                                <span class="ml-2">Detail</span>
-                                            </div>
-                                        </router-link>
-                                    </td>
-                                </tr>
+                                <template v-if="mahasiswa.data.length != 0">
+                                    <tr v-for="(item, index) in mahasiswa.data" :key="index">
+                                        <td>{{ item.nama }}</td>
+                                        <td>{{ item.nim }}</td>
+                                        <td>{{ item.prodi }}</td>
+                                        <td>
+                                            <router-link :to="{ name: 'detailSudahValidasi', params: { nim: item.nim } }" class="btn btn-sm btn-primary" type="submit">
+                                                <div class="d-flex justify-content-center align-items-center px-2">
+                                                    <i class="ti-eye"></i>
+                                                    <span class="ml-2">Detail</span>
+                                                </div>
+                                            </router-link>
+                                        </td>
+                                    </tr>
+                                </template>
+                                <template v-else>
+                                    <tr>
+                                        <td class="text-center" colspan="4">Tidak Ada Data Yang Divalidasi</td>
+                                    </tr>
+                                </template>
                             </tbody>
                         </table>
                     </div>
@@ -52,6 +59,15 @@ export default {
     methods: {
         getResults: function (page = 1) {
             axios.get("/api/mahasiswa?page=" + page).then((response) => {
+                for (let i = 0; i < response.data.data.length; i++) {
+                    axios.get("/api/portofolio/byNim/" + response.data.data[i].nim).then((res) => {
+                        // console.log(res.data.data);
+                        if (res.data.data.sudahValidasi.length == 0) {
+                            response.data.data.splice(i, 1);
+                            i--;
+                        }
+                    });
+                }
                 this.mahasiswa = response.data;
             });
         },

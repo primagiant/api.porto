@@ -24,7 +24,7 @@
                         </div>
                         <div class="form-group">
                             <label for="fakultas_id">Kategori Kegiatan</label>
-                            <select v-model="selectedKategoriKegiatan" required class="form-control">
+                            <select v-model="selectedKategoriKegiatan" required class="form-control select-text">
                                 <option disabled value="">Select Kategori Kegiatan</option>
                                 <option v-for="item in kategori_kegiatan.data" :key="item.id" :value="item.id">{{ item.nama }}</option>
                             </select>
@@ -34,8 +34,8 @@
                         </div>
                         <div class="form-group">
                             <label for="fakultas_id">Jenis Kegiatan</label>
-                            <select v-model="selectedJenisKegiatan" required class="form-control">
-                                <option disabled value="">Select Kategori Kegiatan</option>
+                            <select v-model="selectedJenisKegiatan" required class="form-control select-text">
+                                <option disabled value="">Select Jenis Kegiatan</option>
                                 <option v-for="item in jenis_kegiatan.jenis_kegiatan" :key="item.id" :value="item.id">{{ item.nama }}</option>
                             </select>
                             <div v-if="errors.fakultas_id" class="invalid-feedback">
@@ -49,12 +49,27 @@
                                     <input v-model="ref_point" type="text" disabled class="form-control" name="tahun" id="tahun" placeholder="Tahun" />
                                 </div>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="tahun">Tahun</label>
                                     <input v-model="datas.tahun" type="text" autofocus="autofocus" required class="form-control" :class="{ 'is-invalid': invalid }" name="tahun" id="tahun" placeholder="Tahun" />
                                     <div v-if="errors.tahun" class="invalid-feedback">
                                         {{ errors.tahun[0] }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="tahun">Semester</label>
+                                    <div class="form-check my-0">
+                                        <div class="ml-4">
+                                            <input type="radio" class="form-check-input" v-model="datas.semester_id" checked value="1" />
+                                            Ganjil
+                                        </div>
+                                        <div class="ml-4">
+                                            <input type="radio" class="form-check-input" v-model="datas.semester_id" value="2" />
+                                            Genap
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -87,6 +102,7 @@ export default {
                 nama_kegiatan: null,
                 penyelenggara: null,
                 tahun: null,
+                semester_id: "1",
                 kategori_kegiatan_id: "",
                 jenis_kegiatan_id: "",
                 bukti: null,
@@ -141,11 +157,14 @@ export default {
             formData.append("nama_kegiatan", this.datas.nama_kegiatan);
             formData.append("penyelenggara", this.datas.penyelenggara);
             formData.append("tahun", this.datas.tahun);
+            console.log(this.datas.semester_id);
+            formData.append("semester_id", this.datas.semester_id);
             formData.append("kategori_kegiatan_id", this.datas.kategori_kegiatan_id);
             formData.append("jenis_kegiatan_id", this.datas.jenis_kegiatan_id);
             if (this.datas.bukti != null) {
                 formData.append("bukti", this.datas.bukti);
             }
+
             if (this.$route.params.id) {
                 axios
                     .post("/api/portofolio/" + this.$route.params.id, formData, {
@@ -162,7 +181,6 @@ export default {
                         console.log(this.errors);
                     });
             } else {
-                console.log(this.datas.bukti);
                 axios
                     .post("/api/portofolio", formData, {
                         headers: {
@@ -185,3 +203,9 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.select-text {
+    color: #1f1f1f;
+}
+</style>

@@ -7492,6 +7492,76 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -7576,6 +7646,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     showFilter: function showFilter() {
       this.filterClass = !this.filterClass;
+    },
+    checkExtension: function checkExtension(src) {
+      return src.split(".").pop();
     }
   }
 });
@@ -7671,6 +7744,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -7681,6 +7769,7 @@ __webpack_require__.r(__webpack_exports__);
         nama_kegiatan: null,
         penyelenggara: null,
         tahun: null,
+        semester_id: "1",
         kategori_kegiatan_id: "",
         jenis_kegiatan_id: "",
         bukti: null
@@ -7744,6 +7833,8 @@ __webpack_require__.r(__webpack_exports__);
       formData.append("nama_kegiatan", this.datas.nama_kegiatan);
       formData.append("penyelenggara", this.datas.penyelenggara);
       formData.append("tahun", this.datas.tahun);
+      console.log(this.datas.semester_id);
+      formData.append("semester_id", this.datas.semester_id);
       formData.append("kategori_kegiatan_id", this.datas.kategori_kegiatan_id);
       formData.append("jenis_kegiatan_id", this.datas.jenis_kegiatan_id);
 
@@ -7772,7 +7863,6 @@ __webpack_require__.r(__webpack_exports__);
           console.log(_this4.errors);
         });
       } else {
-        console.log(this.datas.bukti);
         axios.post("/api/portofolio", formData, {
           headers: {
             "Content-Type": "multipart/form-data"
@@ -7928,35 +8018,212 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      // portofolio: {},
-      pembimbingAkademik: {} // totalPoint: 0,
-      // belumValid: 0,
-      // valid: 0,
-      // totalPortofolio: 0,
-
+      pembimbingAkademik: {},
+      angkatan: {},
+      selectedAngkatan: "",
+      perluValidasi: 0,
+      sudahValidasi: 0,
+      totalPortofolio: 0,
+      banyakMahasiswa: 0
     };
   },
   mounted: function mounted() {
     var _this = this;
 
-    // axios.get("/api/portofolio").then((response) => {
-    //     this.portofolio = response.data.data;
-    //     this.portofolio.forEach((e) => {
-    //         this.totalPoint += e.valid_point;
-    //         if (e.status === 1) {
-    //             this.valid++;
-    //         } else {
-    //             this.belumValid++;
-    //         }
-    //         this.totalPortofolio++;
-    //     });
-    // });
     axios.get("/api/pembimbingakademik").then(function (response) {
       _this.pembimbingAkademik = response.data.data;
     });
+    axios.get("/api/angkatan").then(function (response) {
+      _this.angkatan = response.data.data;
+      _this.selectedAngkatan = _this.angkatan[0].tahun;
+    });
+    this.calculateValidation();
+  },
+  methods: {
+    filterAngkatan: function filterAngkatan(id) {
+      for (var i in this.angkatan) {
+        if (this.angkatan[i].id == id) {
+          this.selectedAngkatan = this.angkatan[i].tahun;
+        }
+      }
+    },
+    calculateValidation: function calculateValidation() {
+      var _this2 = this;
+
+      axios.get("/api/mahasiswa").then(function (response) {
+        for (var i = 0; i < response.data.data.length; i++) {
+          axios.get("/api/portofolio/byNim/" + response.data.data[i].nim).then(function (res) {
+            // console.log(res.data.data);
+            _this2.perluValidasi += res.data.data.perluValidasi.length;
+            _this2.sudahValidasi += res.data.data.sudahValidasi.length;
+            _this2.totalPortofolio = _this2.perluValidasi + _this2.sudahValidasi;
+          });
+        } // console.log(response.data.data);
+
+
+        _this2.mahasiswa = response.data;
+        _this2.banyakMahasiswa = response.data.data.length;
+      });
+    },
+    redirectToPerluValidasi: function redirectToPerluValidasi() {
+      this.$router.push({
+        name: "perluValidasi"
+      });
+    },
+    redirectToSudahValidasi: function redirectToSudahValidasi() {
+      this.$router.push({
+        name: "sudahValidasi"
+      });
+    }
   }
 });
 
@@ -8037,19 +8304,72 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       portofolio: {},
-      portofolioPoint: [],
-      isCheckAll: false
+      portofolioPoint: []
     };
   },
   mounted: function mounted() {
     var _this = this;
 
     axios.get("/api/portofolio/byNim/" + this.$route.params.nim).then(function (response) {
-      _this.portofolio = response.data;
+      _this.portofolio = response.data.data;
     });
   },
   methods: {
@@ -8067,12 +8387,12 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: "Validasi",
         cancelButtonText: "Batal"
       }).then(function (result) {
-        for (var i in _this2.portofolio.data) {
+        for (var i in _this2.portofolio.perluValidasi) {
           var formData = new FormData();
           formData.append("valid_point", _this2.portofolioPoint[i]);
 
           if (result.value) {
-            axios.post("/api/portofolio/validasi/" + _this2.portofolio.data[i].id, formData);
+            axios.post("/api/portofolio/validasi/" + _this2.portofolio.perluValidasi[i].id, formData);
           }
         }
 
@@ -8084,10 +8404,7 @@ __webpack_require__.r(__webpack_exports__);
         });
 
         _this2.$router.push({
-          name: "detailMahasiswa",
-          params: {
-            nim: _this2.portofolio.data[0].mahasiswa.nim
-          }
+          name: "perluValidasi"
         });
       });
     },
@@ -8157,6 +8474,70 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -8167,8 +8548,13 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get("/api/portofolio/byNim/" + this.$route.params.nim).then(function (response) {
-      _this.portofolio = response.data;
+      _this.portofolio = response.data.data;
     });
+  },
+  methods: {
+    checkExtension: function checkExtension(src) {
+      return src.split(".").pop();
+    }
   }
 });
 
@@ -8290,6 +8676,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -8305,6 +8698,22 @@ __webpack_require__.r(__webpack_exports__);
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       axios.get("/api/mahasiswa?page=" + page).then(function (response) {
+        var _loop = function _loop(_i) {
+          axios.get("/api/portofolio/byNim/" + response.data.data[_i].nim).then(function (res) {
+            // console.log(res.data.data);
+            if (res.data.data.perluValidasi.length == 0) {
+              response.data.data.splice(_i, 1);
+              _i--;
+            }
+          });
+          i = _i;
+        };
+
+        for (var i = 0; i < response.data.data.length; i++) {
+          _loop(i);
+        } // console.log(response.data.data);
+
+
         _this.mahasiswa = response.data;
       });
     }
@@ -8365,6 +8774,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -8380,6 +8796,21 @@ __webpack_require__.r(__webpack_exports__);
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       axios.get("/api/mahasiswa?page=" + page).then(function (response) {
+        var _loop = function _loop(_i) {
+          axios.get("/api/portofolio/byNim/" + response.data.data[_i].nim).then(function (res) {
+            // console.log(res.data.data);
+            if (res.data.data.sudahValidasi.length == 0) {
+              response.data.data.splice(_i, 1);
+              _i--;
+            }
+          });
+          i = _i;
+        };
+
+        for (var i = 0; i < response.data.data.length; i++) {
+          _loop(i);
+        }
+
         _this.mahasiswa = response.data;
       });
     }
@@ -13770,6 +14201,78 @@ defineJQueryPlugin(Toast);
 
 
 //# sourceMappingURL=bootstrap.esm.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/Portofolio.vue?vue&type=style&index=0&id=0f5dbb19&scoped=true&lang=css&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/Portofolio.vue?vue&type=style&index=0&id=0f5dbb19&scoped=true&lang=css& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.select-text[data-v-0f5dbb19] {\r\n    color: #1f1f1f;\n}\r\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/forms/FormsPortofolio.vue?vue&type=style&index=0&id=7fdb5988&scoped=true&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/forms/FormsPortofolio.vue?vue&type=style&index=0&id=7fdb5988&scoped=true&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.select-text[data-v-7fdb5988] {\r\n    color: #1f1f1f;\n}\r\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=style&index=0&id=a3870a86&scoped=true&lang=css&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=style&index=0&id=a3870a86&scoped=true&lang=css& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.csr-pointer[data-v-a3870a86] {\r\n    cursor: pointer;\n}\r\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
@@ -42777,6 +43280,96 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/Portofolio.vue?vue&type=style&index=0&id=0f5dbb19&scoped=true&lang=css&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/Portofolio.vue?vue&type=style&index=0&id=0f5dbb19&scoped=true&lang=css& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Portofolio_vue_vue_type_style_index_0_id_0f5dbb19_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Portofolio.vue?vue&type=style&index=0&id=0f5dbb19&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/Portofolio.vue?vue&type=style&index=0&id=0f5dbb19&scoped=true&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Portofolio_vue_vue_type_style_index_0_id_0f5dbb19_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Portofolio_vue_vue_type_style_index_0_id_0f5dbb19_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/forms/FormsPortofolio.vue?vue&type=style&index=0&id=7fdb5988&scoped=true&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/forms/FormsPortofolio.vue?vue&type=style&index=0&id=7fdb5988&scoped=true&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FormsPortofolio_vue_vue_type_style_index_0_id_7fdb5988_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FormsPortofolio.vue?vue&type=style&index=0&id=7fdb5988&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/forms/FormsPortofolio.vue?vue&type=style&index=0&id=7fdb5988&scoped=true&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FormsPortofolio_vue_vue_type_style_index_0_id_7fdb5988_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FormsPortofolio_vue_vue_type_style_index_0_id_7fdb5988_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=style&index=0&id=a3870a86&scoped=true&lang=css&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=style&index=0&id=a3870a86&scoped=true&lang=css& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_style_index_0_id_a3870a86_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Dashboard.vue?vue&type=style&index=0&id=a3870a86&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=style&index=0&id=a3870a86&scoped=true&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_style_index_0_id_a3870a86_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_style_index_0_id_a3870a86_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/DetailPerluValidasi.vue?vue&type=style&index=0&id=0642a699&scoped=true&lang=css&":
 /*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/DetailPerluValidasi.vue?vue&type=style&index=0&id=0642a699&scoped=true&lang=css& ***!
@@ -47216,23 +47809,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Portofolio_vue_vue_type_template_id_0f5dbb19___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Portofolio.vue?vue&type=template&id=0f5dbb19& */ "./resources/js/mahasiswa/pages/Portofolio.vue?vue&type=template&id=0f5dbb19&");
+/* harmony import */ var _Portofolio_vue_vue_type_template_id_0f5dbb19_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Portofolio.vue?vue&type=template&id=0f5dbb19&scoped=true& */ "./resources/js/mahasiswa/pages/Portofolio.vue?vue&type=template&id=0f5dbb19&scoped=true&");
 /* harmony import */ var _Portofolio_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Portofolio.vue?vue&type=script&lang=js& */ "./resources/js/mahasiswa/pages/Portofolio.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _Portofolio_vue_vue_type_style_index_0_id_0f5dbb19_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Portofolio.vue?vue&type=style&index=0&id=0f5dbb19&scoped=true&lang=css& */ "./resources/js/mahasiswa/pages/Portofolio.vue?vue&type=style&index=0&id=0f5dbb19&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
+;
 
 
 /* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _Portofolio_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Portofolio_vue_vue_type_template_id_0f5dbb19___WEBPACK_IMPORTED_MODULE_0__.render,
-  _Portofolio_vue_vue_type_template_id_0f5dbb19___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _Portofolio_vue_vue_type_template_id_0f5dbb19_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Portofolio_vue_vue_type_template_id_0f5dbb19_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
-  null,
+  "0f5dbb19",
   null
   
 )
@@ -47255,23 +47850,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _FormsPortofolio_vue_vue_type_template_id_7fdb5988___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FormsPortofolio.vue?vue&type=template&id=7fdb5988& */ "./resources/js/mahasiswa/pages/forms/FormsPortofolio.vue?vue&type=template&id=7fdb5988&");
+/* harmony import */ var _FormsPortofolio_vue_vue_type_template_id_7fdb5988_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FormsPortofolio.vue?vue&type=template&id=7fdb5988&scoped=true& */ "./resources/js/mahasiswa/pages/forms/FormsPortofolio.vue?vue&type=template&id=7fdb5988&scoped=true&");
 /* harmony import */ var _FormsPortofolio_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FormsPortofolio.vue?vue&type=script&lang=js& */ "./resources/js/mahasiswa/pages/forms/FormsPortofolio.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _FormsPortofolio_vue_vue_type_style_index_0_id_7fdb5988_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./FormsPortofolio.vue?vue&type=style&index=0&id=7fdb5988&scoped=true&lang=css& */ "./resources/js/mahasiswa/pages/forms/FormsPortofolio.vue?vue&type=style&index=0&id=7fdb5988&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
+;
 
 
 /* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _FormsPortofolio_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _FormsPortofolio_vue_vue_type_template_id_7fdb5988___WEBPACK_IMPORTED_MODULE_0__.render,
-  _FormsPortofolio_vue_vue_type_template_id_7fdb5988___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _FormsPortofolio_vue_vue_type_template_id_7fdb5988_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _FormsPortofolio_vue_vue_type_template_id_7fdb5988_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
-  null,
+  "7fdb5988",
   null
   
 )
@@ -47370,23 +47967,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Dashboard_vue_vue_type_template_id_a3870a86___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=template&id=a3870a86& */ "./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=template&id=a3870a86&");
+/* harmony import */ var _Dashboard_vue_vue_type_template_id_a3870a86_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=template&id=a3870a86&scoped=true& */ "./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=template&id=a3870a86&scoped=true&");
 /* harmony import */ var _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=script&lang=js& */ "./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _Dashboard_vue_vue_type_style_index_0_id_a3870a86_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=style&index=0&id=a3870a86&scoped=true&lang=css& */ "./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=style&index=0&id=a3870a86&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
+;
 
 
 /* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Dashboard_vue_vue_type_template_id_a3870a86___WEBPACK_IMPORTED_MODULE_0__.render,
-  _Dashboard_vue_vue_type_template_id_a3870a86___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _Dashboard_vue_vue_type_template_id_a3870a86_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Dashboard_vue_vue_type_template_id_a3870a86_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
-  null,
+  "a3870a86",
   null
   
 )
@@ -48043,6 +48642,45 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/mahasiswa/pages/Portofolio.vue?vue&type=style&index=0&id=0f5dbb19&scoped=true&lang=css&":
+/*!**************************************************************************************************************!*\
+  !*** ./resources/js/mahasiswa/pages/Portofolio.vue?vue&type=style&index=0&id=0f5dbb19&scoped=true&lang=css& ***!
+  \**************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Portofolio_vue_vue_type_style_index_0_id_0f5dbb19_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Portofolio.vue?vue&type=style&index=0&id=0f5dbb19&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/Portofolio.vue?vue&type=style&index=0&id=0f5dbb19&scoped=true&lang=css&");
+
+
+/***/ }),
+
+/***/ "./resources/js/mahasiswa/pages/forms/FormsPortofolio.vue?vue&type=style&index=0&id=7fdb5988&scoped=true&lang=css&":
+/*!*************************************************************************************************************************!*\
+  !*** ./resources/js/mahasiswa/pages/forms/FormsPortofolio.vue?vue&type=style&index=0&id=7fdb5988&scoped=true&lang=css& ***!
+  \*************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FormsPortofolio_vue_vue_type_style_index_0_id_7fdb5988_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader/dist/cjs.js!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FormsPortofolio.vue?vue&type=style&index=0&id=7fdb5988&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/forms/FormsPortofolio.vue?vue&type=style&index=0&id=7fdb5988&scoped=true&lang=css&");
+
+
+/***/ }),
+
+/***/ "./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=style&index=0&id=a3870a86&scoped=true&lang=css&":
+/*!**********************************************************************************************************************!*\
+  !*** ./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=style&index=0&id=a3870a86&scoped=true&lang=css& ***!
+  \**********************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_style_index_0_id_a3870a86_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Dashboard.vue?vue&type=style&index=0&id=a3870a86&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=style&index=0&id=a3870a86&scoped=true&lang=css&");
+
+
+/***/ }),
+
 /***/ "./resources/js/pembimbingAkademik/pages/DetailPerluValidasi.vue?vue&type=style&index=0&id=0642a699&scoped=true&lang=css&":
 /*!********************************************************************************************************************************!*\
   !*** ./resources/js/pembimbingAkademik/pages/DetailPerluValidasi.vue?vue&type=style&index=0&id=0642a699&scoped=true&lang=css& ***!
@@ -48447,36 +49085,36 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/mahasiswa/pages/Portofolio.vue?vue&type=template&id=0f5dbb19&":
-/*!************************************************************************************!*\
-  !*** ./resources/js/mahasiswa/pages/Portofolio.vue?vue&type=template&id=0f5dbb19& ***!
-  \************************************************************************************/
+/***/ "./resources/js/mahasiswa/pages/Portofolio.vue?vue&type=template&id=0f5dbb19&scoped=true&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/mahasiswa/pages/Portofolio.vue?vue&type=template&id=0f5dbb19&scoped=true& ***!
+  \************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Portofolio_vue_vue_type_template_id_0f5dbb19___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Portofolio_vue_vue_type_template_id_0f5dbb19___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Portofolio_vue_vue_type_template_id_0f5dbb19_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Portofolio_vue_vue_type_template_id_0f5dbb19_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Portofolio_vue_vue_type_template_id_0f5dbb19___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Portofolio.vue?vue&type=template&id=0f5dbb19& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/Portofolio.vue?vue&type=template&id=0f5dbb19&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Portofolio_vue_vue_type_template_id_0f5dbb19_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Portofolio.vue?vue&type=template&id=0f5dbb19&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/Portofolio.vue?vue&type=template&id=0f5dbb19&scoped=true&");
 
 
 /***/ }),
 
-/***/ "./resources/js/mahasiswa/pages/forms/FormsPortofolio.vue?vue&type=template&id=7fdb5988&":
-/*!***********************************************************************************************!*\
-  !*** ./resources/js/mahasiswa/pages/forms/FormsPortofolio.vue?vue&type=template&id=7fdb5988& ***!
-  \***********************************************************************************************/
+/***/ "./resources/js/mahasiswa/pages/forms/FormsPortofolio.vue?vue&type=template&id=7fdb5988&scoped=true&":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/js/mahasiswa/pages/forms/FormsPortofolio.vue?vue&type=template&id=7fdb5988&scoped=true& ***!
+  \***********************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FormsPortofolio_vue_vue_type_template_id_7fdb5988___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FormsPortofolio_vue_vue_type_template_id_7fdb5988___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FormsPortofolio_vue_vue_type_template_id_7fdb5988_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FormsPortofolio_vue_vue_type_template_id_7fdb5988_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FormsPortofolio_vue_vue_type_template_id_7fdb5988___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FormsPortofolio.vue?vue&type=template&id=7fdb5988& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/forms/FormsPortofolio.vue?vue&type=template&id=7fdb5988&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FormsPortofolio_vue_vue_type_template_id_7fdb5988_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FormsPortofolio.vue?vue&type=template&id=7fdb5988&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/forms/FormsPortofolio.vue?vue&type=template&id=7fdb5988&scoped=true&");
 
 
 /***/ }),
@@ -48515,19 +49153,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=template&id=a3870a86&":
-/*!********************************************************************************************!*\
-  !*** ./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=template&id=a3870a86& ***!
-  \********************************************************************************************/
+/***/ "./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=template&id=a3870a86&scoped=true&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=template&id=a3870a86&scoped=true& ***!
+  \********************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_a3870a86___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_a3870a86___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_a3870a86_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_a3870a86_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_a3870a86___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Dashboard.vue?vue&type=template&id=a3870a86& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=template&id=a3870a86&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_a3870a86_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Dashboard.vue?vue&type=template&id=a3870a86&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=template&id=a3870a86&scoped=true&");
 
 
 /***/ }),
@@ -52418,10 +53056,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/Portofolio.vue?vue&type=template&id=0f5dbb19&":
-/*!***************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/Portofolio.vue?vue&type=template&id=0f5dbb19& ***!
-  \***************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/Portofolio.vue?vue&type=template&id=0f5dbb19&scoped=true&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/Portofolio.vue?vue&type=template&id=0f5dbb19&scoped=true& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -52534,59 +53172,305 @@ var render = function () {
                             ),
                       ]),
                       _vm._v(" "),
-                      _c(
-                        "td",
-                        { staticClass: "text-center" },
-                        [
-                          _c(
-                            "router-link",
-                            {
-                              staticClass: "btn btn-sm btn-primary",
-                              attrs: { to: "", type: "submit" },
+                      _c("td", { staticClass: "text-center" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm btn-primary",
+                            attrs: {
+                              type: "button",
+                              "data-toggle": "modal",
+                              "data-target": "#exampleModal" + index,
                             },
-                            [
-                              _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "d-flex justify-content-center align-items-center",
-                                },
-                                [_c("i", { staticClass: "ti-eye" })]
-                              ),
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-sm btn-warning",
-                              attrs: { type: "submit" },
-                              on: {
-                                click: function ($event) {
-                                  return _vm.redirectCheck(item.id)
-                                },
+                          },
+                          [_vm._m(2, true)]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm btn-warning",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function ($event) {
+                                return _vm.redirectCheck(item.id)
                               },
                             },
-                            [_vm._m(2, true)]
-                          ),
-                          _vm._v(" "),
-                          item.status == 0
-                            ? _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-sm btn-danger",
-                                  attrs: { to: "" },
-                                  on: {
-                                    click: function ($event) {
-                                      return _vm.deleteData(item.id)
-                                    },
+                          },
+                          [_vm._m(3, true)]
+                        ),
+                        _vm._v(" "),
+                        item.status == 0
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-sm btn-danger",
+                                attrs: { to: "" },
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.deleteData(item.id)
                                   },
                                 },
-                                [_vm._m(3, true)]
-                              )
-                            : _vm._e(),
-                        ],
-                        1
+                              },
+                              [_vm._m(4, true)]
+                            )
+                          : _vm._e(),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "modal fade",
+                          attrs: {
+                            id: "exampleModal" + index,
+                            tabindex: "-1",
+                            role: "dialog",
+                            "aria-labelledby": "exampleModalLabel",
+                            "aria-hidden": "true",
+                          },
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "modal-dialog modal-lg",
+                              attrs: { role: "document" },
+                            },
+                            [
+                              _c("div", { staticClass: "modal-content" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _c("div", { staticClass: "col-md-6 card" }, [
+                                    _c("div", { staticClass: "card-body" }, [
+                                      _vm._m(5, true),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Nama Kegiatan")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.nama_kegiatan) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Penyelenggara")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.penyelenggara) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Kategori Kegiatan")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.kategori_kegiatan) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Jenis Kegiatan")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.jenis_kegiatan) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Tahun")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.tahun) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Semester")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label text-capitalize",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.semester) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Valid Point")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.valid_point) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                    ]),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-6" }, [
+                                    _vm.checkExtension(item.bukti) == "pdf"
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "embed-responsive embed-responsive-1by1",
+                                          },
+                                          [
+                                            _c("iframe", {
+                                              staticClass:
+                                                "embed-responsive-item",
+                                              staticStyle: { border: "none" },
+                                              attrs: {
+                                                src: "/storage/" + item.bukti,
+                                                allowfullscreen: "",
+                                                width: "100%",
+                                              },
+                                            }),
+                                          ]
+                                        )
+                                      : _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "d-flex justify-content-center align-items-center collapse-hidden",
+                                          },
+                                          [
+                                            _c("img", {
+                                              attrs: {
+                                                src: "/storage/" + item.bukti,
+                                                alt: "modal image",
+                                              },
+                                            }),
+                                          ]
+                                        ),
+                                  ]),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _vm._m(6, true),
+                            ]
+                          ),
+                        ]
                       ),
                     ])
                   }),
@@ -52639,6 +53523,16 @@ var staticRenderFns = [
     return _c(
       "div",
       { staticClass: "d-flex justify-content-center align-items-center" },
+      [_c("i", { staticClass: "ti-eye" })]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "d-flex justify-content-center align-items-center" },
       [_c("i", { staticClass: "ti-marker-alt" })]
     )
   },
@@ -52652,6 +53546,38 @@ var staticRenderFns = [
       [_c("i", { staticClass: "ti-trash" })]
     )
   },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("h3", [_vm._v("Detail Portofolio")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "mt-3 d-flex justify-content-center align-items-center" },
+      [
+        _c(
+          "button",
+          {
+            staticClass:
+              "btn btn-sm btn-primary d-inline-flex justify-content-center align-items-center",
+            attrs: {
+              type: "button",
+              "data-toggle": "modal",
+              "data-target": "#exampleModal",
+            },
+          },
+          [_vm._v("Close")]
+        ),
+      ]
+    )
+  },
 ]
 render._withStripped = true
 
@@ -52659,10 +53585,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/forms/FormsPortofolio.vue?vue&type=template&id=7fdb5988&":
-/*!**************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/forms/FormsPortofolio.vue?vue&type=template&id=7fdb5988& ***!
-  \**************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/forms/FormsPortofolio.vue?vue&type=template&id=7fdb5988&scoped=true&":
+/*!**************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/mahasiswa/pages/forms/FormsPortofolio.vue?vue&type=template&id=7fdb5988&scoped=true& ***!
+  \**************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -52806,7 +53732,7 @@ var render = function () {
                         expression: "selectedKategoriKegiatan",
                       },
                     ],
-                    staticClass: "form-control",
+                    staticClass: "form-control select-text",
                     attrs: { required: "" },
                     on: {
                       change: function ($event) {
@@ -52867,7 +53793,7 @@ var render = function () {
                         expression: "selectedJenisKegiatan",
                       },
                     ],
-                    staticClass: "form-control",
+                    staticClass: "form-control select-text",
                     attrs: { required: "" },
                     on: {
                       change: function ($event) {
@@ -52887,7 +53813,7 @@ var render = function () {
                   },
                   [
                     _c("option", { attrs: { disabled: "", value: "" } }, [
-                      _vm._v("Select Kategori Kegiatan"),
+                      _vm._v("Select Jenis Kegiatan"),
                     ]),
                     _vm._v(" "),
                     _vm._l(_vm.jenis_kegiatan.jenis_kegiatan, function (item) {
@@ -52949,7 +53875,7 @@ var render = function () {
                   ]),
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-8" }, [
+                _c("div", { staticClass: "col-md-4" }, [
                   _c("div", { staticClass: "form-group" }, [
                     _c("label", { attrs: { for: "tahun" } }, [_vm._v("Tahun")]),
                     _vm._v(" "),
@@ -52992,6 +53918,68 @@ var render = function () {
                           ),
                         ])
                       : _vm._e(),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-4" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "tahun" } }, [
+                      _vm._v("Semester"),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-check my-0" }, [
+                      _c("div", { staticClass: "ml-4" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.datas.semester_id,
+                              expression: "datas.semester_id",
+                            },
+                          ],
+                          staticClass: "form-check-input",
+                          attrs: { type: "radio", checked: "", value: "1" },
+                          domProps: {
+                            checked: _vm._q(_vm.datas.semester_id, "1"),
+                          },
+                          on: {
+                            change: function ($event) {
+                              return _vm.$set(_vm.datas, "semester_id", "1")
+                            },
+                          },
+                        }),
+                        _vm._v(
+                          "\n                                        Ganjil\n                                    "
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "ml-4" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.datas.semester_id,
+                              expression: "datas.semester_id",
+                            },
+                          ],
+                          staticClass: "form-check-input",
+                          attrs: { type: "radio", value: "2" },
+                          domProps: {
+                            checked: _vm._q(_vm.datas.semester_id, "2"),
+                          },
+                          on: {
+                            change: function ($event) {
+                              return _vm.$set(_vm.datas, "semester_id", "2")
+                            },
+                          },
+                        }),
+                        _vm._v(
+                          "\n                                        Genap\n                                    "
+                        ),
+                      ]),
+                    ]),
                   ]),
                 ]),
               ]),
@@ -53259,10 +54247,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=template&id=a3870a86&":
-/*!***********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=template&id=a3870a86& ***!
-  \***********************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=template&id=a3870a86&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pembimbingAkademik/pages/Dashboard.vue?vue&type=template&id=a3870a86&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -53281,14 +54269,171 @@ var render = function () {
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-12 col-xl-8 mb-4 mb-xl-0" }, [
             _c("h3", { staticClass: "font-weight-bold" }, [
-              _vm._v("Selamat Datang " + _vm._s(_vm.pembimbingAkademik.nama)),
+              _vm._v("Welcome " + _vm._s(_vm.pembimbingAkademik.nama)),
             ]),
-            _vm._v(" "),
-            _vm._m(0),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-12 col-xl-4" }, [
+            _c("div", { staticClass: "justify-content-end d-flex" }, [
+              _c(
+                "div",
+                { staticClass: "dropdown flex-md-grow-1 flex-xl-grow-0" },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "btn btn-sm btn-light bg-white dropdown-toggle",
+                      attrs: {
+                        type: "button",
+                        id: "dropdownMenuDate2",
+                        "data-toggle": "dropdown",
+                        "aria-haspopup": "true",
+                        "aria-expanded": "true",
+                      },
+                    },
+                    [
+                      _c("i", { staticClass: "mdi mdi-calendar" }),
+                      _vm._v(
+                        "\n                                Angkatan ( " +
+                          _vm._s(_vm.selectedAngkatan) +
+                          " )\n                            "
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "dropdown-menu dropdown-menu-right",
+                      attrs: { "aria-labelledby": "dropdownMenuDate2" },
+                    },
+                    _vm._l(_vm.angkatan, function (item, index) {
+                      return _c("div", { key: index }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { href: "#" },
+                            on: {
+                              click: function ($event) {
+                                return _vm.filterAngkatan(item.id)
+                              },
+                            },
+                          },
+                          [_vm._v(_vm._s(item.tahun))]
+                        ),
+                      ])
+                    }),
+                    0
+                  ),
+                ]
+              ),
+            ]),
           ]),
         ]),
       ]),
     ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-6 grid-margin transparent" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-6 mb-4 stretch-card transparent" }, [
+            _c(
+              "div",
+              {
+                staticClass: "card card-tale csr-pointer",
+                on: {
+                  click: function ($event) {
+                    return _vm.redirectToPerluValidasi()
+                  },
+                },
+              },
+              [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("p", { staticClass: "mb-4" }, [
+                    _vm._v("Perlu Divalidasi"),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "fs-30 mb-2" }, [
+                    _vm._v(_vm._s(_vm.perluValidasi)),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [_vm._v("Portofolio")]),
+                ]),
+              ]
+            ),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6 mb-4 stretch-card transparent" }, [
+            _c(
+              "div",
+              {
+                staticClass: "card card-dark-blue csr-pointer",
+                on: {
+                  click: function ($event) {
+                    return _vm.redirectToSudahValidasi()
+                  },
+                },
+              },
+              [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("p", { staticClass: "mb-4" }, [
+                    _vm._v("Sudah Divalidasi"),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "fs-30 mb-2" }, [
+                    _vm._v(_vm._s(_vm.sudahValidasi)),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [_vm._v("Portofolio")]),
+                ]),
+              ]
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            { staticClass: "col-md-6 mb-4 mb-lg-0 stretch-card transparent" },
+            [
+              _c("div", { staticClass: "card card-light-blue" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("p", { staticClass: "mb-4" }, [
+                    _vm._v("Banyaknya Portofolio"),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "fs-30 mb-2" }, [
+                    _vm._v(_vm._s(_vm.totalPortofolio)),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [_vm._v("Portofolio")]),
+                ]),
+              ]),
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6 stretch-card transparent" }, [
+            _c("div", { staticClass: "card card-light-danger" }, [
+              _c("div", { staticClass: "card-body" }, [
+                _c("p", { staticClass: "mb-4" }, [_vm._v("Mahasiswa Diampu")]),
+                _vm._v(" "),
+                _c("p", { staticClass: "fs-30 mb-2" }, [
+                  _vm._v(_vm._s(_vm.banyakMahasiswa)),
+                ]),
+                _vm._v(" "),
+                _c("p", [_vm._v("Mahasiswa")]),
+              ]),
+            ]),
+          ]),
+        ]),
+      ]),
+      _vm._v(" "),
+      _vm._m(0),
+    ]),
+    _vm._v(" "),
+    _vm._m(1),
   ])
 }
 var staticRenderFns = [
@@ -53296,11 +54441,470 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h6", { staticClass: "font-weight-normal mb-0" }, [
-      _vm._v(
-        "\n                        All systems are running smoothly! You have\n                        "
-      ),
-      _c("span", { staticClass: "text-primary" }, [_vm._v("3 unread alerts!")]),
+    return _c("div", { staticClass: "col-md-6 grid-margin stretch-card" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "d-flex justify-content-between" }, [
+            _c("p", { staticClass: "card-title" }, [_vm._v("Sales Report")]),
+            _vm._v(" "),
+            _c("a", { staticClass: "text-info", attrs: { href: "#" } }, [
+              _vm._v("View all"),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "font-weight-500" }, [
+            _vm._v(
+              "The total number of sessions within the date range. It is the period time a user is actively engaged with your website, page or app, etc"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("div", {
+            staticClass: "chartjs-legend mt-4 mb-2",
+            attrs: { id: "sales-legend" },
+          }),
+          _vm._v(" "),
+          _c("canvas", { attrs: { id: "sales-chart" } }),
+        ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12 grid-margin stretch-card" }, [
+        _c("div", { staticClass: "card position-relative" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "carousel slide detailed-report-carousel position-static pt-2",
+                attrs: { id: "detailedReports", "data-ride": "carousel" },
+              },
+              [
+                _c("div", { staticClass: "carousel-inner" }, [
+                  _c("div", { staticClass: "carousel-item active" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c(
+                        "div",
+                        { staticClass: "col-md-12 grid-margin stretch-card" },
+                        [
+                          _c("div", { staticClass: "card" }, [
+                            _c("div", { staticClass: "card-body" }, [
+                              _c("p", { staticClass: "card-title mb-0" }, [
+                                _vm._v("Top Mahasiswa"),
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "table-responsive" }, [
+                                _c(
+                                  "table",
+                                  {
+                                    staticClass:
+                                      "table table-striped table-borderless",
+                                  },
+                                  [
+                                    _c("thead", [
+                                      _c("tr", [
+                                        _c("th", [_vm._v("#")]),
+                                        _vm._v(" "),
+                                        _c("th", [_vm._v("Nim")]),
+                                        _vm._v(" "),
+                                        _c("th", [_vm._v("Nama")]),
+                                        _vm._v(" "),
+                                        _c("th", [_vm._v("Skor")]),
+                                      ]),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("tbody", [
+                                      _c("tr", [
+                                        _c("td", [_vm._v("1")]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          { staticClass: "font-weight-bold" },
+                                          [_vm._v("$362")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("td", [_vm._v("21 Sep 2018")]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          { staticClass: "font-weight-medium" },
+                                          [_vm._v("300")]
+                                        ),
+                                      ]),
+                                    ]),
+                                  ]
+                                ),
+                              ]),
+                            ]),
+                          ]),
+                        ]
+                      ),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "carousel-item" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "col-md-12 col-xl-3 d-flex flex-column justify-content-start",
+                        },
+                        [
+                          _c("div", { staticClass: "ml-xl-4 mt-3" }, [
+                            _c("p", { staticClass: "card-title" }, [
+                              _vm._v("Detailed Reports"),
+                            ]),
+                            _vm._v(" "),
+                            _c("h1", { staticClass: "text-primary" }, [
+                              _vm._v("$34040"),
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "h3",
+                              {
+                                staticClass:
+                                  "font-weight-500 mb-xl-4 text-primary",
+                              },
+                              [_vm._v("North America")]
+                            ),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "mb-2 mb-xl-0" }, [
+                              _vm._v(
+                                "The total number of sessions within the date range. It is the period time a user is actively engaged with your website, page or app, etc"
+                              ),
+                            ]),
+                          ]),
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-12 col-xl-9" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-6 border-right" }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "table-responsive mb-3 mb-md-0 mt-3",
+                              },
+                              [
+                                _c(
+                                  "table",
+                                  {
+                                    staticClass:
+                                      "table table-borderless report-table",
+                                  },
+                                  [
+                                    _c("tr", [
+                                      _c("td", { staticClass: "text-muted" }, [
+                                        _vm._v("Illinois"),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "w-100 px-0" }, [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "progress progress-md mx-4",
+                                          },
+                                          [
+                                            _c("div", {
+                                              staticClass:
+                                                "progress-bar bg-primary",
+                                              staticStyle: { width: "70%" },
+                                              attrs: {
+                                                role: "progressbar",
+                                                "aria-valuenow": "70",
+                                                "aria-valuemin": "0",
+                                                "aria-valuemax": "100",
+                                              },
+                                            }),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _c(
+                                          "h5",
+                                          {
+                                            staticClass:
+                                              "font-weight-bold mb-0",
+                                          },
+                                          [_vm._v("713")]
+                                        ),
+                                      ]),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("tr", [
+                                      _c("td", { staticClass: "text-muted" }, [
+                                        _vm._v("Washington"),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "w-100 px-0" }, [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "progress progress-md mx-4",
+                                          },
+                                          [
+                                            _c("div", {
+                                              staticClass:
+                                                "progress-bar bg-warning",
+                                              staticStyle: { width: "30%" },
+                                              attrs: {
+                                                role: "progressbar",
+                                                "aria-valuenow": "30",
+                                                "aria-valuemin": "0",
+                                                "aria-valuemax": "100",
+                                              },
+                                            }),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _c(
+                                          "h5",
+                                          {
+                                            staticClass:
+                                              "font-weight-bold mb-0",
+                                          },
+                                          [_vm._v("583")]
+                                        ),
+                                      ]),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("tr", [
+                                      _c("td", { staticClass: "text-muted" }, [
+                                        _vm._v("Mississippi"),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "w-100 px-0" }, [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "progress progress-md mx-4",
+                                          },
+                                          [
+                                            _c("div", {
+                                              staticClass:
+                                                "progress-bar bg-danger",
+                                              staticStyle: { width: "95%" },
+                                              attrs: {
+                                                role: "progressbar",
+                                                "aria-valuenow": "95",
+                                                "aria-valuemin": "0",
+                                                "aria-valuemax": "100",
+                                              },
+                                            }),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _c(
+                                          "h5",
+                                          {
+                                            staticClass:
+                                              "font-weight-bold mb-0",
+                                          },
+                                          [_vm._v("924")]
+                                        ),
+                                      ]),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("tr", [
+                                      _c("td", { staticClass: "text-muted" }, [
+                                        _vm._v("California"),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "w-100 px-0" }, [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "progress progress-md mx-4",
+                                          },
+                                          [
+                                            _c("div", {
+                                              staticClass:
+                                                "progress-bar bg-info",
+                                              staticStyle: { width: "60%" },
+                                              attrs: {
+                                                role: "progressbar",
+                                                "aria-valuenow": "60",
+                                                "aria-valuemin": "0",
+                                                "aria-valuemax": "100",
+                                              },
+                                            }),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _c(
+                                          "h5",
+                                          {
+                                            staticClass:
+                                              "font-weight-bold mb-0",
+                                          },
+                                          [_vm._v("664")]
+                                        ),
+                                      ]),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("tr", [
+                                      _c("td", { staticClass: "text-muted" }, [
+                                        _vm._v("Maryland"),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "w-100 px-0" }, [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "progress progress-md mx-4",
+                                          },
+                                          [
+                                            _c("div", {
+                                              staticClass:
+                                                "progress-bar bg-primary",
+                                              staticStyle: { width: "40%" },
+                                              attrs: {
+                                                role: "progressbar",
+                                                "aria-valuenow": "40",
+                                                "aria-valuemin": "0",
+                                                "aria-valuemax": "100",
+                                              },
+                                            }),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _c(
+                                          "h5",
+                                          {
+                                            staticClass:
+                                              "font-weight-bold mb-0",
+                                          },
+                                          [_vm._v("560")]
+                                        ),
+                                      ]),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("tr", [
+                                      _c("td", { staticClass: "text-muted" }, [
+                                        _vm._v("Alaska"),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "w-100 px-0" }, [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "progress progress-md mx-4",
+                                          },
+                                          [
+                                            _c("div", {
+                                              staticClass:
+                                                "progress-bar bg-danger",
+                                              staticStyle: { width: "75%" },
+                                              attrs: {
+                                                role: "progressbar",
+                                                "aria-valuenow": "75",
+                                                "aria-valuemin": "0",
+                                                "aria-valuemax": "100",
+                                              },
+                                            }),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _c(
+                                          "h5",
+                                          {
+                                            staticClass:
+                                              "font-weight-bold mb-0",
+                                          },
+                                          [_vm._v("793")]
+                                        ),
+                                      ]),
+                                    ]),
+                                  ]
+                                ),
+                              ]
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-6 mt-3" }, [
+                            _c("canvas", {
+                              attrs: { id: "south-america-chart" },
+                            }),
+                            _vm._v(" "),
+                            _c("div", {
+                              attrs: { id: "south-america-legend" },
+                            }),
+                          ]),
+                        ]),
+                      ]),
+                    ]),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "carousel-control-prev",
+                    attrs: {
+                      href: "#detailedReports",
+                      role: "button",
+                      "data-slide": "prev",
+                    },
+                  },
+                  [
+                    _c("span", {
+                      staticClass: "carousel-control-prev-icon",
+                      attrs: { "aria-hidden": "true" },
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "sr-only" }, [
+                      _vm._v("Previous"),
+                    ]),
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "carousel-control-next",
+                    attrs: {
+                      href: "#detailedReports",
+                      role: "button",
+                      "data-slide": "next",
+                    },
+                  },
+                  [
+                    _c("span", {
+                      staticClass: "carousel-control-next-icon",
+                      attrs: { "aria-hidden": "true" },
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "sr-only" }, [_vm._v("Next")]),
+                  ]
+                ),
+              ]
+            ),
+          ]),
+        ]),
+      ]),
     ])
   },
 ]
@@ -53343,26 +54947,15 @@ var render = function () {
             },
           },
           [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary mb-3",
-                attrs: { type: "submit" },
-              },
-              [_vm._v("Validasi Semua Portofolio")]
-            ),
-            _vm._v(" "),
             _c("div", { staticClass: "table-responsive" }, [
               _c("table", { staticClass: "table table-hover" }, [
                 _vm._m(1),
                 _vm._v(" "),
                 _c(
                   "tbody",
-                  _vm._l(_vm.portofolio.data, function (item, index) {
+                  _vm._l(_vm.portofolio.perluValidasi, function (item, index) {
                     return _c("tr", { key: index }, [
-                      _c("td", { staticClass: "text-center" }, [
-                        _vm._v(_vm._s(item.nama_kegiatan)),
-                      ]),
+                      _c("td", [_vm._v(_vm._s(item.nama_kegiatan))]),
                       _vm._v(" "),
                       _c("td", { staticClass: "text-center" }, [
                         _vm._v(_vm._s(item.tahun)),
@@ -53444,43 +55037,236 @@ var render = function () {
                             },
                             [
                               _c("div", { staticClass: "modal-content" }, [
-                                _vm.checkExtension(item.bukti) == "pdf"
-                                  ? _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "embed-responsive embed-responsive-21by9",
-                                      },
-                                      [
-                                        _c("iframe", {
-                                          staticClass: "embed-responsive-item",
-                                          staticStyle: { border: "none" },
-                                          attrs: {
-                                            src: "/storage/" + item.bukti,
-                                            allowfullscreen: "",
-                                            width: "100%",
+                                _c("div", { staticClass: "row" }, [
+                                  _c("div", { staticClass: "col-md-6 card" }, [
+                                    _c("div", { staticClass: "card-body" }, [
+                                      _vm._m(3, true),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
                                           },
-                                        }),
-                                      ]
-                                    )
-                                  : _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "d-flex justify-content-center align-items-center collapse-hidden",
-                                      },
-                                      [
-                                        _c("img", {
-                                          attrs: {
-                                            src: "/storage/" + item.bukti,
-                                            alt: "modal image",
+                                          [_vm._v("Nama Kegiatan")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
                                           },
-                                        }),
-                                      ]
-                                    ),
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.nama_kegiatan) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Penyelenggara")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.penyelenggara) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Kategori Kegiatan")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.kategori_kegiatan) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Jenis Kegiatan")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.jenis_kegiatan) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Tahun")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.tahun) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Semester")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label text-capitalize",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.semester) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Valid Point")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.valid_point) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                    ]),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-6" }, [
+                                    _vm.checkExtension(item.bukti) == "pdf"
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "embed-responsive embed-responsive-1by1",
+                                          },
+                                          [
+                                            _c("iframe", {
+                                              staticClass:
+                                                "embed-responsive-item",
+                                              staticStyle: { border: "none" },
+                                              attrs: {
+                                                src: "/storage/" + item.bukti,
+                                                allowfullscreen: "",
+                                                width: "100%",
+                                              },
+                                            }),
+                                          ]
+                                        )
+                                      : _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "d-flex justify-content-center align-items-center collapse-hidden",
+                                          },
+                                          [
+                                            _c("img", {
+                                              attrs: {
+                                                src: "/storage/" + item.bukti,
+                                                alt: "modal image",
+                                              },
+                                            }),
+                                          ]
+                                        ),
+                                  ]),
+                                ]),
                               ]),
                               _vm._v(" "),
-                              _vm._m(3, true),
+                              _vm._m(4, true),
                             ]
                           ),
                         ]
@@ -53491,7 +55277,26 @@ var render = function () {
                 ),
               ]),
             ]),
-          ]
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary mt-3 float-right",
+                attrs: { type: "submit" },
+              },
+              [_vm._v("Validasi Semua Portofolio")]
+            ),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              {
+                staticClass: "btn btn-light mt-3",
+                attrs: { to: { name: "perluValidasi" } },
+              },
+              [_vm._v("Kembali")]
+            ),
+          ],
+          1
         ),
       ]),
     ]),
@@ -53512,7 +55317,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", { staticClass: "text-center" }, [_vm._v("Nama Kegiatan")]),
+        _c("th", [_vm._v("Nama Kegiatan")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("Tahun")]),
         _vm._v(" "),
@@ -53541,6 +55346,14 @@ var staticRenderFns = [
       { staticClass: "d-flex justify-content-center align-items-center" },
       [_c("i", { staticClass: "ti-eye" })]
     )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("h3", [_vm._v("Detail Portofolio")]),
+    ])
   },
   function () {
     var _vm = this
@@ -53594,68 +55407,316 @@ var render = function () {
     _vm._v(" "),
     _c("div", { staticClass: "col-lg-12 grid-margin stretch-card" }, [
       _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "table-responsive" }, [
-            _c("table", { staticClass: "table table-hover" }, [
-              _vm._m(1),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                [
-                  _vm.portofolio.data.length !== 0
-                    ? _vm._l(_vm.portofolio.data, function (item, index) {
-                        return _c("tr", { key: index }, [
-                          _c("td", { staticClass: "text-center" }, [
-                            _vm._v(_vm._s(item.nama_kegiatan)),
-                          ]),
-                          _vm._v(" "),
-                          _c("td", { staticClass: "text-center" }, [
-                            _vm._v(_vm._s(item.tahun)),
-                          ]),
-                          _vm._v(" "),
-                          _c("td", { staticClass: "text-center" }, [
-                            _vm._v(_vm._s(item.penyelenggara)),
-                          ]),
-                          _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "card-body" },
+          [
+            _c("div", { staticClass: "table-responsive" }, [
+              _c("table", { staticClass: "table table-hover" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.portofolio.sudahValidasi, function (item, index) {
+                    return _c("tr", { key: index }, [
+                      _c("td", [_vm._v(_vm._s(item.nama_kegiatan))]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-center" }, [
+                        _vm._v(_vm._s(item.tahun)),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-center" }, [
+                        _vm._v(_vm._s(item.penyelenggara)),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-center" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm btn-primary",
+                            attrs: {
+                              type: "button",
+                              "data-toggle": "modal",
+                              "data-target": "#exampleModal" + index,
+                            },
+                          },
+                          [_vm._m(2, true)]
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "modal fade",
+                          attrs: {
+                            id: "exampleModal" + index,
+                            tabindex: "-1",
+                            role: "dialog",
+                            "aria-labelledby": "exampleModalLabel",
+                            "aria-hidden": "true",
+                          },
+                        },
+                        [
                           _c(
-                            "td",
-                            { staticClass: "text-center" },
+                            "div",
+                            {
+                              staticClass: "modal-dialog modal-lg",
+                              attrs: { role: "document" },
+                            },
                             [
-                              _c(
-                                "router-link",
-                                {
-                                  staticClass: "btn btn-sm btn-primary",
-                                  attrs: {
-                                    to: {
-                                      name: "validasi",
-                                      params: { id: item.id },
-                                    },
-                                    type: "submit",
-                                  },
-                                },
-                                [
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "d-flex justify-content-center align-items-center",
-                                    },
-                                    [_c("i", { staticClass: "ti-eye" })]
-                                  ),
-                                ]
-                              ),
-                            ],
-                            1
+                              _c("div", { staticClass: "modal-content" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _c("div", { staticClass: "col-md-6 card" }, [
+                                    _c("div", { staticClass: "card-body" }, [
+                                      _vm._m(3, true),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Nama Kegiatan")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.nama_kegiatan) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Penyelenggara")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.penyelenggara) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Kategori Kegiatan")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.kategori_kegiatan) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Jenis Kegiatan")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.jenis_kegiatan) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Tahun")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.tahun) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Semester")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label text-capitalize",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.semester) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "col-sm-3 col-form-label",
+                                          },
+                                          [_vm._v("Valid Point")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass:
+                                              "col-sm-9 col-form-label",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                " +
+                                                _vm._s(item.valid_point) +
+                                                "\n                                                            "
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
+                                    ]),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-6" }, [
+                                    _vm.checkExtension(item.bukti) == "pdf"
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "embed-responsive embed-responsive-1by1",
+                                          },
+                                          [
+                                            _c("iframe", {
+                                              staticClass:
+                                                "embed-responsive-item",
+                                              staticStyle: { border: "none" },
+                                              attrs: {
+                                                src: "/storage/" + item.bukti,
+                                                allowfullscreen: "",
+                                                width: "100%",
+                                              },
+                                            }),
+                                          ]
+                                        )
+                                      : _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "d-flex justify-content-center align-items-center collapse-hidden",
+                                          },
+                                          [
+                                            _c("img", {
+                                              attrs: {
+                                                src: "/storage/" + item.bukti,
+                                                alt: "modal image",
+                                              },
+                                            }),
+                                          ]
+                                        ),
+                                  ]),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _vm._m(4, true),
+                            ]
                           ),
-                        ])
-                      })
-                    : [_vm._m(2)],
-                ],
-                2
-              ),
+                        ]
+                      ),
+                    ])
+                  }),
+                  0
+                ),
+              ]),
             ]),
-          ]),
-        ]),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              {
+                staticClass: "btn btn-light float-right mt-3",
+                attrs: { to: { name: "sudahValidasi" }, type: "button" },
+              },
+              [_vm._v("Kembali")]
+            ),
+          ],
+          1
+        ),
       ]),
     ]),
   ])
@@ -53675,7 +55736,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", { staticClass: "text-center" }, [_vm._v("Nama Kegiatan")]),
+        _c("th", [_vm._v("Nama Kegiatan")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("Tahun")]),
         _vm._v(" "),
@@ -53691,13 +55752,43 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", { staticClass: "text-center", attrs: { colspan: "5" } }, [
-        _vm._v(
-          "Tidak Ada Portofolio yang Harus Divalidasi Untuk Mahasiswa Terkait"
-        ),
-      ]),
+    return _c(
+      "div",
+      { staticClass: "d-flex justify-content-center align-items-center" },
+      [_c("i", { staticClass: "ti-eye" })]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("h3", [_vm._v("Detail Portofolio")]),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "mt-3 d-flex justify-content-center align-items-center" },
+      [
+        _c(
+          "button",
+          {
+            staticClass:
+              "btn btn-sm btn-primary d-inline-flex justify-content-center align-items-center",
+            attrs: {
+              type: "button",
+              "data-toggle": "modal",
+              "data-target": "#exampleModal",
+            },
+          },
+          [_vm._v("Close")]
+        ),
+      ]
+    )
   },
 ]
 render._withStripped = true
@@ -53833,52 +55924,56 @@ var render = function () {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.mahasiswa.data, function (item, index) {
-                  return _c("tr", { key: index }, [
-                    _c("td", [_vm._v(_vm._s(item.nama))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.nim))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.prodi))]),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            staticClass: "btn btn-sm btn-primary",
-                            attrs: {
-                              to: {
-                                name: "detailPerluValidasi",
-                                params: { nim: item.nim },
-                              },
-                              type: "submit",
-                            },
-                          },
-                          [
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "d-flex justify-content-center align-items-center px-2",
-                              },
-                              [
-                                _c("i", { staticClass: "ti-eye" }),
-                                _vm._v(" "),
-                                _c("span", { staticClass: "ml-2" }, [
-                                  _vm._v("Detail"),
-                                ]),
-                              ]
-                            ),
-                          ]
-                        ),
-                      ],
-                      1
-                    ),
-                  ])
-                }),
-                0
+                [
+                  _vm.mahasiswa.data.length != 0
+                    ? _vm._l(_vm.mahasiswa.data, function (item, index) {
+                        return _c("tr", { key: index }, [
+                          _c("td", [_vm._v(_vm._s(item.nama))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.nim))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.prodi))]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            [
+                              _c(
+                                "router-link",
+                                {
+                                  staticClass: "btn btn-sm btn-primary",
+                                  attrs: {
+                                    to: {
+                                      name: "detailPerluValidasi",
+                                      params: { nim: item.nim },
+                                    },
+                                    type: "submit",
+                                  },
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "d-flex justify-content-center align-items-center px-2",
+                                    },
+                                    [
+                                      _c("i", { staticClass: "ti-eye" }),
+                                      _vm._v(" "),
+                                      _c("span", { staticClass: "ml-2" }, [
+                                        _vm._v("Detail"),
+                                      ]),
+                                    ]
+                                  ),
+                                ]
+                              ),
+                            ],
+                            1
+                          ),
+                        ])
+                      })
+                    : [_vm._m(2)],
+                ],
+                2
               ),
             ]),
           ]),
@@ -53911,6 +56006,16 @@ var staticRenderFns = [
         _c("th", { staticClass: "text-right", attrs: { width: "50" } }, [
           _vm._v("Action"),
         ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { staticClass: "text-center", attrs: { colspan: "4" } }, [
+        _vm._v("Tidak Ada Data Yang Perlu Divalidasi"),
       ]),
     ])
   },
@@ -53949,52 +56054,56 @@ var render = function () {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.mahasiswa.data, function (item, index) {
-                  return _c("tr", { key: index }, [
-                    _c("td", [_vm._v(_vm._s(item.nama))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.nim))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.prodi))]),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            staticClass: "btn btn-sm btn-primary",
-                            attrs: {
-                              to: {
-                                name: "DetailPerluValidasi",
-                                params: { nim: item.nim },
-                              },
-                              type: "submit",
-                            },
-                          },
-                          [
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "d-flex justify-content-center align-items-center px-2",
-                              },
-                              [
-                                _c("i", { staticClass: "ti-eye" }),
-                                _vm._v(" "),
-                                _c("span", { staticClass: "ml-2" }, [
-                                  _vm._v("Detail"),
-                                ]),
-                              ]
-                            ),
-                          ]
-                        ),
-                      ],
-                      1
-                    ),
-                  ])
-                }),
-                0
+                [
+                  _vm.mahasiswa.data.length != 0
+                    ? _vm._l(_vm.mahasiswa.data, function (item, index) {
+                        return _c("tr", { key: index }, [
+                          _c("td", [_vm._v(_vm._s(item.nama))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.nim))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.prodi))]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            [
+                              _c(
+                                "router-link",
+                                {
+                                  staticClass: "btn btn-sm btn-primary",
+                                  attrs: {
+                                    to: {
+                                      name: "detailSudahValidasi",
+                                      params: { nim: item.nim },
+                                    },
+                                    type: "submit",
+                                  },
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "d-flex justify-content-center align-items-center px-2",
+                                    },
+                                    [
+                                      _c("i", { staticClass: "ti-eye" }),
+                                      _vm._v(" "),
+                                      _c("span", { staticClass: "ml-2" }, [
+                                        _vm._v("Detail"),
+                                      ]),
+                                    ]
+                                  ),
+                                ]
+                              ),
+                            ],
+                            1
+                          ),
+                        ])
+                      })
+                    : [_vm._m(2)],
+                ],
+                2
               ),
             ]),
           ]),
@@ -54027,6 +56136,16 @@ var staticRenderFns = [
         _c("th", { staticClass: "text-right", attrs: { width: "50" } }, [
           _vm._v("Action"),
         ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { staticClass: "text-center", attrs: { colspan: "4" } }, [
+        _vm._v("Tidak Ada Data Yang Divalidasi"),
       ]),
     ])
   },
