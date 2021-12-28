@@ -27,6 +27,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('pembimbingakademik', PembimbingAkademikController::class)->except(['create', 'edit']);
     // Mahasiswa
     Route::resource('mahasiswa', MahasiswaController::class)->except(['create', 'edit']);
+    Route::post('mahasiswa/assign/{id}', [MahasiswaController::class, 'assignMahasiswa']);
     // Portofolio
     Route::resource('portofolio', PortofolioController::class)->except(['create', 'edit', 'update']);
     Route::post('portofolio/{portofolio}', [PortofolioController::class, 'update']);

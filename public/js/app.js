@@ -5450,8 +5450,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5688,6 +5686,13 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get("/api/mahasiswa").then(function (response) {
+        for (var i = 0; i < response.data.data.length; i++) {
+          if (response.data.data[i].pembimbing_akademik !== "Data Belum Ada") {
+            response.data.data.splice(i, 1);
+            i--;
+          }
+        }
+
         _this.mahasiswa = response.data;
       });
     },
@@ -5713,23 +5718,40 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       e.preventDefault();
-      var formdata = new FormData();
-      formdata.append("pembimbing_akademik_id", this.$route.params.id);
-
-      for (var i in this.selected) {
-        axios.put("/api/mahasiswa/" + this.selected[i], formdata).then(function (response) {})["catch"](function (error) {
-          _this2.errors = error.response.data;
-          _this2.invalid = true;
-        });
-      }
-
       this.$swal.fire({
-        title: "Success!",
-        icon: "success",
-        timer: 1000
-      });
-      this.$router.push({
-        name: "pembimbingakademik"
+        title: "Apakah anda yakin?",
+        text: "Jika anda menetapkan pembimbing akademik, maka data tidak akan bisa ubah kembali.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Tetapkan",
+        cancelButtonText: "Batal"
+      }).then(function (result) {
+        if (result.value) {
+          var success = false;
+          var formdata = new FormData();
+          formdata.append("pembimbing_akademik_id", _this2.$route.params.id);
+
+          for (var i in _this2.selected) {
+            axios.post("/api/mahasiswa/assign/" + _this2.selected[i], formdata).then(function (response) {
+              success = true;
+            });
+          }
+
+          if (success) {
+            _this2.$swal.fire({
+              title: "Success!",
+              text: "Pembimbing Akademik Berhasil Ditetapkan",
+              icon: "success",
+              timer: 1000
+            });
+
+            _this2.$route.push({
+              name: "pembimbingakademik"
+            });
+          }
+        }
       });
     }
   }
@@ -49821,7 +49843,7 @@ var render = function () {
               },
               [
                 _c("i", { staticClass: "icon-plus mr-2" }),
-                _vm._v("\n          Tambah Data\n        "),
+                _vm._v("\n                    Tambah Data\n                "),
               ]
             ),
             _vm._v(" "),
@@ -49833,8 +49855,6 @@ var render = function () {
                   "tbody",
                   _vm._l(_vm.mahasiswa.data, function (item, index) {
                     return _c("tr", { key: index }, [
-                      _vm._m(2, true),
-                      _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(item.nama))]),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(item.nim))]),
@@ -49915,10 +49935,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [
-          _c("input", { attrs: { type: "checkbox", id: "checkAll" } }),
-        ]),
-        _vm._v(" "),
         _c("th", [_vm._v("Nama Mahasiswa")]),
         _vm._v(" "),
         _c("th", [_vm._v("NIM")]),
@@ -49935,14 +49951,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("Action")]),
       ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("input", { staticClass: "checkClass", attrs: { type: "checkbox" } }),
     ])
   },
 ]
@@ -50262,7 +50270,7 @@ var render = function () {
                     staticClass: "btn btn-primary float-right mt-3",
                     attrs: { type: "submit" },
                   },
-                  [_vm._v("Assign")]
+                  [_vm._v("Tetapkan PA")]
                 ),
               ]),
             ]),

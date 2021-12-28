@@ -45,6 +45,10 @@ class MahasiswaController extends Controller
         }
     }
 
+    public function show($id)
+    {
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -102,8 +106,31 @@ class MahasiswaController extends Controller
         }
     }
 
-    public function show($id)
+    public function assignMahasiswa(Request $request, $id)
     {
+        $mahasiswa = Mahasiswa::findOrFail($id);
+        $validator = Validator::make($request->all(), [
+            'pembimbing_akademik_id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        try {
+            $mahasiswa->update([
+                'pembimbing_akademik_id' => $request->pembimbing_akademik_id,
+            ]);
+            $response = [
+                'message' => "Jurusan Updated",
+                'data' => new MahasiswaResource($mahasiswa),
+            ];
+            return response()->json($response, Response::HTTP_OK);
+        } catch (QueryException $e) {
+            return response()->json([
+                'message' => "Failed " . $e->errorInfo,
+            ]);
+        }
     }
 
     public function destroy($id)
