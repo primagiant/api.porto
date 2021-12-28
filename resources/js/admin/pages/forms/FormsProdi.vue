@@ -18,7 +18,7 @@
 
                         <div class="form-group">
                             <label for="fakultas_id">Fakultas</label>
-                            <select v-model="selectedFakultas" class="form-control">
+                            <select v-model="selectedFakultas" class="form-control select-text">
                                 <option disabled value="">Select Fakultas</option>
                                 <option v-for="item in fakultas.data" :key="item.id" :value="item.id">{{ item.nama_fakultas }}</option>
                             </select>
@@ -29,7 +29,7 @@
 
                         <div class="form-group">
                             <label for="jurusan_id">Jurusan</label>
-                            <select v-model="selectedJurusan" class="form-control">
+                            <select v-model="selectedJurusan" class="form-control select-text">
                                 <option disabled value="">Select Jurusan</option>
                                 <option v-for="item in jurusan.data" :key="item.id" :value="item.id">{{ item.nama_jurusan }}</option>
                             </select>
@@ -129,3 +129,9 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.select-text {
+    color: #495057;
+}
+</style>

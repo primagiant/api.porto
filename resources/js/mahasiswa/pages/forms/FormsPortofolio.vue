@@ -206,6 +206,6 @@ export default {
 
 <style scoped>
 .select-text {
-    color: #1f1f1f;
+    color: #495057;
 }
 </style>
