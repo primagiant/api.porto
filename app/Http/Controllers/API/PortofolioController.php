@@ -23,6 +23,14 @@ class PortofolioController extends Controller
         );
     }
 
+    public function countPortofolio()
+    {
+        $response = [
+            "data" => Portofolio::count(),
+        ];
+        return response($response, 200);
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
