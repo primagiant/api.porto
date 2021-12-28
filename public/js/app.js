@@ -7321,6 +7321,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -53130,57 +53150,69 @@ var render = function () {
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-12 col-xl-8 mb-4 mb-xl-0" }, [
             _c("h3", { staticClass: "font-weight-bold" }, [
-              _vm._v("Selamat Datang " + _vm._s(_vm.mhs.nama)),
+              _vm._v("Welcome " + _vm._s(_vm.mhs.nama)),
             ]),
           ]),
+          _vm._v(" "),
+          _vm._m(0),
         ]),
       ]),
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-6" }, [
+      _c("div", { staticClass: "col-md-6 grid-margin transparent" }, [
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-md-6 mb-4 stretch-card transparent" }, [
-            _c("div", { staticClass: "card card-tale" }, [
+            _c("div", { staticClass: "card card-tale csr-pointer" }, [
               _c("div", { staticClass: "card-body" }, [
                 _c("p", { staticClass: "mb-4" }, [_vm._v("Point Terkumpul")]),
                 _vm._v(" "),
                 _c("p", { staticClass: "fs-30 mb-2" }, [
                   _vm._v(_vm._s(_vm.totalPoint)),
                 ]),
+                _vm._v(" "),
+                _c("p", [_vm._v("Portofolio")]),
               ]),
             ]),
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-6 mb-4 stretch-card transparent" }, [
-            _c("div", { staticClass: "card card-dark-blue" }, [
+            _c("div", { staticClass: "card card-dark-blue csr-pointer" }, [
               _c("div", { staticClass: "card-body" }, [
                 _c("p", { staticClass: "mb-4" }, [_vm._v("Total Portofolio")]),
                 _vm._v(" "),
                 _c("p", { staticClass: "fs-30 mb-2" }, [
                   _vm._v(_vm._s(_vm.totalPortofolio)),
                 ]),
+                _vm._v(" "),
+                _c("p", [_vm._v("Portofolio")]),
               ]),
             ]),
           ]),
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-6 mb-4 stretch-card transparent" }, [
-            _c("div", { staticClass: "card card-light-blue" }, [
-              _c("div", { staticClass: "card-body" }, [
-                _c("p", { staticClass: "mb-4" }, [_vm._v("Sudah Tervalidasi")]),
-                _vm._v(" "),
-                _c("p", { staticClass: "fs-30 mb-2" }, [
-                  _vm._v(_vm._s(_vm.valid)),
+          _c(
+            "div",
+            { staticClass: "col-md-6 mb-4 mb-lg-0 stretch-card transparent" },
+            [
+              _c("div", { staticClass: "card card-light-blue" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("p", { staticClass: "mb-4" }, [
+                    _vm._v("Sudah Tervalidasi"),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "fs-30 mb-2" }, [
+                    _vm._v(_vm._s(_vm.valid)),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [_vm._v("Portofolio")]),
                 ]),
               ]),
-            ]),
-          ]),
+            ]
+          ),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-6 mb-4 stretch-card transparent" }, [
+          _c("div", { staticClass: "col-md-6 stretch-card transparent" }, [
             _c("div", { staticClass: "card card-light-danger" }, [
               _c("div", { staticClass: "card-body" }, [
                 _c("p", { staticClass: "mb-4" }, [_vm._v("Belum Tervalidasi")]),
@@ -53188,15 +53220,70 @@ var render = function () {
                 _c("p", { staticClass: "fs-30 mb-2" }, [
                   _vm._v(_vm._s(_vm.belumValid)),
                 ]),
+                _vm._v(" "),
+                _c("p", [_vm._v("Mahasiswa")]),
               ]),
             ]),
           ]),
         ]),
       ]),
+      _vm._v(" "),
+      _vm._m(1),
     ]),
   ])
 }
 var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12 col-xl-4" }, [
+      _c("div", { staticClass: "justify-content-end d-flex" }, [
+        _c("div", { staticClass: "dropdown flex-md-grow-1 flex-xl-grow-0" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-sm btn-light bg-white dropdown-toggle",
+              attrs: {
+                type: "button",
+                id: "dropdownMenuDate2",
+                "data-toggle": "dropdown",
+                "aria-haspopup": "true",
+                "aria-expanded": "true",
+              },
+            },
+            [
+              _c("i", { staticClass: "mdi mdi-calendar" }),
+              _vm._v(
+                "\n                                Semester ( 1 )\n                            "
+              ),
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "dropdown-menu dropdown-menu-right",
+              attrs: { "aria-labelledby": "dropdownMenuDate2" },
+            },
+            [
+              _c("button", { staticClass: "dropdown-item" }, [_vm._v("1")]),
+              _vm._v(" "),
+              _c("button", { staticClass: "dropdown-item" }, [_vm._v("2")]),
+              _vm._v(" "),
+              _c("button", { staticClass: "dropdown-item" }, [_vm._v("3")]),
+              _vm._v(" "),
+              _c("button", { staticClass: "dropdown-item" }, [_vm._v("4")]),
+              _vm._v(" "),
+              _c("button", { staticClass: "dropdown-item" }, [_vm._v("5")]),
+              _vm._v(" "),
+              _c("button", { staticClass: "dropdown-item" }, [_vm._v("6")]),
+            ]
+          ),
+        ]),
+      ]),
+    ])
+  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
@@ -53206,20 +53293,22 @@ var staticRenderFns = [
         _c("div", { staticClass: "card-body" }, [
           _c("div", { staticClass: "d-flex justify-content-between" }, [
             _c("p", { staticClass: "card-title" }, [_vm._v("Laporan Point")]),
+            _vm._v(" "),
+            _c("a", { staticClass: "text-info", attrs: { href: "#" } }, [
+              _vm._v("View all"),
+            ]),
           ]),
           _vm._v(" "),
           _c("p", { staticClass: "font-weight-500" }, [
             _vm._v("Total point yang terkumpul setiap semesternya."),
           ]),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass:
-                "d-flex justify-content-center align-items-center mt-3 pt-3",
-            },
-            [_c("h1", [_vm._v("chart")])]
-          ),
+          _c("div", {
+            staticClass: "chartjs-legend mt-4 mb-2",
+            attrs: { id: "sales-legend" },
+          }),
+          _vm._v(" "),
+          _c("canvas", { attrs: { id: "sales-chart" } }),
         ]),
       ]),
     ])
