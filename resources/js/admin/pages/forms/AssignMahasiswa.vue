@@ -96,19 +96,15 @@ export default {
                 })
                 .then((result) => {
                     if (result.value) {
-                        let success = false;
                         let formdata = new FormData();
                         formdata.append("pembimbing_akademik_id", this.$route.params.id);
                         for (let i in this.selected) {
                             axios.post("/api/mahasiswa/assign/" + this.selected[i], formdata).then((response) => {
-                                success = true;
+                                this.$swal.fire({ title: "Success!", text: "Pembimbing Akademik Berhasil Ditetapkan", icon: "success", timer: 1000 });
                             });
                         }
-                        if (success) {
-                            this.$swal.fire({ title: "Success!", text: "Pembimbing Akademik Berhasil Ditetapkan", icon: "success", timer: 1000 });
-                            this.$route.push({ name: "pembimbingakademik" });
-                        }
                     }
+                    this.$router.push({ name: "pembimbingakademik" });
                 });
         },
     },
