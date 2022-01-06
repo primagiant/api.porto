@@ -4,7 +4,7 @@ window.Vue = require('vue').default;
 
 import Admin from './admin/App.vue';
 import PembimbingAkademik from './pembimbingAkademik/App.vue';
-import Mahasiswa from './Mahasiswa/App.vue';
+import Mahasiswa from './mahasiswa/App.vue';
 
 import VueAxios from 'vue-axios';
 import VueRouter from 'vue-router';

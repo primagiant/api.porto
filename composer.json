@@ -12,6 +12,7 @@
         "laravel/framework": "^8.65",
         "laravel/sanctum": "^2.12",
         "laravel/tinker": "^2.5",
+        "nao-pon/flysystem-google-drive": "~1.1",
         "santigarcor/laratrust": "^6.3"
     },
     "require-dev": {

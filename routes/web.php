@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\KegiatanController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect('login');
+});
+Route::get('test', function() {
+    dd(Storage::disk('google')->files());
+    // return view('testing');
+});
+
+Route::post('test', function (Request $request) {
+    $upload = $request->file('file')->store('', 'google');
+    dd($upload);
 });
 
 Route::group(['middleware' => ['auth']], function () {

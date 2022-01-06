@@ -17,6 +17,6 @@ class JenisKegiatan extends Model
 
     public function kategoriKegiatan()
     {
-        return $this->belongsTo(kategoriKegiatan::class, 'kategori_kegiatan_id', 'id');
+        return $this->belongsTo(KategoriKegiatan::class, 'kategori_kegiatan_id', 'id');
     }
 }
