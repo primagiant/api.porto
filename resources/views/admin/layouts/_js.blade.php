@@ -1,4 +1,4 @@
-<script src="{{ mix('js/app.js') }}"></script>
+<script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('vendors/js/vendor.bundle.base.js') }}"></script>
 
 {{-- <script src="{{ asset('') }}/vendors/chart.js/Chart.min.js"></script> --}}

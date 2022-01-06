@@ -56,7 +56,7 @@ class PortofolioController extends Controller
                 'penyelenggara' => $request->penyelenggara,
                 'tahun' => $request->tahun,
                 'semester_id' => $request->semester_id,
-                'bukti' => $request->file('bukti')->store('bukti'),
+                'bukti' => $request->file('bukti')->store('', 'google'),
                 'valid_point' => '0',
             ]);
 
