@@ -1,14 +1,14 @@
 <template>
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
-            <li class="nav-item">
+            <li class="nav-item" :class="{ active: $route.matched.some(({ name }) => name === 'dashboard') }">
                 <router-link :to="{ name: 'dashboard' }" class="nav-link">
                     <i class="icon-grid menu-icon"></i>
                     <span class="menu-title">Beranda</span>
                 </router-link>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item" :class="{ active: $route.matched.some(({ name }) => name === 'kegiatan') }">
                 <router-link :to="{ name: 'kegiatan' }" class="nav-link">
                     <i class="icon-layout menu-icon"></i>
                     <span class="menu-title">Kegiatan</span>
@@ -16,7 +16,7 @@
             </li>
 
             <li class="nav-item">
-                <div class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <div class="nav-link" data-toggle="collapse" href="#ui-basic" :aria-expanded="expand" aria-controls="ui-basic">
                     <i class="ti-package menu-icon"></i>
                     <span class="menu-title">Mahasiswa</span>
                     <i class="menu-arrow"></i>
