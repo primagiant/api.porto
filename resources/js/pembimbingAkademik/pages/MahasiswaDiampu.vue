@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="col-md-12 mb-3">
-            <h3>Perlu Validasi</h3>
+            <h3>Mahasiswa Diampu</h3>
         </div>
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
@@ -11,30 +11,25 @@
                             <thead>
                                 <tr>
                                     <th>Nama</th>
-                                    <th>NIM</th>
-                                    <th>Program Studi</th>
-                                    <th width="50" class="text-right">Action</th>
+                                    <th class="text-center">NIM</th>
+                                    <th class="text-center">Program Studi</th>
+                                    <th class="text-center">Skor Terkumpul</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <template v-if="mahasiswa.data.length != 0">
                                     <tr v-for="(item, index) in mahasiswa.data" :key="index">
                                         <td>{{ item.nama }}</td>
-                                        <td>{{ item.nim }}</td>
-                                        <td>{{ item.prodi }}</td>
-                                        <td>
-                                            <router-link :to="{ name: 'detailPerluValidasi', params: { nim: item.nim } }" class="btn btn-sm btn-primary" type="submit">
-                                                <div class="d-flex justify-content-center align-items-center px-2">
-                                                    <i class="ti-eye"></i>
-                                                    <span class="ml-2">Detail</span>
-                                                </div>
-                                            </router-link>
+                                        <td class="text-center">{{ item.nim }}</td>
+                                        <td class="text-center">{{ item.prodi }}</td>
+                                        <td class="text-center">
+                                            {{ item.totalSkor }}
                                         </td>
                                     </tr>
                                 </template>
                                 <template v-else>
                                     <tr>
-                                        <td class="text-center" colspan="4">Tidak Ada Data Yang Perlu Divalidasi</td>
+                                        <td class="text-center" colspan="4">Belum Ada Mahasiswa</td>
                                     </tr>
                                 </template>
                             </tbody>
@@ -58,7 +53,7 @@ export default {
     },
     methods: {
         getResults: function (page = 1) {
-            axios.get("/api/pembimbingakademik/invalidMahasiswa?page=" + page).then((response) => {
+            axios.get("/api/mahasiswa?page=" + page).then((response) => {
                 this.mahasiswa = response.data;
             });
         },

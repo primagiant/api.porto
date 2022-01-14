@@ -10,7 +10,7 @@
                     <form @submit.prevent="saveData" class="forms-sample">
                         <div class="form-group">
                             <label for="tahun">Tahun</label>
-                            <input v-model="datas.tahun" type="text" autofocus="autofocus" class="form-control" :class="{ 'is-invalid': invalid }" name="tahun" id="tahun" placeholder="Tahun" />
+                            <input v-model="datas.tahun" type="text" autofocus="autofocus" class="form-control" :class="{ 'is-invalid': errors.tahun }" name="tahun" id="tahun" placeholder="Tahun" />
                             <div v-if="errors.tahun" class="invalid-feedback">
                                 {{ errors.tahun[0] }}
                             </div>
@@ -32,7 +32,6 @@ export default {
                 tahun: null,
             },
             errors: {},
-            invalid: false,
         };
     },
     mounted() {
@@ -54,7 +53,6 @@ export default {
                     })
                     .catch((error) => {
                         this.errors = error.response.data;
-                        this.invalid = true;
                     });
             } else {
                 axios
@@ -65,7 +63,6 @@ export default {
                     })
                     .catch((error) => {
                         this.errors = error.response.data;
-                        this.invalid = true;
                     });
             }
         },

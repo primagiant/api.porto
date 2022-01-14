@@ -24,6 +24,9 @@
                 <div class="collapse" id="ui-basic">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
+                            <router-link :to="{ name: 'mahasiswaDiampu' }" class="nav-link">Mahasiswa Diampu</router-link>
+                        </li>
+                        <li class="nav-item">
                             <router-link :to="{ name: 'perluValidasi' }" class="nav-link">Perlu Validasi</router-link>
                         </li>
                         <li class="nav-item">

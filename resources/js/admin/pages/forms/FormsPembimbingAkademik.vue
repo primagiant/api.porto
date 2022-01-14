@@ -12,7 +12,7 @@
                             <div>
                                 <div class="form-group">
                                     <label for="name">Nama Pembimbing Akademik</label>
-                                    <input v-model="datas.name" type="text" autofocus class="form-control" :class="{ 'is-invalid': invalid }" placeholder="Nama Pembimbing Akademik" />
+                                    <input v-model="datas.name" type="text" autofocus class="form-control" :class="{ 'is-invalid': errors.name }" placeholder="Nama Pembimbing Akademik" />
                                     <div v-if="errors.name" class="invalid-feedback">
                                         {{ errors.name[0] }}
                                     </div>
@@ -20,7 +20,7 @@
 
                                 <div class="form-group">
                                     <label for="fakultas_id">Fakultas</label>
-                                    <select v-model="selectedFakultas" class="form-control select-text">
+                                    <select v-model="selectedFakultas" class="form-control select-text" :class="{ 'is-invalid border-danger': errors.fakultas_id }">
                                         <option disabled value="">Select Fakultas</option>
                                         <option v-for="item in fakultas.data" :key="item.id" :value="item.id">{{ item.nama_fakultas }}</option>
                                     </select>
@@ -31,7 +31,7 @@
 
                                 <div class="form-group">
                                     <label for="jurusan_id">Jurusan</label>
-                                    <select v-model="selectedJurusan" class="form-control select-text">
+                                    <select v-model="selectedJurusan" class="form-control select-text" :class="{ 'is-invalid border-danger': errors.jurusan_id }">
                                         <option disabled value="">Select Jurusan</option>
                                         <option v-for="item in jurusan.data" :key="item.id" :value="item.id">{{ item.nama_jurusan }}</option>
                                     </select>
@@ -42,7 +42,7 @@
 
                                 <div class="form-group">
                                     <label for="prodi_id">Prodi</label>
-                                    <select v-model="selectedProdi" class="form-control select-text">
+                                    <select v-model="selectedProdi" class="form-control select-text" :class="{ 'is-invalid border-danger': errors.prodi_id }">
                                         <option disabled value="">Select Prodi</option>
                                         <option v-for="item in prodi.data" :key="item.id" :value="item.id">{{ item.nama_prodi }}</option>
                                     </select>
@@ -60,15 +60,15 @@
                             <div>
                                 <div class="form-group">
                                     <label for="nama">Email</label>
-                                    <input v-model="datas.email" type="email" autofocus class="form-control" :class="{ 'is-invalid': invalid }" name="nama" placeholder="Email" />
-                                    <div v-if="errors.nama" class="invalid-feedback">
-                                        {{ errors.nama[0] }}
+                                    <input v-model="datas.email" type="email" autofocus class="form-control" :class="{ 'is-invalid': errors.email }" placeholder="Email" />
+                                    <div v-if="errors.email" class="invalid-feedback">
+                                        {{ errors.email[0] }}
                                     </div>
                                 </div>
 
                                 <div v-if="!$route.params.id" class="form-group">
                                     <label for="nama">Password</label>
-                                    <input v-model="datas.password" type="password" autofocus class="form-control" :class="{ 'is-invalid': invalid }" name="nama" placeholder="Password" />
+                                    <input v-model="datas.password" type="password" autofocus class="form-control" :class="{ 'is-invalid': errors.password }" placeholder="Password" />
                                     <div v-if="errors.password" class="invalid-feedback">
                                         {{ errors.password[0] }}
                                     </div>
@@ -76,10 +76,7 @@
 
                                 <div v-if="!$route.params.id" class="form-group">
                                     <label for="nama">Konfirmasi Password</label>
-                                    <input v-model="datas.password_confirmation" type="password" autofocus class="form-control" :class="{ 'is-invalid': invalid }" name="nama" placeholder="Konfirmasi Password" />
-                                    <div v-if="errors.password_confirmation" class="invalid-feedback">
-                                        {{ errors.password_confirmation[0] }}
-                                    </div>
+                                    <input v-model="datas.password_confirmation" type="password" autofocus class="form-control" :class="{ 'is-invalid': errors.password }" placeholder="Konfirmasi Password" />
                                 </div>
 
                                 <button type="submit" class="btn btn-primary mr-2">Simpan</button>
@@ -113,7 +110,6 @@ export default {
             selectedFakultas: "",
             selectedJurusan: "",
             selectedProdi: "",
-            invalid: false,
         };
     },
     mounted() {
@@ -165,7 +161,6 @@ export default {
                     })
                     .catch((error) => {
                         this.errors = error.response.data;
-                        this.invalid = true;
                     });
             } else {
                 axios
@@ -176,7 +171,6 @@ export default {
                     })
                     .catch((error) => {
                         this.errors = error.response.data;
-                        this.invalid = true;
                     });
             }
         },

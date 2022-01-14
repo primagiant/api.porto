@@ -10,7 +10,7 @@
                     <form @submit.prevent="saveData" class="forms-sample">
                         <div class="form-group">
                             <label for="nama_jurusan">Jurusan</label>
-                            <input v-model="datas.nama_jurusan" type="text" autofocus class="form-control" :class="{ 'is-invalid': invalid }" name="nama_jurusan" placeholder="Nama Jurusan" />
+                            <input v-model="datas.nama_jurusan" type="text" autofocus class="form-control" :class="{ 'is-invalid': errors.nama_jurusan }" name="nama_jurusan" placeholder="Nama Jurusan" />
                             <div v-if="errors.nama_jurusan" class="invalid-feedback">
                                 {{ errors.nama_jurusan[0] }}
                             </div>
@@ -18,7 +18,7 @@
 
                         <div class="form-group">
                             <label for="fakultas_id">Fakultas</label>
-                            <select v-model="datas.fakultas_id" class="form-control select-text">
+                            <select v-model="datas.fakultas_id" class="form-control select-text" :class="{ 'is-invalid border-danger': errors.fakultas_id }">
                                 <option disabled value="">Select Fakultas</option>
                                 <option v-for="item in fakultas.data" :key="item.id" :value="item.id">{{ item.nama_fakultas }}</option>
                             </select>
@@ -29,7 +29,7 @@
 
                         <div class="form-group">
                             <label for="deskripsi">Deskripsi</label>
-                            <textarea v-model="datas.deskripsi" class="form-control" :class="{ 'is-invalid': invalid }" name="deskripsi" rows="6"></textarea>
+                            <textarea v-model="datas.deskripsi" class="form-control" :class="{ 'is-invalid': errors.deskripsi }" name="deskripsi" rows="6"></textarea>
                             <div v-if="errors.deskripsi" class="invalid-feedback">
                                 {{ errors.deskripsi[0] }}
                             </div>
@@ -54,7 +54,6 @@ export default {
                 deskripsi: null,
             },
             errors: {},
-            invalid: false,
         };
     },
     mounted() {
@@ -83,7 +82,6 @@ export default {
                     })
                     .catch((error) => {
                         this.errors = error.response.data;
-                        this.invalid = true;
                     });
             } else {
                 axios
@@ -94,7 +92,6 @@ export default {
                     })
                     .catch((error) => {
                         this.errors = error.response.data;
-                        this.invalid = true;
                     });
             }
         },

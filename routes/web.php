@@ -19,14 +19,17 @@ use Illuminate\Http\Request;
 Route::get('/', function () {
     return redirect('login');
 });
-Route::get('test', function() {
-    dd(Storage::disk('google')->files());
-    // return view('testing');
+
+Route::get('test', function () {
+    // dd(Storage::disk('google')->files());
+    return view('testing');
 });
 
 Route::post('test', function (Request $request) {
-    $upload = $request->file('file')->store('', 'google');
-    dd($upload);
+    $file = Storage::disk('google')->put('test.txt', "Hello World");
+    dd($file);
+    // $upload = $request->file('file')->store('', 'google');
+    // dd($upload);
 });
 
 Route::group(['middleware' => ['auth']], function () {

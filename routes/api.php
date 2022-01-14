@@ -24,25 +24,39 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('jeniskegiatan', JenisKegiatanController::class)->only(['index', 'show']);
     Route::resource('kategorikegiatan', KategoriKegiatanController::class)->only(['index', 'show']);
     // Pembimbing Akademik
-    Route::resource('pembimbingakademik', PembimbingAkademikController::class)->except(['create', 'edit']);
+    Route::prefix('pembimbingakademik')->group(function () {
+        Route::resource('/', PembimbingAkademikController::class)->except(['create', 'edit']);
+        Route::get('validMahasiswa', [PembimbingAkademikController::class, 'validMahasiswa']);
+        Route::get('invalidMahasiswa', [PembimbingAkademikController::class, 'invalidMahasiswa']);
+    });
     // Mahasiswa
-    Route::resource('mahasiswa', MahasiswaController::class)->except(['create', 'edit']);
-    Route::post('mahasiswa/assign/{id}', [MahasiswaController::class, 'assignMahasiswa']);
+    Route::prefix('mahasiswa')->group(function () {
+        Route::resource('/', MahasiswaController::class)->except(['create', 'edit']);
+        Route::post('assign/{id}', [MahasiswaController::class, 'assignMahasiswa']);
+    });
     // Portofolio
-    Route::resource('portofolio', PortofolioController::class)->except(['create', 'edit', 'update']);
-    Route::post('portofolio/{portofolio}', [PortofolioController::class, 'update']);
-    Route::post('portofolio/validasi/{portofolio}', [PortofolioController::class, 'validasi']);
-    Route::get('portofolio/byNim/{nim}', [PortofolioController::class, 'byNim']);
-    Route::get('portofolio/count', [PortofolioController::class, 'countPortofolio']);
+    Route::prefix('portofolio')->group(function () {
+        Route::resource('/', PortofolioController::class)->except(['create', 'edit', 'update']);
+        Route::post('{portofolio}', [PortofolioController::class, 'update']);
+        Route::post('validasi/{portofolio}', [PortofolioController::class, 'validasi']);
+        Route::get('byNim/{nim}', [PortofolioController::class, 'byNim']);
+        Route::get('count', [PortofolioController::class, 'countPortofolio']);
+    });
     // Fakultas
-    Route::resource('fakultas', FakultasController::class)->except(['create', 'edit']);
-    Route::get('fakultas/all', [FakultasController::class, 'allData']);
+    Route::prefix('fakultas')->group(function () {
+        Route::resource('/', FakultasController::class)->except(['create', 'edit']);
+        Route::get('all', [FakultasController::class, 'allData']);
+    });
     // Jurusan
-    Route::resource('jurusan', JurusanController::class)->except(['create', 'edit']);
-    Route::get('jurusan/byFakultas/{fakultas_id}', [JurusanController::class, 'byFakultas']);
+    Route::prefix('jurusan')->group(function () {
+        Route::resource('/', JurusanController::class)->except(['create', 'edit']);
+        Route::get('byFakultas/{fakultas_id}', [JurusanController::class, 'byFakultas']);
+    });
     // Prodi
-    Route::resource('prodi', ProdiController::class)->except(['create', 'edit']);
-    Route::get('prodi/byJurusan/{jurusan_id}', [ProdiController::class, 'byJurusan']);
+    Route::prefix('prodi')->group(function () {
+        Route::resource('/', ProdiController::class)->except(['create', 'edit']);
+        Route::get('byJurusan/{jurusan_id}', [ProdiController::class, 'byJurusan']);
+    });
     // Angkatan
     Route::resource('angkatan', AngkatanController::class)->except(['create', 'edit']);
 });

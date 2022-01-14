@@ -28,18 +28,22 @@ class MahasiswaController extends Controller
                 return MahasiswaResource::collection(Mahasiswa::all());
             }
         } else if (Auth::user()->hasRole('pembimbingakademik')) {
-            if (request('keyword') != null) {
-                return MahasiswaResource::collection(
-                    Mahasiswa::where('pa_id', '=', Auth::user()->pa->id)
-                        ->where('nim', 'like', '%' . request('keyword') . '%')
-                        ->orWhere('nama', 'like', '%' . request('keyword') . '%')
-                        ->get()
-                );
-            } else {
-                return MahasiswaResource::collection(
-                    PembimbingAkademik::find(Auth::user()->pa->id)->mahasiswas
-                );
-            }
+            // if (request('keyword') != null) {
+            //     return MahasiswaResource::collection(
+            //         Mahasiswa::where('pa_id', '=', Auth::user()->pa->id)
+            //             ->where('nim', 'like', '%' . request('keyword') . '%')
+            //             ->orWhere('nama', 'like', '%' . request('keyword') . '%')
+            //             ->get()
+            //     );
+            // } else {
+            $pa_id = Auth::user()->pa->id;
+            return MahasiswaResource::collection(
+                Mahasiswa::whereHas('pembimbing_akademik', function ($query) use ($pa_id) {
+                    $query->where('id', '=', $pa_id);
+                })->paginate(10)
+            );
+
+            // }
         } else if (Auth::user()->hasRole('mahasiswa')) {
             return new MahasiswaResource(Mahasiswa::where('user_id', Auth::user()->id)->first());
         }

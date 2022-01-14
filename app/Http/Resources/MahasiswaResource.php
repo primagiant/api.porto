@@ -21,6 +21,10 @@ class MahasiswaResource extends JsonResource
         } else {
             $pa = $this->pembimbing_akademik;
         }
+        $totalSkor = 0;
+        foreach ($this->portofolio as $p) {
+            $totalSkor += $p->valid_point;
+        }
         return [
             'id' => $this->id,
             'nim' => $this->nim,
@@ -31,6 +35,7 @@ class MahasiswaResource extends JsonResource
             'fakultas' => $this->fakultas->nama_fakultas,
             'jurusan' => $this->jurusan->nama_jurusan,
             'prodi' => $this->prodi->nama_prodi,
+            'totalSkor' => $totalSkor,
             'status' => $this->status,
         ];
     }

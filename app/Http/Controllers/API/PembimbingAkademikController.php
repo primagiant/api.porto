@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\MahasiswaResource;
 use App\Http\Resources\PembimbingAkademikResource;
+use App\Models\Mahasiswa;
 use App\Models\PembimbingAkademik;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -108,5 +110,29 @@ class PembimbingAkademikController extends Controller
                 'message' => "Failed " . $e->errorInfo,
             ]);
         }
+    }
+
+    public function validMahasiswa()
+    {
+        $pa_id = Auth::user()->pa->id;
+        return MahasiswaResource::collection(
+            Mahasiswa::whereHas('portofolio', function ($query) {
+                $query->where('status', '=', "1");
+            })->whereHas('pembimbing_akademik', function ($query) use ($pa_id) {
+                $query->where('id', '=', $pa_id);
+            })->paginate(7)
+        );
+    }
+
+    public function invalidMahasiswa()
+    {
+        $pa_id = Auth::user()->pa->id;
+        return MahasiswaResource::collection(
+            Mahasiswa::whereHas('portofolio', function ($query) {
+                $query->where('status', '=', "0");
+            })->whereHas('pembimbing_akademik', function ($query) use ($pa_id) {
+                $query->where('id', '=', $pa_id);
+            })->paginate(7)
+        );
     }
 }

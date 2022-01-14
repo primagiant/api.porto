@@ -58,16 +58,7 @@ export default {
     },
     methods: {
         getResults: function (page = 1) {
-            axios.get("/api/mahasiswa?page=" + page).then((response) => {
-                for (let i = 0; i < response.data.data.length; i++) {
-                    axios.get("/api/portofolio/byNim/" + response.data.data[i].nim).then((res) => {
-                        // console.log(res.data.data);
-                        if (res.data.data.sudahValidasi.length == 0) {
-                            response.data.data.splice(i, 1);
-                            i--;
-                        }
-                    });
-                }
+            axios.get("/api/pembimbingakademik/validMahasiswa?page=" + page).then((response) => {
                 this.mahasiswa = response.data;
             });
         },

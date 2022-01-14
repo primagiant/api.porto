@@ -10,7 +10,7 @@
                     <form @submit.prevent="saveData" class="forms-sample">
                         <div class="form-group">
                             <label for="nama_prodi">Prodi</label>
-                            <input v-model="datas.nama_prodi" type="text" autofocus class="form-control" :class="{ 'is-invalid': invalid }" name="nama_prodi" placeholder="Nama Prodi" />
+                            <input v-model="datas.nama_prodi" type="text" autofocus class="form-control" :class="{ 'is-invalid': errors.nama_prodi }" name="nama_prodi" placeholder="Nama Prodi" />
                             <div v-if="errors.nama_prodi" class="invalid-feedback">
                                 {{ errors.nama_prodi[0] }}
                             </div>
@@ -18,7 +18,7 @@
 
                         <div class="form-group">
                             <label for="fakultas_id">Fakultas</label>
-                            <select v-model="selectedFakultas" class="form-control select-text">
+                            <select v-model="selectedFakultas" class="form-control select-text" :class="{ 'is-invalid border-danger': errors.fakultas_id }">
                                 <option disabled value="">Select Fakultas</option>
                                 <option v-for="item in fakultas.data" :key="item.id" :value="item.id">{{ item.nama_fakultas }}</option>
                             </select>
@@ -29,7 +29,7 @@
 
                         <div class="form-group">
                             <label for="jurusan_id">Jurusan</label>
-                            <select v-model="selectedJurusan" class="form-control select-text">
+                            <select v-model="selectedJurusan" class="form-control select-text" :class="{ 'is-invalid border-danger': errors.jurusan_id }">
                                 <option disabled value="">Select Jurusan</option>
                                 <option v-for="item in jurusan.data" :key="item.id" :value="item.id">{{ item.nama_jurusan }}</option>
                             </select>
@@ -40,7 +40,7 @@
 
                         <div class="form-group">
                             <label for="deskripsi">Deskripsi</label>
-                            <textarea v-model="datas.deskripsi" class="form-control" :class="{ 'is-invalid': invalid }" name="deskripsi" rows="6"></textarea>
+                            <textarea v-model="datas.deskripsi" class="form-control" :class="{ 'is-invalid': errors.deskripsi }" name="deskripsi" rows="6"></textarea>
                             <div v-if="errors.deskripsi" class="invalid-feedback">
                                 {{ errors.deskripsi[0] }}
                             </div>
@@ -69,7 +69,6 @@ export default {
             errors: {},
             selectedFakultas: "",
             selectedJurusan: "",
-            invalid: false,
         };
     },
     mounted() {
@@ -110,7 +109,6 @@ export default {
                     })
                     .catch((error) => {
                         this.errors = error.response.data;
-                        this.invalid = true;
                     });
             } else {
                 console.log(this.datas);
@@ -122,7 +120,6 @@ export default {
                     })
                     .catch((error) => {
                         this.errors = error.response.data;
-                        this.invalid = true;
                     });
             }
         },
