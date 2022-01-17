@@ -15,25 +15,25 @@
                 </router-link>
             </li>
 
-            <li class="nav-item">
-                <div class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                    <i class="ti-package menu-icon"></i>
+            <li class="nav-item" :class="{ active: $route.matched.some(({ name }) => name === 'mahasiswaDiampu') }">
+                <router-link :to="{ name: 'mahasiswaDiampu' }" class="nav-link">
+                    <i class="icon-folder menu-icon"></i>
                     <span class="menu-title">Mahasiswa</span>
-                    <i class="menu-arrow"></i>
-                </div>
-                <div class="collapse" id="ui-basic">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item">
-                            <router-link :to="{ name: 'mahasiswaDiampu' }" class="nav-link">Mahasiswa Diampu</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link :to="{ name: 'perluValidasi' }" class="nav-link">Perlu Validasi</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link :to="{ name: 'sudahValidasi' }" class="nav-link">Sudah Validasi</router-link>
-                        </li>
-                    </ul>
-                </div>
+                </router-link>
+            </li>
+
+            <li class="nav-item" :class="{ active: $route.matched.some(({ name }) => name === 'perluValidasi') }">
+                <router-link :to="{ name: 'perluValidasi' }" class="nav-link">
+                    <i class="icon-square-cross menu-icon"></i>
+                    <span class="menu-title">Belum Validasi</span>
+                </router-link>
+            </li>
+
+            <li class="nav-item" :class="{ active: $route.matched.some(({ name }) => name === 'sudahValidasi') }">
+                <router-link :to="{ name: 'sudahValidasi' }" class="nav-link">
+                    <i class="icon-square-check menu-icon"></i>
+                    <span class="menu-title">Sudah Validasi</span>
+                </router-link>
             </li>
         </ul>
     </nav>

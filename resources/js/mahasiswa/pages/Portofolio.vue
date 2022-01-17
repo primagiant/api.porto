@@ -53,7 +53,7 @@
                                                 <i class="ti-marker-alt"></i>
                                             </div>
                                         </button>
-                                        <button @click="deleteData(item.id)" v-if="item.status == 0" to="" class="btn btn-sm btn-danger">
+                                        <button @click="deleteData(item.id)" v-if="item.status == 0" class="btn btn-sm btn-danger">
                                             <div class="d-flex justify-content-center align-items-center">
                                                 <i class="ti-trash"></i>
                                             </div>

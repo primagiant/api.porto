@@ -34,7 +34,7 @@
                         <div class="card card-tale csr-pointer">
                             <div class="card-body">
                                 <p class="mb-4">Point Terkumpul</p>
-                                <p class="fs-30 mb-2">{{ totalPoint }}</p>
+                                <p class="fs-30 mb-2">{{ mhs.totalSkor }}</p>
                                 <p>Portofolio</p>
                             </div>
                         </div>
@@ -93,7 +93,6 @@ export default {
         return {
             portofolio: {},
             mhs: {},
-            totalPoint: 0,
             belumValid: 0,
             valid: 0,
             totalPortofolio: 0,
@@ -103,7 +102,6 @@ export default {
         axios.get("/api/portofolio").then((response) => {
             this.portofolio = response.data.data;
             this.portofolio.forEach((e) => {
-                this.totalPoint += e.valid_point;
                 if (e.status === 1) {
                     this.valid++;
                 } else {
