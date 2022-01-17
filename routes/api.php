@@ -33,6 +33,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::prefix('mahasiswa')->group(function () {
         Route::resource('/', MahasiswaController::class)->except(['create', 'edit']);
         Route::post('assign/{id}', [MahasiswaController::class, 'assignMahasiswa']);
+        Route::get('topMahasiswa/{angkatan_id}', [MahasiswaController::class, 'topMahasiswa']);
     });
     // Portofolio
     Route::prefix('portofolio')->group(function () {

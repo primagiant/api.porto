@@ -16,7 +16,7 @@
             </li>
 
             <li class="nav-item">
-                <div class="nav-link" data-toggle="collapse" href="#ui-basic" :aria-expanded="expand" aria-controls="ui-basic">
+                <div class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                     <i class="ti-package menu-icon"></i>
                     <span class="menu-title">Mahasiswa</span>
                     <i class="menu-arrow"></i>

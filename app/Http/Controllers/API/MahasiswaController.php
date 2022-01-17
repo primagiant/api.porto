@@ -153,4 +153,11 @@ class MahasiswaController extends Controller
             ]);
         }
     }
+
+    public function topMahasiswa($angkatan_id)
+    {
+        return MahasiswaResource::collection(Mahasiswa::whereHas('angkatan', function ($query) use ($angkatan_id) {
+            $query->where('id', '=', $angkatan_id);
+        })->get());
+    }
 }
