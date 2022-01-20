@@ -52,7 +52,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 grid-margin stretch-card">
+            <!-- <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
@@ -64,7 +64,7 @@
                         <canvas id="sales-chart"></canvas>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>

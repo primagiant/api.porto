@@ -15,19 +15,10 @@ class AngkatanSeeder extends Seeder
     public function run()
     {
         Angkatan::create([
-            'tahun' => '2018'
-        ]);
-        Angkatan::create([
-            'tahun' => '2019'
-        ]);
-        Angkatan::create([
             'tahun' => '2020'
         ]);
         Angkatan::create([
             'tahun' => '2021'
-        ]);
-        Angkatan::create([
-            'tahun' => '2022'
         ]);
     }
 }

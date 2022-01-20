@@ -4,28 +4,13 @@
             <div class="col-md-12 grid-margin">
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                        <h3 class="font-weight-bold">Welcome Admin :3</h3>
-                    </div>
-                    <div class="col-12 col-xl-4">
-                        <div class="justify-content-end d-flex">
-                            <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
-                                <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    <i class="mdi mdi-calendar"></i>
-                                    Angkatan ( {{ selectedAngkatan }} )
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
-                                    <div v-for="(item, index) in angkatan" :key="index">
-                                        <button @click="filterAngkatan(item.id)" class="dropdown-item" href="#">{{ item.tahun }}</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <h3 class="font-weight-bold">Welcome Admin</h3>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6 grid-margin transparent">
+            <div class="col-md-12 grid-margin transparent">
                 <div class="row">
                     <div class="col-md-6 mb-4 stretch-card transparent">
                         <div class="card card-tale">
@@ -67,7 +52,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 grid-margin stretch-card">
+            <!-- <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
@@ -79,59 +64,56 @@
                         <canvas id="sales-chart"></canvas>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
-                <div class="card position-relative">
+                <div class="card">
                     <div class="card-body">
-                        <div id="detailedReports" class="carousel slide detailed-report-carousel position-static pt-2" data-ride="carousel">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <div class="row">
-                                        <div class="col-md-12 grid-margin stretch-card">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <p class="card-title mb-0">Top Mahasiswa</p>
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped table-borderless">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>#</th>
-                                                                    <th>Nim</th>
-                                                                    <th>Nama</th>
-                                                                    <th>Skor</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <template v-if="isThereMahasiswaAngkatan === true">
-                                                                    <tr v-for="(item, index) in mahasiswa.data" :key="index">
-                                                                        <td>{{ index + 1 }}</td>
-                                                                        <td class="font-weight-bold">{{ item.nim }}</td>
-                                                                        <td>{{ item.nama }}</td>
-                                                                        <td class="font-weight-medium">{{ item.totalSkor }}</td>
-                                                                    </tr>
-                                                                </template>
-                                                                <tr v-else>
-                                                                    <td colspan="4" class="text-center">Tidak ada Data Mahasiswa</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
+                        <div class="row">
+                            <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                                <p class="card-title mb-0">Top Mahasiswa</p>
+                            </div>
+                            <div class="col-12 col-xl-4">
+                                <div class="justify-content-end d-flex">
+                                    <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+                                        <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            <i class="mdi mdi-calendar"></i>
+                                            Angkatan ( {{ selectedAngkatan }} )
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
+                                            <div v-for="(item, index) in angkatan" :key="index">
+                                                <button @click="filterAngkatan(item.id)" class="dropdown-item" href="#">{{ item.tahun }}</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <a class="carousel-control-prev" href="#detailedReports" role="button" data-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="carousel-control-next" href="#detailedReports" role="button" data-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
-                            </a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nim</th>
+                                        <th>Nama</th>
+                                        <th>Skor</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template v-if="isThereMahasiswaAngkatan === true">
+                                        <tr v-for="(item, index) in mahasiswa.data" :key="index">
+                                            <td>{{ index + 1 }}</td>
+                                            <td class="font-weight-bold">{{ item.nim }}</td>
+                                            <td>{{ item.nama }}</td>
+                                            <td class="font-weight-medium">{{ item.totalSkor }}</td>
+                                        </tr>
+                                    </template>
+                                    <tr v-else>
+                                        <td colspan="4" class="text-center">Tidak ada Data Mahasiswa</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
