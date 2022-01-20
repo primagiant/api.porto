@@ -24,7 +24,7 @@ class PembimbingAkademikController extends Controller
     {
         if (Auth::user()->hasRole('admin')) {
             return PembimbingAkademikResource::collection(
-                PembimbingAkademik::paginate(4)
+                PembimbingAkademik::paginate(5)
             );
         } else if (Auth::user()->hasRole('pembimbingakademik')) {
             return new PembimbingAkademikResource(

@@ -46,6 +46,9 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="mt-3">
+                            <pagination :data="mahasiswa" @pagination-change-page="getResults" align="center"></pagination>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -61,11 +64,11 @@ export default {
         };
     },
     mounted() {
-        this.showAllData();
+        this.getResults();
     },
     methods: {
-        showAllData: function () {
-            axios.get("/api/mahasiswa").then((response) => {
+        getResults: function (page = 1) {
+            axios.get("/api/mahasiswa?page=" + page).then((response) => {
                 this.mahasiswa = response.data;
             });
         },

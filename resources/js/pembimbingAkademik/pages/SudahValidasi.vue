@@ -39,6 +39,9 @@
                                 </template>
                             </tbody>
                         </table>
+                        <div class="mt-3">
+                            <pagination :data="mahasiswa" @pagination-change-page="getResults" align="center"></pagination>
+                        </div>
                     </div>
                 </div>
             </div>

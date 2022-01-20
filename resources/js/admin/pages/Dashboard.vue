@@ -10,13 +10,13 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12 grid-margin transparent">
+            <div class="col-xl-4 grid-margin transparent">
                 <div class="row">
                     <div class="col-md-6 mb-4 stretch-card transparent">
                         <div class="card card-tale">
                             <div class="card-body">
                                 <p class="mb-4">Waktu Sistem</p>
-                                <p class="fs-30 mb-2">{{ time }}</p>
+                                <p class="h3 mb-2">{{ time }}</p>
                                 <p>Waktu Setempat</p>
                             </div>
                         </div>
@@ -26,7 +26,6 @@
                             <div class="card-body">
                                 <p class="mb-4">Jumlah Total Portofolio</p>
                                 <p class="fs-30 mb-2">{{ totalPortofolio }}</p>
-                                <p>Portofolio</p>
                             </div>
                         </div>
                     </div>
@@ -35,9 +34,8 @@
                     <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
                         <div class="card card-light-blue csr-pointer" @click="redirectToPembimbingAkademik()">
                             <div class="card-body">
-                                <p class="mb-4">Jumlah Pembimbing Akademik</p>
+                                <p class="mb-4">Pembimbing Akademik</p>
                                 <p class="fs-30 mb-2">{{ banyakPA }}</p>
-                                <p>Pembimbing Akademik</p>
                             </div>
                         </div>
                     </div>
@@ -46,28 +44,12 @@
                             <div class="card-body">
                                 <p class="mb-4">Jumlah Mahasiswa</p>
                                 <p class="fs-30 mb-2">{{ banyakMahasiswa }}</p>
-                                <p>Mahasiswa</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- <div class="col-md-6 grid-margin stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <p class="card-title">Report</p>
-                            <a href="#" class="text-info">View all</a>
-                        </div>
-                        <p class="font-weight-500">The total number of sessions within the date range. It is the period time a user is actively engaged with your website, page or app, etc</p>
-                        <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
-                        <canvas id="sales-chart"></canvas>
-                    </div>
-                </div>
-            </div> -->
-        </div>
-        <div class="row">
-            <div class="col-md-12 grid-margin stretch-card">
+            <div class="col-xl-8 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">

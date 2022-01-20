@@ -23,9 +23,9 @@ class MahasiswaController extends Controller
     {
         if (Auth::user()->hasRole('admin')) {
             if (isset($request->page)) {
-                return MahasiswaResource::collection(Mahasiswa::orderBy('nim')->paginate(4));
+                return MahasiswaResource::collection(Mahasiswa::orderBy('nim')->paginate(5));
             } else {
-                return MahasiswaResource::collection(Mahasiswa::all());
+                return MahasiswaResource::collection(Mahasiswa::paginate(5));
             }
         } else if (Auth::user()->hasRole('pembimbingakademik')) {
             // if (request('keyword') != null) {

@@ -42,6 +42,9 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="mt-3">
+                            <pagination :data="prodi" @pagination-change-page="showAllData" align="center"></pagination>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -60,8 +63,8 @@ export default {
         this.showAllData();
     },
     methods: {
-        showAllData: function () {
-            axios.get("/api/prodi").then((response) => {
+        showAllData: function (page = 1) {
+            axios.get("/api/prodi?page=" + page).then((response) => {
                 this.prodi = response.data.data;
             });
         },

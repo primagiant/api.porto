@@ -1,15 +1,8 @@
 <template>
     <div>
+        <loading :active.sync="isLoading"></loading>
         <div class="col-md-12 mb-3 d-flex justify-content-between align-items-center">
             <h3>Data Portofolio Mahasiswa</h3>
-            <button @click="showFilter()" class="btn btn-sm btn-primary">
-                <i class="icon-eye mb-1"></i>
-            </button>
-        </div>
-        <div id="filter" class="col-lg-12 mb-3 stretch-card" v-show="filterClass">
-            <div class="card">
-                <div class="card-body"></div>
-            </div>
         </div>
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
@@ -132,6 +125,9 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="mt-3">
+                            <pagination :data="portofolio" @pagination-change-page="getResults" align="center"></pagination>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -140,19 +136,29 @@
 </template>
 
 <script>
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 export default {
+    components: {
+        Loading,
+    },
     data() {
         return {
+            isLoading: false,
+            isSuccess: false,
             portofolio: {},
             filterClass: false,
         };
     },
     created() {
-        axios.get("/api/portofolio/").then((response) => {
-            this.portofolio = response.data;
-        });
+        this.getResults();
     },
     methods: {
+        getResults: function (page = 1) {
+            axios.get("/api/portofolio?page=" + page).then((response) => {
+                this.portofolio = response.data;
+            });
+        },
         deleteData: function (id) {
             this.$swal
                 .fire({
@@ -167,11 +173,19 @@ export default {
                 })
                 .then((result) => {
                     if (result.value) {
+                        this.isLoading = true;
+                        this.isSuccess = false;
                         let uri = `/api/portofolio/${id}`;
-                        this.axios.delete(uri).then((response) => {
-                            this.$swal.fire({ title: "Success!", text: "Angkatan deleted successfully", icon: "success", timer: 1000 });
-                            this.portofolio.data.splice(this.portofolio.data.indexOf(id), 1);
-                        });
+                        this.axios
+                            .delete(uri)
+                            .then((response) => {
+                                this.isSuccess = true;
+                                this.$swal.fire({ title: "Success!", text: "Angkatan deleted successfully", icon: "success", timer: 1000 });
+                                this.portofolio.data.splice(this.portofolio.data.indexOf(id), 1);
+                            })
+                            .finally(() => {
+                                this.isLoading = false;
+                            });
                     }
                 });
         },
@@ -198,9 +212,6 @@ export default {
                         });
                 }
             });
-        },
-        showFilter: function () {
-            this.filterClass = !this.filterClass;
         },
         // checkExtension: function (src) {
         //     return src.split(".").pop();

@@ -1,5 +1,6 @@
 <template>
     <div>
+        <loading :active.sync="isLoading"></loading>
         <div class="col-md-12">
             <h3 v-if="$route.params.id" class="card-title">Edit Portofolio</h3>
             <h3 v-else class="card-title">Tambah Portofolio</h3>
@@ -10,36 +11,36 @@
                     <form @submit.prevent="saveData" enctype="multipart/form-data" class="forms-sample">
                         <div class="form-group">
                             <label for="nama_kegiatan">Nama Kegiatan</label>
-                            <input v-model="datas.nama_kegiatan" type="text" autofocus="autofocus" class="form-control" required :class="{ 'is-invalid': invalid }" id="nama_kegiatan" placeholder="Nama Kegiatan" />
+                            <input v-model="datas.nama_kegiatan" type="text" autofocus="autofocus" class="form-control" :class="{ 'is-invalid': errors.nama_kegiatan }" required placeholder="Nama Kegiatan" />
                             <div v-if="errors.nama_kegiatan" class="invalid-feedback">
                                 {{ errors.nama_kegiatan[0] }}
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="penyelenggara">Penyelenggara</label>
-                            <input v-model="datas.penyelenggara" type="text" autofocus="autofocus" class="form-control" required :class="{ 'is-invalid': invalid }" id="penyelenggara" placeholder="Penyelenggara" />
+                            <input v-model="datas.penyelenggara" type="text" autofocus="autofocus" class="form-control" :class="{ 'is-invalid': errors.penyelenggara }" required placeholder="Penyelenggara" />
                             <div v-if="errors.penyelenggara" class="invalid-feedback">
                                 {{ errors.penyelenggara[0] }}
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="fakultas_id">Kategori Kegiatan</label>
-                            <select v-model="selectedKategoriKegiatan" required class="form-control select-text">
+                            <label>Kategori Kegiatan</label>
+                            <select v-model="selectedKategoriKegiatan" class="form-control select-text" :class="{ 'is-invalid border-danger': errors.kategori_kegiatan_id }">
                                 <option disabled value="">Select Kategori Kegiatan</option>
                                 <option v-for="item in kategori_kegiatan.data" :key="item.id" :value="item.id">{{ item.nama }}</option>
                             </select>
-                            <div v-if="errors.fakultas_id" class="invalid-feedback">
-                                {{ errors.fakultas_id[0] }}
+                            <div v-if="errors.kategori_kegiatan_id" class="invalid-feedback">
+                                {{ errors.kategori_kegiatan_id[0] }}
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="fakultas_id">Jenis Kegiatan</label>
-                            <select v-model="selectedJenisKegiatan" required class="form-control select-text">
+                            <label>Jenis Kegiatan</label>
+                            <select v-model="selectedJenisKegiatan" class="form-control select-text" :class="{ 'is-invalid border-danger': errors.jenis_kegiatan_id }">
                                 <option disabled value="">Select Jenis Kegiatan</option>
                                 <option v-for="item in jenis_kegiatan.jenis_kegiatan" :key="item.id" :value="item.id">{{ item.nama }}</option>
                             </select>
-                            <div v-if="errors.fakultas_id" class="invalid-feedback">
-                                {{ errors.fakultas_id[0] }}
+                            <div v-if="errors.jenis_kegiatan_id" class="invalid-feedback">
+                                {{ errors.jenis_kegiatan_id[0] }}
                             </div>
                         </div>
                         <div class="row">
@@ -52,7 +53,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="tahun">Tahun</label>
-                                    <input v-model="datas.tahun" type="text" autofocus="autofocus" required class="form-control" :class="{ 'is-invalid': invalid }" name="tahun" id="tahun" placeholder="Tahun" />
+                                    <input v-model="datas.tahun" type="text" autofocus="autofocus" class="form-control" :class="{ 'is-invalid': errors.tahun }" name="tahun" id="tahun" placeholder="Tahun" />
                                     <div v-if="errors.tahun" class="invalid-feedback">
                                         {{ errors.tahun[0] }}
                                     </div>
@@ -77,7 +78,7 @@
                         <div class="form-group">
                             <label for="bukti">Bukti</label>
                             <input v-if="$route.params.id" @change="onChangeFileUpload()" ref="bukti" type="file" autofocus="autofocus" class="form-control" :class="{ 'is-invalid': invalid }" id="bukti" placeholder="Bukti" />
-                            <input v-else @change="onChangeFileUpload()" ref="bukti" type="file" autofocus="autofocus" class="form-control" :class="{ 'is-invalid': invalid }" id="bukti" placeholder="Bukti" required />
+                            <input v-else @change="onChangeFileUpload()" ref="bukti" type="file" autofocus="autofocus" class="form-control" :class="{ 'is-invalid': errors.bukti }" id="bukti" placeholder="Bukti" />
                             <div v-if="errors.bukti" class="invalid-feedback">
                                 {{ errors.bukti[0] }}
                             </div>
@@ -92,9 +93,16 @@
 </template>
 
 <script>
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 export default {
+    components: {
+        Loading,
+    },
     data() {
         return {
+            isLoading: false,
+            isSuccess: false,
             kategori_kegiatan: {},
             jenis_kegiatan: {},
             ref_point: 0,
@@ -110,14 +118,7 @@ export default {
             selectedKategoriKegiatan: "",
             selectedJenisKegiatan: "",
             errors: {},
-            invalid: false,
             buktiImage: "",
-            // invalid: {
-            //     nama_kegiatan: false,
-            //     penyelenggara: false,
-            //     tahun: false,
-            //     bukti: false,
-            // },
         };
     },
     watch: {
@@ -135,7 +136,7 @@ export default {
             this.datas.jenis_kegiatan_id = this.selectedJenisKegiatan;
         },
     },
-    mounted() {
+    created() {
         axios.get("/api/kategorikegiatan").then((response) => {
             this.kategori_kegiatan = response.data;
         });
@@ -153,11 +154,14 @@ export default {
     methods: {
         saveData: function (e) {
             e.preventDefault();
+
+            this.isLoading = true;
+            this.isSuccess = false;
+
             let formData = new FormData();
             formData.append("nama_kegiatan", this.datas.nama_kegiatan);
             formData.append("penyelenggara", this.datas.penyelenggara);
             formData.append("tahun", this.datas.tahun);
-            console.log(this.datas.semester_id);
             formData.append("semester_id", this.datas.semester_id);
             formData.append("kategori_kegiatan_id", this.datas.kategori_kegiatan_id);
             formData.append("jenis_kegiatan_id", this.datas.jenis_kegiatan_id);
@@ -173,12 +177,15 @@ export default {
                         },
                     })
                     .then((response) => {
+                        this.isSuccess = true;
                         this.$swal.fire({ title: "Success!", text: response.data.message, icon: "success", timer: 1000 });
                         this.$router.push({ name: "portofolio" });
                     })
                     .catch((error) => {
                         this.errors = error.response.data;
-                        console.log(this.errors);
+                    })
+                    .finally(() => {
+                        this.isLoading = false;
                     });
             } else {
                 axios
@@ -188,12 +195,15 @@ export default {
                         },
                     })
                     .then((response) => {
+                        this.isSuccess = true;
                         this.$swal.fire({ title: "Success!", text: response.data.message, icon: "success", timer: 1000 });
                         this.$router.push({ name: "portofolio" });
                     })
                     .catch((error) => {
                         this.errors = error.response.data;
-                        console.log(this.errors);
+                    })
+                    .finally(() => {
+                        this.isLoading = false;
                     });
             }
         },
