@@ -37,8 +37,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
     // Portofolio
     Route::prefix('portofolio')->group(function () {
-        Route::resource('/', PortofolioController::class)->except(['create', 'edit', 'update', 'show']);
-        Route::get('{id}', [PortofolioController::class, 'show ']);
+        Route::resource('/', PortofolioController::class)->only(['index', 'store']);
+        Route::delete('{id}', [PortofolioController::class, 'destroy']);
+        Route::get('{id}', [PortofolioController::class, 'show']);
         Route::post('{portofolio}', [PortofolioController::class, 'update']);
         Route::post('validasi/{portofolio}', [PortofolioController::class, 'validasi']);
         Route::get('byNim/{nim}', [PortofolioController::class, 'byNim']);

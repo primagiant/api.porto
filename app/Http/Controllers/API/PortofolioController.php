@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Storage;
 
 class PortofolioController extends Controller
 {
@@ -33,6 +34,7 @@ class PortofolioController extends Controller
 
     public function store(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'kategori_kegiatan_id' => ['required'],
             'jenis_kegiatan_id' => ['required'],
@@ -48,6 +50,45 @@ class PortofolioController extends Controller
         }
 
         try {
+            // Connection to Google Drive API V2
+            $client = new \Google_Client();
+            $client->setClientId(env('GOOGLE_DRIVE_CLIENT_ID'));
+            $client->setClientSecret(env('GOOGLE_DRIVE_CLIENT_SECRET'));
+            $client->refreshToken(env('GOOGLE_DRIVE_REFRESH_TOKEN'));
+            $service = new \Google_Service_Drive($client);
+
+            // Get Filename
+            $fileExtension = $request->file('bukti')->extension();
+            $fileName = time() . uniqid() . '.' . $fileExtension;
+
+            // Get MimeType
+            if ($fileExtension == 'pdf') {
+                $mimeType = 'application/pdf';
+            } else if ($fileExtension == 'jpg' || $fileExtension == 'jpeg') {
+                $mimeType = 'image/jpeg';
+            } else if ($fileExtension == 'png') {
+                $mimeType = 'image/png';
+            }
+
+            // Upload File
+            $fileMetadata = new \Google_Service_Drive_DriveFile(array(
+                'name' => $fileName,
+                'parents' => array(env('GOOGLE_DRIVE_FOLDER_ID'))
+            ));
+
+            $file = file_get_contents($request->file('bukti'));
+
+            $fileArray = $service->files->create($fileMetadata, array(
+                'data' => $file,
+                'mimeType' => $mimeType,
+                'uploadType' => 'multipart',
+                'fields' => 'id'
+            ));
+
+            // Get File Id
+            $fileId = $fileArray->id;
+
+            // Simpan di Database
             $portofolio = Portofolio::create([
                 'mahasiswa_id' => User::find(Auth::user()->id)->mahasiswa->id,
                 'kategori_kegiatan_id' => $request->kategori_kegiatan_id,
@@ -56,7 +97,7 @@ class PortofolioController extends Controller
                 'penyelenggara' => $request->penyelenggara,
                 'tahun' => $request->tahun,
                 'semester_id' => $request->semester_id,
-                'bukti' => $request->file('bukti')->store('', 'google'),
+                'bukti' => $fileId,
                 'valid_point' => '0',
             ]);
 
@@ -117,8 +158,47 @@ class PortofolioController extends Controller
 
         try {
             if ($request->file('bukti')) {
-                unlink('storage/' . $portofolio->bukti);
-                $bukti = $request->file('bukti')->store('bukti');
+                // Remove Previous File
+                Storage::disk('google')->delete($portofolio->bukti);
+
+                // Connection to Google Drive API V2
+                $client = new \Google_Client();
+                $client->setClientId(env('GOOGLE_DRIVE_CLIENT_ID'));
+                $client->setClientSecret(env('GOOGLE_DRIVE_CLIENT_SECRET'));
+                $client->refreshToken(env('GOOGLE_DRIVE_REFRESH_TOKEN'));
+                $service = new \Google_Service_Drive($client);
+
+                // Get Filename
+                $fileExtension = $request->file('bukti')->extension();
+                $fileName = time() . uniqid() . '.' . $fileExtension;
+
+                // Get MimeType
+                if ($fileExtension == 'pdf') {
+                    $mimeType = 'application/pdf';
+                } else if ($fileExtension == 'jpg' || $fileExtension == 'jpeg') {
+                    $mimeType = 'image/jpeg';
+                } else if ($fileExtension == 'png') {
+                    $mimeType = 'image/png';
+                }
+
+                // Upload File
+                $fileMetadata = new \Google_Service_Drive_DriveFile(array(
+                    'name' => $fileName,
+                    'parents' => array(env('GOOGLE_DRIVE_FOLDER_ID'))
+                ));
+
+                $file = file_get_contents($request->file('bukti'));
+
+                $fileArray = $service->files->create($fileMetadata, array(
+                    'data' => $file,
+                    'mimeType' => $mimeType,
+                    'uploadType' => 'multipart',
+                    'fields' => 'id'
+                ));
+
+                // Get File Id
+                $fileId = $fileArray->id;
+                $bukti = $fileId;
             } else {
                 $bukti = $portofolio->bukti;
             }
@@ -177,7 +257,7 @@ class PortofolioController extends Controller
     {
         $portofolio = Portofolio::findOrFail($id);
         try {
-            unlink('storage/' . $portofolio->bukti);
+            Storage::disk('google')->delete($portofolio->bukti);
             $portofolio->delete();
             $response = [
                 'message' => "Portofolio Deleted",

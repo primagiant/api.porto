@@ -25,110 +25,110 @@
                                     <th class="text-center">Nama Kegiatan</th>
                                     <th class="text-center">Penyelenggara</th>
                                     <th class="text-center">Point</th>
-                                    <th class="text-center" width="50">Status</th>
+                                    <th class="text-center" width="10">Status</th>
                                     <th class="text-center" width="50">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(item, index) in portofolio.data" :key="index">
-                                    <td class="text-center">{{ item.nama_kegiatan }}</td>
-                                    <td class="text-center">{{ item.penyelenggara }}</td>
-                                    <td class="text-center">{{ item.valid_point }}</td>
-                                    <td class="text-center">
-                                        <div v-if="item.status == 0" class="btn btn-sm btn-danger d-flex justify-content-center align-items-center">
-                                            <i class="ti-close"></i>
-                                        </div>
-                                        <div v-else class="btn btn-sm btn-success d-flex justify-content-center align-items-center">
-                                            <i class="ti-check"></i>
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <button class="btn btn-sm btn-primary" type="button" data-toggle="modal" :data-target="'#exampleModal' + index">
-                                            <div class="d-flex justify-content-center align-items-center">
-                                                <i class="ti-eye"></i>
+                                <template v-if="portofolio.data.length !== 0">
+                                    <tr v-for="(item, index) in portofolio.data" :key="index">
+                                        <td class="text-center">{{ item.nama_kegiatan }}</td>
+                                        <td class="text-center">{{ item.penyelenggara }}</td>
+                                        <td class="text-center">{{ item.valid_point }}</td>
+                                        <td class="text-center">
+                                            <div v-if="item.status == 0" class="btn btn-sm btn-danger d-flex justify-content-center align-items-center">
+                                                <i class="ti-close"></i>
                                             </div>
-                                        </button>
-                                        <button @click="redirectCheck(item.id)" class="btn btn-sm btn-warning" type="button">
-                                            <div class="d-flex justify-content-center align-items-center">
-                                                <i class="ti-marker-alt"></i>
+                                            <div v-else class="btn btn-sm btn-success d-flex justify-content-center align-items-center">
+                                                <i class="ti-check"></i>
                                             </div>
-                                        </button>
-                                        <button @click="deleteData(item.id)" v-if="item.status == 0" class="btn btn-sm btn-danger">
-                                            <div class="d-flex justify-content-center align-items-center">
-                                                <i class="ti-trash"></i>
-                                            </div>
-                                        </button>
-                                    </td>
-                                    <!-- Modal -->
-                                    <div class="modal fade" :id="'exampleModal' + index" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg" role="document">
-                                            <div class="modal-content">
-                                                <div class="row">
-                                                    <div class="col-md-6 card">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <h3>Detail Portofolio</h3>
-                                                            </div>
-                                                            <div class="row">
-                                                                <strong class="col-sm-3 col-form-label">Nama Kegiatan</strong>
-                                                                <label class="col-sm-9 col-form-label">
-                                                                    {{ item.nama_kegiatan }}
-                                                                </label>
-                                                            </div>
-                                                            <div class="row">
-                                                                <strong class="col-sm-3 col-form-label">Penyelenggara</strong>
-                                                                <label class="col-sm-9 col-form-label">
-                                                                    {{ item.penyelenggara }}
-                                                                </label>
-                                                            </div>
-                                                            <div class="row">
-                                                                <strong class="col-sm-3 col-form-label">Kategori Kegiatan</strong>
-                                                                <label class="col-sm-9 col-form-label">
-                                                                    {{ item.kategori_kegiatan }}
-                                                                </label>
-                                                            </div>
-                                                            <div class="row">
-                                                                <strong class="col-sm-3 col-form-label">Jenis Kegiatan</strong>
-                                                                <label class="col-sm-9 col-form-label">
-                                                                    {{ item.jenis_kegiatan }}
-                                                                </label>
-                                                            </div>
-                                                            <div class="row">
-                                                                <strong class="col-sm-3 col-form-label">Tahun</strong>
-                                                                <label class="col-sm-9 col-form-label">
-                                                                    {{ item.tahun }}
-                                                                </label>
-                                                            </div>
-                                                            <div class="row">
-                                                                <strong class="col-sm-3 col-form-label">Semester</strong>
-                                                                <label class="col-sm-9 col-form-label text-capitalize">
-                                                                    {{ item.semester }}
-                                                                </label>
-                                                            </div>
-                                                            <div class="row">
-                                                                <strong class="col-sm-3 col-form-label">Valid Point</strong>
-                                                                <label class="col-sm-9 col-form-label">
-                                                                    {{ item.valid_point }}
-                                                                </label>
+                                        </td>
+                                        <td class="text-center">
+                                            <button class="btn btn-sm btn-primary" type="button" data-toggle="modal" :data-target="'#exampleModal' + index">
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <i class="ti-eye"></i>
+                                                </div>
+                                            </button>
+                                            <button @click="redirectCheck(item.id)" class="btn btn-sm btn-warning" type="button">
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <i class="ti-marker-alt"></i>
+                                                </div>
+                                            </button>
+                                            <button @click="deleteData(item.id)" v-if="item.status == 0" class="btn btn-sm btn-danger">
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <i class="ti-trash"></i>
+                                                </div>
+                                            </button>
+                                        </td>
+                                        <!-- Modal -->
+                                        <div class="modal fade" :id="'exampleModal' + index" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="row">
+                                                        <div class="col-md-6 card">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <h3>Detail Portofolio</h3>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <strong class="col-sm-3 col-form-label">Nama Kegiatan</strong>
+                                                                    <label class="col-sm-9 col-form-label">
+                                                                        {{ item.nama_kegiatan }}
+                                                                    </label>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <strong class="col-sm-3 col-form-label">Penyelenggara</strong>
+                                                                    <label class="col-sm-9 col-form-label">
+                                                                        {{ item.penyelenggara }}
+                                                                    </label>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <strong class="col-sm-3 col-form-label">Kategori Kegiatan</strong>
+                                                                    <label class="col-sm-9 col-form-label">
+                                                                        {{ item.kategori_kegiatan }}
+                                                                    </label>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <strong class="col-sm-3 col-form-label">Jenis Kegiatan</strong>
+                                                                    <label class="col-sm-9 col-form-label">
+                                                                        {{ item.jenis_kegiatan }}
+                                                                    </label>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <strong class="col-sm-3 col-form-label">Tahun</strong>
+                                                                    <label class="col-sm-9 col-form-label">
+                                                                        {{ item.tahun }}
+                                                                    </label>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <strong class="col-sm-3 col-form-label">Semester</strong>
+                                                                    <label class="col-sm-9 col-form-label text-capitalize">
+                                                                        {{ item.semester }}
+                                                                    </label>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <strong class="col-sm-3 col-form-label">Valid Point</strong>
+                                                                    <label class="col-sm-9 col-form-label">
+                                                                        {{ item.valid_point }}
+                                                                    </label>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div v-if="checkExtension(item.bukti) == 'pdf'" class="embed-responsive embed-responsive-1by1">
-                                                            <iframe :src="'/storage/' + item.bukti" class="embed-responsive-item" allowfullscreen style="border: none" width="100%"></iframe>
-                                                        </div>
-                                                        <div v-else class="d-flex justify-content-center align-items-center collapse-hidden">
-                                                            <img :src="'/storage/' + item.bukti" alt="modal image" />
+                                                        <div class="col-md-6">
+                                                            <iframe src="" class="embed-responsive-item" allowfullscreen style="border: none" width="100%"></iframe>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="mt-3 d-flex justify-content-center align-items-center">
-                                                <button type="button" class="btn btn-sm btn-primary d-inline-flex justify-content-center align-items-center" data-toggle="modal" data-target="#exampleModal">Close</button>
+                                                <div class="mt-3 d-flex justify-content-center align-items-center">
+                                                    <button type="button" class="btn btn-sm btn-primary d-inline-flex justify-content-center align-items-center" data-toggle="modal" data-target="#exampleModal">Close</button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <!-- End Modal -->
+                                        <!-- End Modal -->
+                                    </tr>
+                                </template>
+                                <tr v-else>
+                                    <td colspan="5" class="text-center">Belum Ada Data Portofolio</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -147,7 +147,7 @@ export default {
             filterClass: false,
         };
     },
-    mounted() {
+    created() {
         axios.get("/api/portofolio/").then((response) => {
             this.portofolio = response.data;
         });
@@ -172,7 +172,6 @@ export default {
                             this.$swal.fire({ title: "Success!", text: "Angkatan deleted successfully", icon: "success", timer: 1000 });
                             this.portofolio.data.splice(this.portofolio.data.indexOf(id), 1);
                         });
-                        this.$router.push({ name: "portofolio" });
                     }
                 });
         },
@@ -203,9 +202,9 @@ export default {
         showFilter: function () {
             this.filterClass = !this.filterClass;
         },
-        checkExtension: function (src) {
-            return src.split(".").pop();
-        },
+        // checkExtension: function (src) {
+        //     return src.split(".").pop();
+        // },
     },
 };
 </script>

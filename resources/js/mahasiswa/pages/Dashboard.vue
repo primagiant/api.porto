@@ -6,24 +6,6 @@
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                         <h3 class="font-weight-bold">Welcome {{ mhs.nama }}</h3>
                     </div>
-                    <div class="col-12 col-xl-4">
-                        <div class="justify-content-end d-flex">
-                            <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
-                                <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    <i class="mdi mdi-calendar"></i>
-                                    Semester ( 1 )
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
-                                    <button class="dropdown-item">1</button>
-                                    <button class="dropdown-item">2</button>
-                                    <button class="dropdown-item">3</button>
-                                    <button class="dropdown-item">4</button>
-                                    <button class="dropdown-item">5</button>
-                                    <button class="dropdown-item">6</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

@@ -14,9 +14,16 @@ class PortofolioResource extends JsonResource
      */
     public function toArray($request)
     {
+        $mahasiswa = new MahasiswaResource($this->mahasiswa);
+        $semester = intval($this->tahun) - intval($mahasiswa->angkatan->tahun);
+        if (intval($this->semester_id) == 1) {
+            $semester = $semester * 2 + 1;
+        } else if (intval($this->semester_id) == 2) {
+            $semester = $semester * 2;
+        }
         return [
             'id' => $this->id,
-            'mahasiswa' => new MahasiswaResource($this->mahasiswa),
+            'mahasiswa' => $mahasiswa,
             'kategori_kegiatan_id' => $this->kategori_kegiatan_id,
             'kategori_kegiatan' => $this->kategori_kegiatan->nama,
             'jenis_kegiatan_id' => $this->jenis_kegiatan_id,
@@ -26,8 +33,9 @@ class PortofolioResource extends JsonResource
             'nama_kegiatan' => $this->nama_kegiatan,
             'penyelenggara' => $this->penyelenggara,
             'tahun' => $this->tahun,
-            'semester_id' => $this->semester_id,
-            'semester' => $this->semester->name,
+            // 'semester_id' => $this->semester_id,
+            // 'semester' => $this->semester->name,
+            'semester' => $semester,
             'bukti' => $this->bukti,
             'status' => $this->status,
         ];
