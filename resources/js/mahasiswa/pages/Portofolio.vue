@@ -55,10 +55,10 @@
                                         </td>
                                         <!-- Modal -->
                                         <div class="modal fade" :id="'exampleModal' + index" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-dialog modal-md" role="document">
                                                 <div class="modal-content">
                                                     <div class="row">
-                                                        <div class="col-md-6 card">
+                                                        <div class="col-12 card">
                                                             <div class="card-body">
                                                                 <div class="row">
                                                                     <h3>Detail Portofolio</h3>
@@ -105,10 +105,13 @@
                                                                         {{ item.valid_point }}
                                                                     </label>
                                                                 </div>
+                                                                <div class="row">
+                                                                    <strong class="col-sm-3 col-form-label">Bukti</strong>
+                                                                    <a :href="item.bukti_url" target="_blank" class="col-sm-9 col-form-label">
+                                                                        {{ item.bukti_url }}
+                                                                    </a>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <iframe src="" class="embed-responsive-item" allowfullscreen style="border: none" width="100%"></iframe>
                                                         </div>
                                                     </div>
                                                 </div>

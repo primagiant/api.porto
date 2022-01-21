@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PortofolioResource extends JsonResource
@@ -14,6 +15,7 @@ class PortofolioResource extends JsonResource
      */
     public function toArray($request)
     {
+        // Kalkulasi Semester
         $mahasiswa = new MahasiswaResource($this->mahasiswa);
         $semester = intval($this->tahun) - intval($mahasiswa->angkatan->tahun);
         if (intval($this->semester_id) == 1) {
@@ -21,6 +23,10 @@ class PortofolioResource extends JsonResource
         } else if (intval($this->semester_id) == 2) {
             $semester = $semester * 2;
         }
+
+        // Get Link URL
+        $url = Storage::disk('google')->url($this->bukti);
+
         return [
             'id' => $this->id,
             'mahasiswa' => $mahasiswa,
@@ -37,6 +43,7 @@ class PortofolioResource extends JsonResource
             // 'semester' => $this->semester->name,
             'semester' => $semester,
             'bukti' => $this->bukti,
+            'bukti_url' => $url,
             'status' => $this->status,
         ];
     }
