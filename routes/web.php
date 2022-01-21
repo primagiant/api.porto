@@ -20,12 +20,6 @@ Route::get('/', function () {
     return redirect('login');
 });
 
-Route::get('test', function () {
-    $files = Storage::disk('google')->files();
-    $file = $files[0];
-    dd(Storage::disk('google')->url($file));
-});
-
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
