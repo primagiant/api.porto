@@ -16,16 +16,6 @@ use Illuminate\Http\Request;
 |
 */
 
-
-
-Route::get('/test', function () {
-    $dirParent = Storage::disk('google')->directories();
-    $dir = Storage::disk('google')->directories($dirParent[0]);
-    $dir = explode('/', $dir[0]);
-    $filename = Storage::disk('google')->getMetadata($dir[1])['name'];
-    dd($filename);
-});
-
 Route::get('/', function () {
     return redirect('login');
 });
