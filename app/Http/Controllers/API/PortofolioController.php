@@ -57,6 +57,88 @@ class PortofolioController extends Controller
             $client->refreshToken(env('GOOGLE_DRIVE_REFRESH_TOKEN'));
             $service = new \Google_Service_Drive($client);
 
+            // Create Angkatan Folder Name
+            $angkatanFolderName =  User::find(Auth::user()->id)->mahasiswa->angkatan->tahun;
+
+            // Check Angkatan Foldername is exits
+            $angkatanDir = Storage::disk('google')->directories();
+            foreach ($angkatanDir as $dir) {
+                $filename = Storage::disk('google')->getMetadata($dir)['name'];
+
+                if ($filename != $angkatanFolderName) {
+                    // Create Angkatan Folder 
+                    $angkatanFileMetadata = new \Google_Service_Drive_DriveFile(array(
+                        'name' => (string) $angkatanFolderName,
+                        'parents' => array(env('GOOGLE_DRIVE_FOLDER_ID')),
+                        'mimeType' => 'application/vnd.google-apps.folder'
+                    ));
+
+                    $angkatanFolderId = $service->files->create($angkatanFileMetadata, array(
+                        'fields' => 'id'
+                    ));
+                    $angkatanFolderId = $angkatanFolderId->id;
+                    break;
+                } else {
+                    $angkatanFolderId = $dir;
+                }
+            }
+
+            // Check if Folder Not Found
+            if (empty($angkatanDir)) {
+                // Create Angkatan Folder 
+                $angkatanFileMetadata = new \Google_Service_Drive_DriveFile(array(
+                    'name' => (string) $angkatanFolderName,
+                    'parents' => array(env('GOOGLE_DRIVE_FOLDER_ID')),
+                    'mimeType' => 'application/vnd.google-apps.folder'
+                ));
+
+                $angkatanFolderId = $service->files->create($angkatanFileMetadata, array(
+                    'fields' => 'id'
+                ));
+                $angkatanFolderId = $angkatanFolderId->id;
+            }
+
+            // Create NIM Folder Name
+            $nimFolderName =  User::find(Auth::user()->id)->mahasiswa->nim;
+
+            // Check NIM Foldername is exits
+            $nimDir = Storage::disk('google')->directories($angkatanFolderId);
+            foreach ($nimDir as $dir) {
+                $dirr = explode('/', $dir);
+                $filename = Storage::disk('google')->getMetadata($dirr[1])['name'];
+
+                if ($filename != $nimFolderName) {
+                    // Create NIM Folder 
+                    $nimFileMetadata = new \Google_Service_Drive_DriveFile(array(
+                        'name' => (string) $nimFolderName,
+                        'parents' => array($angkatanFolderId),
+                        'mimeType' => 'application/vnd.google-apps.folder'
+                    ));
+
+                    $nimFolderId = $service->files->create($nimFileMetadata, array(
+                        'fields' => 'id'
+                    ));
+                    $nimFolderId = $nimFolderId->id;
+                    break;
+                } else {
+                    $nimFolderId = $dirr[1];
+                }
+            }
+
+            if (empty($nimDir)) {
+                // Create NIM Folder 
+                $nimFileMetadata = new \Google_Service_Drive_DriveFile(array(
+                    'name' => (string) $nimFolderName,
+                    'parents' => array($angkatanFolderId),
+                    'mimeType' => 'application/vnd.google-apps.folder'
+                ));
+
+                $nimFolderId = $service->files->create($nimFileMetadata, array(
+                    'fields' => 'id'
+                ));
+                $nimFolderId = $nimFolderId->id;
+            }
+
             // Get Filename
             $fileExtension = $request->file('bukti')->extension();
             $fileName = time() . uniqid() . '.' . $fileExtension;
@@ -73,7 +155,7 @@ class PortofolioController extends Controller
             // Upload File
             $fileMetadata = new \Google_Service_Drive_DriveFile(array(
                 'name' => $fileName,
-                'parents' => array(env('GOOGLE_DRIVE_FOLDER_ID'))
+                'parents' => array($nimFolderId),
             ));
 
             $file = file_get_contents($request->file('bukti'));
