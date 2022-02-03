@@ -155,7 +155,11 @@ class PortofolioController extends Controller
             // Upload File
             $fileMetadata = new \Google_Service_Drive_DriveFile(array(
                 'name' => $fileName,
+<<<<<<< HEAD
                 'parents' => array($nimFolderId),
+=======
+                'parents' => $nimFolderId,
+>>>>>>> 8c061a2 (laptop)
             ));
 
             $file = file_get_contents($request->file('bukti'));
